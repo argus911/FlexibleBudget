@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>銷貨成本彈性預算說明</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;background:#f0f4f8;color:#1a1a2e;font-size:13px}
+.header{background:linear-gradient(135deg,#1a5276 0%,#2e86c1 100%);color:#fff;padding:14px 20px 0;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.header h1{font-size:16px;font-weight:700;margin-bottom:2px}
+.header p{font-size:11px;opacity:.8;margin-bottom:10px}
+.tab-bar{display:flex;gap:0;padding:0 20px;background:linear-gradient(135deg,#1a5276 0%,#2e86c1 100%)}
+.tab-btn{background:transparent;border:none;color:rgba(255,255,255,.7);padding:8px 16px;cursor:pointer;font-size:12px;font-weight:600;border-bottom:3px solid transparent;transition:.2s}
+.tab-btn.active{color:#fff;border-bottom-color:#f0e14a}
+.tab-btn:hover:not(.active){color:#fff;background:rgba(255,255,255,.1)}
+.content{display:none;padding:16px 20px}
+.content.active{display:block}
+
+/* Cards */
+.card{background:#fff;border-radius:8px;padding:16px;margin-bottom:14px;box-shadow:0 1px 4px rgba(0,0,0,.08);border-left:4px solid #2e86c1}
+.card.yellow{border-left-color:#f39c12}
+.card.green{border-left-color:#27ae60}
+.card.red{border-left-color:#e74c3c}
+.card.purple{border-left-color:#8e44ad}
+.card h3{font-size:13px;color:#1a5276;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.card p,.card li{font-size:12px;line-height:1.8;color:#2c3e50}
+.card ul{padding-left:18px}
+.card li{margin-bottom:4px}
+
+/* Formula box */
+.formula-box{background:#eaf6ff;border:1px solid #aed6f1;border-radius:6px;padding:12px 16px;margin:10px 0;font-family:monospace;font-size:13px;color:#154360}
+.formula-box .f-title{font-family:"Microsoft JhengHei",sans-serif;font-size:11px;color:#7fb3d3;margin-bottom:6px;font-weight:600}
+
+/* Table */
+.data-table{width:100%;border-collapse:collapse;margin-top:10px;font-size:11px}
+.data-table th{background:#1a5276;color:#fff;padding:7px 10px;text-align:center;font-weight:600}
+.data-table td{padding:6px 10px;border-bottom:1px solid #e8edf2;text-align:right}
+.data-table td:first-child,.data-table td:nth-child(2){text-align:left}
+.data-table tr:nth-child(even){background:#f8fbff}
+.data-table tr:hover{background:#eaf2ff}
+.data-table .total{font-weight:700;background:#d5f5e3 !important}
+.data-table .adjust{color:#888;font-style:italic}
+.pos{color:#1a5276;font-weight:600}
+.neg{color:#c0392b;font-weight:600}
+
+/* Badge */
+.badge{display:inline-block;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:700;margin-left:6px}
+.badge.b-blue{background:#d6eaf8;color:#1a5276}
+.badge.b-green{background:#d5f5e3;color:#145a32}
+.badge.b-red{background:#fadbd8;color:#922b21}
+.badge.b-yellow{background:#fef9e7;color:#7d6608}
+
+/* Alert */
+.alert{border-radius:6px;padding:10px 14px;margin:10px 0;font-size:12px;line-height:1.7}
+.alert.info{background:#d6eaf8;border:1px solid #aed6f1;color:#154360}
+.alert.warn{background:#fef9e7;border:1px solid #f9e79f;color:#7d6608}
+.alert.success{background:#d5f5e3;border:1px solid #a9dfbf;color:#145a32}
+
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:600px){.two-col{grid-template-columns:1fr}}
+
+.step{display:flex;gap:10px;margin-bottom:12px}
+.step-num{flex-shrink:0;width:26px;height:26px;background:#1a5276;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
+.step-body{flex:1}
+.step-body b{color:#1a5276;display:block;margin-bottom:3px;font-size:12px}
+.step-body p{font-size:11px;color:#555;line-height:1.7}
+
+hr{border:none;border-top:1px solid #e0e8f0;margin:14px 0}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>🛒 銷貨成本彈性預算說明</h1>
+  <p>115年度 銷貨收入/成本分析 · 彈性預算調整邏輯 · 差異原因說明</p>
+</div>
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="showTab('t1',this)">📋 預算編列邏輯</button>
+  <button class="tab-btn" onclick="showTab('t2',this)">🔢 彈性預算計算</button>
+  <button class="tab-btn" onclick="showTab('t3',this)">⚠️ 差異原因分析</button>
+  <button class="tab-btn" onclick="showTab('t4',this)">📊 成本調整項目</button>
+  <button class="tab-btn" onclick="showTab('t5',this)">📅 Q1差異說明</button>
+</div>
+
+<!-- ── Tab 1：預算編列邏輯 ── -->
+<div id="t1" class="content active">
+  <div class="card">
+    <h3>📌 一、預算編列邏輯</h3>
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <b>銷貨成本預算 ＝ 銷貨收入預算 × 預估成本率</b>
+        <p>成本預算係以各產品別的預算收入，乘以事前設定的預估成本率（即預算毛利率的反向）推算而得。</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <b>預算毛利率 ＝ 事前估定值</b>
+        <p>依各產品別特性、銷售策略及歷史經驗設定，為固定基準值，不隨實際銷售量調整。</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <b>實際入帳邏輯</b>
+        <p>實際銷貨成本依系統認列之「實際銷貨或出貨數量」計入對應成本科目；
+          收入與成本對應認列後，即可計算實際毛利率。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="card green">
+      <h3>✅ 正常情形（收入成本對應）</h3>
+      <ul>
+        <li>收入已認列 → 對應成本同步入帳</li>
+        <li>可計算實際毛利率</li>
+        <li>與預算毛利率之差異反映：<br>
+            ① 產品組合變動<br>
+            ② 售價策略調整<br>
+            ③ 實際成本結構差異</li>
+      </ul>
+    </div>
+    <div class="card red">
+      <h3>⚠️ 時點差異（出貨先於收入）</h3>
+      <ul>
+        <li>已出貨 → 成本先入帳</li>
+        <li>收入尚未認列</li>
+        <li>當期效果：<br>
+            ① 銷貨成本偏高<br>
+            ② 毛利率下降（被稀釋）<br>
+            ③ 成本率呈現偏高</li>
+        <li class="neg">⚡ 此為暫時性，非真實績效問題</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="alert warn">
+    <b>📌 分析建議：</b>遇到成本率異常偏高時，應先確認是否存在「出貨已認列但收入尚未對應」的情形，
+    以「收入對應成本」為基礎判讀，避免誤判經營績效。
+  </div>
+</div>
+
+<!-- ── Tab 2：彈性預算計算 ── -->
+<div id="t2" class="content">
+  <div class="card">
+    <h3>🔢 彈性預算核心概念</h3>
+    <p>傳統固定預算（Fixed Budget）以原始預算收入為分母計算成本率，無法反映實際業務量的影響。
+       <b>彈性預算（Flexible Budget）</b>以<b>實際收入</b>為基準，套用<b>預算成本率</b>計算應有成本，
+       使比較更具意義。</p>
+  </div>
+
+  <div class="card yellow">
+    <h3>📐 計算公式</h3>
+    <div class="formula-box">
+      <div class="f-title">▸ 預算成本率</div>
+      預算成本率 ＝ 累計預算成本 ÷ 累計預算收入淨額
+    </div>
+    <div class="formula-box">
+      <div class="f-title">▸ 彈性預算成本（彈性調整後應有成本）</div>
+      彈性預算成本 ＝ 實際累計收入淨額 × 預算成本率
+    </div>
+    <div class="formula-box">
+      <div class="f-title">▸ 彈性預算差異</div>
+      差異 ＝ 實際累計成本 − 彈性預算成本<br>
+      <span class="neg">正值（>0）→ 實際成本超過彈性預算 → 超支 ⚠️</span><br>
+      <span class="pos">負值（&lt;0）→ 實際成本低於彈性預算 → 節省 ✅</span>
+    </div>
+    <div class="formula-box">
+      <div class="f-title">▸ 毛利率差異（績效判斷）</div>
+      毛利率差異 ＝ 實際毛利率 − 預算毛利率<br>
+      <span class="pos">正值 → 優於預算 ✅</span>　　<span class="neg">負值 → 低於預算 ⚠️</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>📝 計算範例（手機配件 3311B，115年4月累計）</h3>
+    <table class="data-table">
+      <tr><th>項目</th><th>數值</th><th>說明</th></tr>
+      <tr><td>累計實際收入淨額</td><td>14,883,654</td><td>已扣除銷貨退回</td></tr>
+      <tr><td>累計實際成本</td><td>9,357,000</td><td>系統認列成本</td></tr>
+      <tr><td>實際毛利</td><td>5,526,654</td><td>收入 − 成本</td></tr>
+      <tr><td>實際毛利率</td><td class="pos">37.1%</td><td>毛利 ÷ 收入</td></tr>
+      <tr><td colspan="3" style="background:#f0f4f8;font-weight:600;text-align:center;color:#1a5276;">— 彈性預算計算 —</td></tr>
+      <tr><td>累計預算收入淨額</td><td>16,173,000</td><td>原始預算</td></tr>
+      <tr><td>累計預算成本</td><td>10,262,000</td><td>原始預算</td></tr>
+      <tr><td>預算成本率</td><td>63.5%</td><td>10,262,000 ÷ 16,173,000</td></tr>
+      <tr><td>彈性預算成本</td><td>9,451,640</td><td>14,883,654 × 63.5%</td></tr>
+      <tr><td>彈性預算差異</td><td class="pos">−94,640</td><td>9,357,000 − 9,451,640</td></tr>
+      <tr class="total"><td colspan="2">結論</td><td class="pos">✅ 成本節省 94,640 元</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ── Tab 3：差異原因分析 ── -->
+<div id="t3" class="content">
+  <div class="card">
+    <h3>⚠️ 三、差異產生原因說明（重點）</h3>
+    <p style="margin-bottom:10px">銷貨成本差異可分為以下三類，性質不同，處理方式亦不同：</p>
+
+    <div class="alert success">
+      <b>① 產品組合差異</b><br>
+      收入與成本均已對應認列，但實際銷售的產品組合（高毛利/低毛利品項比例）
+      與預算假設不同，導致整體成本率偏高或偏低。
+      此為<b>經營策略因素</b>，非單純銷售不足所致。
+    </div>
+
+    <div class="alert info">
+      <b>② 售價策略差異</b><br>
+      實際售價（銷貨收入）高於或低於預算假設，在成本固定的情況下，
+      會直接影響毛利率。
+    </div>
+
+    <div class="alert warn">
+      <b>③ 收入成本認列時點差異（需特別注意）</b><br>
+      出貨後成本已認列，但對應收入尚未認列（如跨月認列），
+      造成當期成本偏高、毛利率被稀釋。<br>
+      → <b>建議：</b>分析時應以「收入對應成本」為基礎，並標注時點差異項目。
+    </div>
+  </div>
+
+  <div class="card purple">
+    <h3>🔍 115年Q1~Q2 差異說明</h3>
+    <table class="data-table">
+      <tr><th>品項</th><th>差異方向</th><th>主要原因研判</th></tr>
+      <tr><td>節能週邊商品 3311F</td><td class="neg">成本率偏高</td><td>出貨量大、收入認列時點差</td></tr>
+      <tr><td>新品手機 33111</td><td class="pos">毛利率優異</td><td>成本尚未對應（新機備貨）</td></tr>
+      <tr><td>手機配件 3311B</td><td class="pos">成本節省</td><td>實際成本低於彈性預算</td></tr>
+      <tr><td>喇叭組 33114</td><td class="neg">成本超支</td><td>銷量低，固定成本攤提影響</td></tr>
+      <tr><td>健康保養產品 3318</td><td class="pos">節省顯著</td><td>Q1大量認列，成本攤薄</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>📌 分析判讀建議步驟</h3>
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <b>先確認收入成本是否已對應認列</b>
+        <p>若成本已入帳但收入未認列 → 標注為「時點差異」，不計入績效判斷</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <b>計算彈性預算成本</b>
+        <p>以實際收入 × 預算成本率，得出應有成本基準</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <b>比較實際成本 vs 彈性預算成本</b>
+        <p>差異 = 實際成本控制能力（剔除銷量影響後）</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <b>判斷差異性質</b>
+        <p>價格因素 / 成本結構因素 / 量差因素 → 分別提出對策</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Tab 4：成本調整項目 ── -->
+<div id="t4" class="content">
+  <div class="card">
+    <h3>📂 四、成本調整項目說明</h3>
+    <p style="margin-bottom:10px">
+      以下四個成本科目屬「行銷費用重分類」項目，
+      <b>無對應銷貨收入科目</b>，不計入產品別毛利率計算。
+    </p>
+    <table class="data-table">
+      <tr><th>成本科目</th><th>科目名稱</th><th>性質說明</th><th>彈性預算處理</th></tr>
+      <tr class="adjust">
+        <td>R33</td>
+        <td>商品成本（重分類）</td>
+        <td>調整用，對應銷貨退回沖銷</td>
+        <td class="badge b-yellow">排除計算</td>
+      </tr>
+      <tr class="adjust">
+        <td>2031A</td>
+        <td>行銷業務推廣激勵獎金－銷售商品</td>
+        <td>銷售人員獎金，非直接成本</td>
+        <td class="badge b-yellow">排除計算</td>
+      </tr>
+      <tr class="adjust">
+        <td>2041P</td>
+        <td>行銷業務推廣代理佣金─承攬門市業務</td>
+        <td>門市代理佣金，間接費用</td>
+        <td class="badge b-yellow">排除計算</td>
+      </tr>
+      <tr class="adjust">
+        <td>20418</td>
+        <td>行銷業務推廣代理佣金－銷售商品</td>
+        <td>商品銷售佣金，間接費用</td>
+        <td class="badge b-yellow">排除計算</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="alert info">
+    <b>🔍 注意：</b>這些科目在「成本分析」面板中以【成本調整項目】獨立顯示（灰底）。
+    計算整體毛利率時應排除，以免與產品別毛利率混淆。
+    其金額反映在「其他行銷費用」管理分析中。
+  </div>
+
+  <div class="card yellow">
+    <h3>📊 115年4月 成本調整項目彙總（累計）</h3>
+    <table class="data-table">
+      <tr><th>科目</th><th>當月金額</th><th>當月止累計</th><th>預算（累計）</th></tr>
+      <tr><td>R33（商品成本重分類）</td><td class="pos">−793,978</td><td class="pos">−3,600,353</td><td>0</td></tr>
+      <tr><td>2031A（激勵獎金）</td><td class="neg">170</td><td class="neg">2,165</td><td>0</td></tr>
+      <tr><td>2041P（門市代理佣金）</td><td class="neg">2,390,000</td><td class="neg">3,230,617</td><td>9,850,000</td></tr>
+      <tr><td>20418（商品佣金）</td><td class="neg">63,095</td><td class="neg">309,603</td><td>167,000</td></tr>
+      <tr class="total"><td>合計</td><td class="neg">1,659,287</td><td class="neg">−57,968</td><td>10,017,000</td></tr>
+    </table>
+    <p style="margin-top:8px;font-size:11px;color:#888">
+      R33 為負值係因商品退回沖銷，實為成本減少；2041P 代理佣金累計低於預算，
+      反映代理銷售量未達預期。
+    </p>
+  </div>
+</div>
+
+<!-- ── Tab 5：Q1差異說明 ── -->
+<div id="t5" class="content">
+  <div class="card">
+    <h3>📅 五、Q1 預算與實績差異說明</h3>
+    <div class="alert info">
+      <b>會計說明：</b>本分析表係依 115年3月及4月各會計科目對應收入、成本及預算數編製，
+      有助於掌握各產品別毛利結構及預算達成情形，供營運決策參考。
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>📊 Q1 產品別毛利率分析（115年3月累計）</h3>
+    <table class="data-table">
+      <tr><th>品名</th><th>累計收入</th><th>累計成本</th><th>實際毛利率</th><th>預算毛利率</th><th>差異</th></tr>
+      <tr><td>手機配件</td><td>11,080,890</td><td>7,187,737</td><td class="pos">35.1%</td><td>36.3%</td><td class="neg">−1.2%</td></tr>
+      <tr><td>節能週邊商品</td><td>12,553,659</td><td>13,664,299</td><td class="neg">−8.9%</td><td>0.0%</td><td class="neg">−8.9%</td></tr>
+      <tr><td>新品手機</td><td>48,017,121</td><td>1,118,886</td><td class="pos">97.7%</td><td>100%</td><td class="neg">−2.3%</td></tr>
+      <tr><td>健康保養產品</td><td>823,335</td><td>702,859</td><td class="pos">14.6%</td><td>17.9%</td><td class="neg">−3.2%</td></tr>
+      <tr><td>電話機</td><td>708,990</td><td>533,119</td><td class="pos">24.8%</td><td>16.6%</td><td class="pos">+8.2%</td></tr>
+      <tr><td>Apple Watch</td><td>1,574,889</td><td>0</td><td class="pos">100%</td><td>100%</td><td>－</td></tr>
+    </table>
+  </div>
+
+  <div class="card green">
+    <h3>📝 Q1 彈性預算執行建議</h3>
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <b>確認 Q1 是否已依彈性預算調整邏輯辦理</b>
+        <p>以實際收入換算對應彈性預算成本，再與原預算比較，判斷差異屬價格/成本因素或量差因素。</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <b>節能週邊商品（3311F）成本率異常</b>
+        <p>3月累計毛利率 −8.9%，遠低於預算 0%。建議確認是否有出貨已認列但收入尚未對應的情形，
+           或實際採購成本高於預算假設。</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <b>將差異適當反映於 4 月後預算執行分析</b>
+        <p>Q1 已確認之差異，應更新為「已知差異」，不影響 Q2 後的預算修正基準，
+           以利後續績效判讀一致。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card yellow">
+    <h3>📊 115年4月 累計與彈性預算對比（主要品項）</h3>
+    <table class="data-table">
+      <tr><th>品名</th><th>累計收入</th><th>彈性預算成本</th><th>實際成本</th><th>差異</th><th>判斷</th></tr>
+      <tr><td>手機配件</td><td>14,883,654</td><td>9,451,640</td><td>9,357,000</td><td class="pos">−94,640</td><td class="badge b-green">節省</td></tr>
+      <tr><td>節能週邊商品</td><td>16,645,381</td><td>16,497,413</td><td>15,102,000</td><td class="pos">−1,395,413</td><td class="badge b-green">節省</td></tr>
+      <tr><td>電話機</td><td>910,048</td><td>758,978</td><td>1,047,000</td><td class="neg">+288,022</td><td class="badge b-red">超支</td></tr>
+      <tr><td>喇叭組</td><td>490,700</td><td>462,299</td><td>240,000</td><td class="pos">−222,299</td><td class="badge b-green">節省</td></tr>
+      <tr><td>3C週邊商品</td><td>1,075,829</td><td>1,004,810</td><td>812,000</td><td class="pos">−192,810</td><td class="badge b-green">節省</td></tr>
+    </table>
+    <p style="margin-top:8px;font-size:11px;color:#888">彈性預算成本 ＝ 累計收入 × 預算成本率</p>
+  </div>
+</div>
+
+<script>
+function showTab(id, btn) {
+  document.querySelectorAll('.content').forEach(function(el){ el.classList.remove('active'); });
+  document.querySelectorAll('.tab-btn').forEach(function(el){ el.classList.remove('active'); });
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>
