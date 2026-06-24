@@ -177,8 +177,8 @@ input[type=text]:focus{border-color:#128048}
     <div class="drop-zone" id="budgetDropZone" onclick="document.getElementById('budgetFileInput').click()">
       <div class="dz-icon">📊</div>
       <p>點擊選擇 Excel 檔案（或 PDF），或拖曳至此處更新最新月份數據<br>
-         <small>支援格式：.xls &nbsp;.xlsx &nbsp;.pdf</small></p>
-      <input type="file" id="budgetFileInput" accept=".xls,.xlsx,.pdf">
+         <small>支援格式：.xls &nbsp;.xlsx &nbsp;.csv &nbsp;.pdf</small></p>
+      <input type="file" id="budgetFileInput" accept=".xls,.xlsx,.csv,.pdf">
     </div>
     <div id="upload-msg"></div>
     <div class="upload-meta" id="budgetMeta"></div>
@@ -736,8 +736,26 @@ function processBudgetFile(file){
   const msg = document.getElementById('upload-msg');
   const ext = file.name.split('.').pop().toLowerCase();
   msg.innerHTML = '<span class="upload-info">⏳ 解析中…</span>';
+  if(ext === 'csv'){
+    // CSV 直接用 FileReader 文字讀取 → XLSX 解析
+    const readerCsv = new FileReader();
+    readerCsv.onload = function(ev){
+      try{
+        if(typeof XLSX === 'undefined') throw new Error('XLSX.js 尚未載入');
+        const wb = XLSX.read(ev.target.result, {type:'string'});
+        const ws = wb.Sheets[wb.SheetNames[0]];
+        const rows = XLSX.utils.sheet_to_json(ws, {defval:''});
+        if(!rows.length) throw new Error('CSV 無資料');
+        finalizeBudgetRows(rows, file.name);
+      }catch(err){
+        msg.innerHTML = '<span class="upload-err">❌ ' + err.message + '</span>';
+      }
+    };
+    readerCsv.readAsText(file, 'UTF-8');
+    return;
+  }
   if(ext === 'pdf'){
-    msg.innerHTML = '<span class="upload-err">⚠️ 預算管理目前僅支援 Excel 格式（.xlsx/.xls）</span>';
+    msg.innerHTML = '<span class="upload-err">⚠️ 預算管理目前僅支援 Excel / CSV 格式</span>';
     return;
   }
   const reader = new FileReader();
@@ -748,53 +766,7 @@ function processBudgetFile(file){
       const ws = wb.Sheets[wb.SheetNames[0]];
       const rows = XLSX.utils.sheet_to_json(ws, {defval:''});
       if(!rows.length) throw new Error('工作表無資料');
-
-      // 欄位對應（支援中英文欄位名）
-      const FIELD_MAP = {
-        '明細帳':'明細帳','account_code':'明細帳',
-        '會計項目':'會計項目','account_name':'會計項目',
-        '本月動支數':'本月動支數','month_used':'本月動支數',
-        '本月餘額':'本月餘額','month_balance':'本月餘額',
-        '本月預算數':'本月預算數','month_budget':'本月預算數',
-        '至本月預算數累計':'至本月預算數累計',
-        '累計動支率':'累計動支率',
-        '本年度預算':'本年度預算','year_budget':'本年度預算',
-        '年度動支率':'年度動支率',
-        '剩餘可動支數':'剩餘可動支數',
-        '預算主管單位':'預算主管單位','unit':'預算主管單位',
-        '費用分類':'費用分類','category':'費用分類',
-        '分類代碼':'分類代碼'
-      };
-      const mapped = rows.map(function(r){
-        var obj = {};
-        Object.keys(r).forEach(function(k){
-          var target = FIELD_MAP[k] || k;
-          obj[target] = r[k];
-        });
-        return obj;
-      }).filter(function(r){ return r['明細帳'] || r['會計項目']; });
-
-      if(!mapped.length) throw new Error('無法辨識欄位，請確認 Excel 格式');
-
-      // 月份偵測
-      var year = YEAR, month = MONTH;
-      var fname = file.name;
-      var ym = fname.match(/(\d{3})[\-_年]?(\d{1,2})[\-_月]?/);
-      if(ym){ year = ym[1]; month = String(parseInt(ym[2])); }
-
-      // 存入 localStorage
-      RAW = mapped;
-      YEAR = year; MONTH = month;
-      localStorage.setItem(BUDGET_LS_KEY, JSON.stringify(mapped));
-      const meta = {
-        filename: fname, year: year, month: month,
-        rows: mapped.length,
-        saved: new Date().toLocaleString('zh-TW',{hour12:false})
-      };
-      localStorage.setItem(BUDGET_META_KEY, JSON.stringify(meta));
-      showBudgetMeta(meta);
-      reinitBudget();
-      msg.innerHTML = '<span class="upload-ok">✅ 已載入 ' + mapped.length + ' 筆預算資料，資料永久保存於本裝置</span>';
+      finalizeBudgetRows(rows, file.name);
     }catch(err){
       msg.innerHTML = '<span class="upload-err">❌ ' + err.message + '</span>';
     }
@@ -821,6 +793,44 @@ function processBudgetFile(file){
 // 啟動時載入已存數據
 budgetLoadSaved();
 /* ══ end 預算管理上傳邏輯 ══ */
+
+
+/* 共用：整理欄位對應 + 存檔 + 重繪 */
+function finalizeBudgetRows(rows, fname){
+  var msg = document.getElementById('upload-msg');
+  var FIELD_MAP = {
+    '明細帳':'明細帳','account_code':'明細帳',
+    '會計項目':'會計項目','account_name':'會計項目',
+    '本月動支數':'本月動支數','month_used':'本月動支數',
+    '本月餘額':'本月餘額','month_balance':'本月餘額',
+    '本月預算數':'本月預算數','month_budget':'本月預算數',
+    '至本月預算數累計':'至本月預算數累計',
+    '累計動支率':'累計動支率',
+    '本年度預算':'本年度預算','year_budget':'本年度預算',
+    '年度動支率':'年度動支率',
+    '剩餘可動支數':'剩餘可動支數',
+    '預算主管單位':'預算主管單位','unit':'預算主管單位',
+    '費用分類':'費用分類','category':'費用分類',
+    '分類代碼':'分類代碼'
+  };
+  var mapped = rows.map(function(r){
+    var obj={};
+    Object.keys(r).forEach(function(k){ obj[FIELD_MAP[k]||k]=r[k]; });
+    return obj;
+  }).filter(function(r){ return r['明細帳']||r['會計項目']; });
+  if(!mapped.length){ msg.innerHTML='<span class="upload-err">❌ 無法辨識欄位，請確認格式</span>'; return; }
+  var year=YEAR, month=MONTH;
+  var ym=fname.match(/(\d{3})[\-_年]?(\d{1,2})[\-_月]?/);
+  if(ym){ year=ym[1]; month=String(parseInt(ym[2])); }
+  RAW=mapped; YEAR=year; MONTH=month;
+  localStorage.setItem(BUDGET_LS_KEY, JSON.stringify(mapped));
+  var meta={filename:fname,year:year,month:month,rows:mapped.length,
+    saved:new Date().toLocaleString('zh-TW',{hour12:false})};
+  localStorage.setItem(BUDGET_META_KEY, JSON.stringify(meta));
+  showBudgetMeta(meta);
+  reinitBudget();
+  msg.innerHTML='<span class="upload-ok">✅ 已載入 '+mapped.length+' 筆預算資料，永久保存於本裝置</span>';
+}
 
 </script>
 <!-- FlexibleBudget 回主頁按鈕 -->
