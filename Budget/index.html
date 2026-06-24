@@ -160,7 +160,6 @@ input[type=text]:focus{border-color:#128048}
   border-radius:6px; padding:3px 8px; }
 
 </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body>
 
@@ -304,36 +303,40 @@ document.querySelectorAll('.tab-btn').forEach(function(b){
 var filterKw = '', filterCat = 'all', filterUnit = 'all';
 var PAGE_SIZE = 20, curPage = 1;
 
-// 費用分類 Chips
-var CATS = ['all','人事費','業務外包','業務成本','專案建置成本','設備及折舊','管銷費用'];
-var catChips = document.getElementById('catChips');
-CATS.forEach(function(c){
-  var btn = document.createElement('button');
-  btn.className = 'chip' + (c === 'all' ? ' active' : '');
-  btn.textContent = c === 'all' ? '全部' : c;
-  btn.dataset.cat = c;
-  btn.addEventListener('click', function(){
-    filterCat = this.dataset.cat;
-    document.querySelectorAll('#catChips .chip').forEach(function(x){ x.classList.toggle('active', x.dataset.cat === filterCat); });
-    curPage = 1; render();
+// 費用分類 & 科室 Chips（包裝成可重複呼叫的函數）
+function buildChips(){
+  var CATS = ['all','人事費','業務外包','業務成本','專案建置成本','設備及折舊','管銷費用'];
+  var catChips = document.getElementById('catChips');
+  catChips.innerHTML = '';
+  CATS.forEach(function(c){
+    var btn = document.createElement('button');
+    btn.className = 'chip' + (c === filterCat ? ' active' : '');
+    btn.textContent = c === 'all' ? '全部' : c;
+    btn.dataset.cat = c;
+    btn.addEventListener('click', function(){
+      filterCat = this.dataset.cat;
+      document.querySelectorAll('#catChips .chip').forEach(function(x){ x.classList.toggle('active', x.dataset.cat === filterCat); });
+      curPage = 1; render();
+    });
+    catChips.appendChild(btn);
   });
-  catChips.appendChild(btn);
-});
 
-// 科室 Chips
-var unitChips = document.getElementById('unitChips');
-(['all'].concat(unitList)).forEach(function(u){
-  var btn = document.createElement('button');
-  btn.className = 'chip' + (u === 'all' ? ' active' : '');
-  btn.textContent = u === 'all' ? '全部' : u;
-  btn.dataset.unit = u;
-  btn.addEventListener('click', function(){
-    filterUnit = this.dataset.unit;
-    document.querySelectorAll('#unitChips .chip').forEach(function(x){ x.classList.toggle('active', x.dataset.unit === filterUnit); });
-    curPage = 1; render();
+  var unitChips = document.getElementById('unitChips');
+  unitChips.innerHTML = '';
+  (['all'].concat(unitList)).forEach(function(u){
+    var btn = document.createElement('button');
+    btn.className = 'chip' + (u === filterUnit ? ' active' : '');
+    btn.textContent = u === 'all' ? '全部' : u;
+    btn.dataset.unit = u;
+    btn.addEventListener('click', function(){
+      filterUnit = this.dataset.unit;
+      document.querySelectorAll('#unitChips .chip').forEach(function(x){ x.classList.toggle('active', x.dataset.unit === filterUnit); });
+      curPage = 1; render();
+    });
+    unitChips.appendChild(btn);
   });
-  unitChips.appendChild(btn);
-});
+}
+buildChips(); // 初始執行
 
 // 關鍵字
 document.getElementById('kwInput').addEventListener('input', function(){
@@ -780,17 +783,32 @@ function processBudgetFile(file){
     msg.innerHTML = '<span class="upload-err">⚠️ 預算管理目前僅支援 Excel / CSV 格式</span>';
     return;
   }
-  const reader = new FileReader();
-  reader.onload = function(e){
+  // Excel — 動態載入 XLSX（避免 CDN 封鎖）
+  function doExcelParse(arrayBuf){
     try{
-      if(typeof XLSX === 'undefined') throw new Error('XLSX.js 尚未載入');
-      const wb = XLSX.read(e.target.result, {type:'array'});
+      const wb = XLSX.read(arrayBuf, {type:'array'});
       const ws = wb.Sheets[wb.SheetNames[0]];
       const rows = XLSX.utils.sheet_to_json(ws, {defval:''});
       if(!rows.length) throw new Error('工作表無資料');
       finalizeBudgetRows(rows, file.name);
     }catch(err){
       msg.innerHTML = '<span class="upload-err">❌ ' + err.message + '</span>';
+    }
+  }
+  const reader = new FileReader();
+  reader.onload = function(e){
+    const buf = e.target.result;
+    if(typeof XLSX !== 'undefined'){
+      doExcelParse(buf);
+    } else {
+      msg.innerHTML = '<span class="upload-info">⏳ 載入 Excel 解析器…</span>';
+      var s = document.createElement('script');
+      s.src = 'https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js';
+      s.onload = function(){ doExcelParse(buf); };
+      s.onerror = function(){
+        msg.innerHTML = '<span class="upload-err">❌ Excel 解析器載入失敗，請使用 CSV 格式</span>';
+      };
+      document.head.appendChild(s);
     }
   };
   reader.readAsArrayBuffer(file);
