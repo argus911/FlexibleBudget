@@ -121,6 +121,43 @@ input[type=text]:focus{border-color:#128048}
 #fb-home-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,91,172,.6); }
 #fb-home-btn:active { transform: scale(.95); }
 
+
+/* ── 資料更新區 ── */
+#upload-panel{
+  background:#161b22; border:1px solid #21262d; border-radius:14px;
+  margin:12px 16px 4px; padding:16px; position:relative;
+}
+#upload-panel summary{
+  cursor:pointer; font-size:13px; font-weight:600; color:#58a6ff;
+  list-style:none; display:flex; align-items:center; gap:8px;
+  user-select:none; -webkit-tap-highlight-color:transparent;
+}
+#upload-panel summary::-webkit-details-marker{ display:none; }
+#upload-panel summary .arrow{ transition:transform .2s; font-size:11px; color:#7d8590; }
+#upload-panel[open] summary .arrow{ transform:rotate(90deg); }
+#upload-panel .panel-body{ margin-top:14px; }
+.drop-zone{
+  border:2px dashed #30363d; border-radius:10px;
+  padding:22px 16px; text-align:center; cursor:pointer;
+  transition:border-color .2s, background .2s;
+  background:rgba(88,166,255,.03);
+}
+.drop-zone:hover,.drop-zone.dragover{
+  border-color:#58a6ff; background:rgba(88,166,255,.07);
+}
+.drop-zone p{ font-size:13px; color:#7d8590; margin:0; line-height:1.7; }
+.drop-zone .dz-icon{ font-size:28px; margin-bottom:6px; }
+.drop-zone input[type=file]{ display:none; }
+#upload-msg{ margin-top:10px; font-size:12px; min-height:18px; }
+.upload-ok  { color:#3fb950; } .upload-err { color:#f85149; }
+.upload-info{ color:#58a6ff; }
+.upload-meta{
+  margin-top:10px; font-size:11px; color:#7d8590;
+  display:flex; gap:10px; flex-wrap:wrap;
+}
+.upload-meta span{ background:#0d1117; border:1px solid #21262d;
+  border-radius:6px; padding:3px 8px; }
+
 </style>
 </head>
 <body>
@@ -129,6 +166,24 @@ input[type=text]:focus{border-color:#128048}
   <h1>💰 預算管理 ｜ 彰化營運處</h1>
   <span class="badge" id="totalBadge">— 筆</span>
 </header>
+
+
+<details id="upload-panel">
+  <summary>
+    <span>📂 更新預算數據</span>
+    <span class="arrow">▶</span>
+  </summary>
+  <div class="panel-body">
+    <div class="drop-zone" id="budgetDropZone" onclick="document.getElementById('budgetFileInput').click()">
+      <div class="dz-icon">📊</div>
+      <p>點擊選擇 Excel 檔案（或 PDF），或拖曳至此處更新最新月份數據<br>
+         <small>支援格式：.xls &nbsp;.xlsx &nbsp;.pdf</small></p>
+      <input type="file" id="budgetFileInput" accept=".xls,.xlsx,.pdf">
+    </div>
+    <div id="upload-msg"></div>
+    <div class="upload-meta" id="budgetMeta"></div>
+  </div>
+</details>
 
 <div class="tab-bar" id="topTabBar">
   <button class="tab-btn active" data-tab="query">🔍 預算查詢</button>
@@ -629,6 +684,144 @@ function drawCharts(){
 
 // 初始化
 render();
+
+/* ══ 預算管理 上傳邏輯 ══════════════════════════════════════════════ */
+const BUDGET_LS_KEY = 'fb_budget_raw_v1';
+const BUDGET_META_KEY = 'fb_budget_meta_v1';
+
+function budgetLoadSaved(){
+  try{
+    const saved = localStorage.getItem(BUDGET_LS_KEY);
+    if(saved){
+      const arr = JSON.parse(saved);
+      if(arr && arr.length){
+        RAW = arr;
+        const meta = JSON.parse(localStorage.getItem(BUDGET_META_KEY)||'{}');
+        if(meta.year) YEAR = meta.year;
+        if(meta.month) MONTH = meta.month;
+        showBudgetMeta(meta);
+        reinitBudget();
+      }
+    }
+  }catch(e){}
+}
+
+function showBudgetMeta(meta){
+  const el = document.getElementById('budgetMeta');
+  if(!el) return;
+  el.innerHTML = (meta.filename ? `<span>📄 ${meta.filename}</span>` : '') +
+    (meta.year && meta.month ? `<span>📅 ${meta.year}年${meta.month}月</span>` : '') +
+    (meta.rows ? `<span>📋 ${meta.rows} 筆</span>` : '') +
+    (meta.saved ? `<span>🕐 ${meta.saved}</span>` : '');
+}
+
+function reinitBudget(){
+  // 重建分類/單位列表
+  var us = {}, cs = {};
+  RAW.forEach(function(r){
+    if(r['預算主管單位']) us[r['預算主管單位']] = true;
+    if(r['費用分類']) cs[r['費用分類']] = true;
+  });
+  unitList = Object.keys(us).sort();
+  catList  = Object.keys(cs).sort();
+  unitList.forEach(function(u,i){ unitColorMap[u] = UNIT_PALETTE[i % UNIT_PALETTE.length]; });
+  catList.forEach(function(c,i){ catColorMap[c]   = CAT_PALETTE[i  % CAT_PALETTE.length];  });
+  buildChips();
+  filterKw = ''; filterUnit = ''; filterCat = '';
+  render();
+  document.getElementById('totalBadge').textContent = RAW.length + ' 筆';
+}
+
+function processBudgetFile(file){
+  const msg = document.getElementById('upload-msg');
+  const ext = file.name.split('.').pop().toLowerCase();
+  msg.innerHTML = '<span class="upload-info">⏳ 解析中…</span>';
+  if(ext === 'pdf'){
+    msg.innerHTML = '<span class="upload-err">⚠️ 預算管理目前僅支援 Excel 格式（.xlsx/.xls）</span>';
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = function(e){
+    try{
+      if(typeof XLSX === 'undefined') throw new Error('XLSX.js 尚未載入');
+      const wb = XLSX.read(e.target.result, {type:'array'});
+      const ws = wb.Sheets[wb.SheetNames[0]];
+      const rows = XLSX.utils.sheet_to_json(ws, {defval:''});
+      if(!rows.length) throw new Error('工作表無資料');
+
+      // 欄位對應（支援中英文欄位名）
+      const FIELD_MAP = {
+        '明細帳':'明細帳','account_code':'明細帳',
+        '會計項目':'會計項目','account_name':'會計項目',
+        '本月動支數':'本月動支數','month_used':'本月動支數',
+        '本月餘額':'本月餘額','month_balance':'本月餘額',
+        '本月預算數':'本月預算數','month_budget':'本月預算數',
+        '至本月預算數累計':'至本月預算數累計',
+        '累計動支率':'累計動支率',
+        '本年度預算':'本年度預算','year_budget':'本年度預算',
+        '年度動支率':'年度動支率',
+        '剩餘可動支數':'剩餘可動支數',
+        '預算主管單位':'預算主管單位','unit':'預算主管單位',
+        '費用分類':'費用分類','category':'費用分類',
+        '分類代碼':'分類代碼'
+      };
+      const mapped = rows.map(function(r){
+        var obj = {};
+        Object.keys(r).forEach(function(k){
+          var target = FIELD_MAP[k] || k;
+          obj[target] = r[k];
+        });
+        return obj;
+      }).filter(function(r){ return r['明細帳'] || r['會計項目']; });
+
+      if(!mapped.length) throw new Error('無法辨識欄位，請確認 Excel 格式');
+
+      // 月份偵測
+      var year = YEAR, month = MONTH;
+      var fname = file.name;
+      var ym = fname.match(/(\d{3})[\-_年]?(\d{1,2})[\-_月]?/);
+      if(ym){ year = ym[1]; month = String(parseInt(ym[2])); }
+
+      // 存入 localStorage
+      RAW = mapped;
+      YEAR = year; MONTH = month;
+      localStorage.setItem(BUDGET_LS_KEY, JSON.stringify(mapped));
+      const meta = {
+        filename: fname, year: year, month: month,
+        rows: mapped.length,
+        saved: new Date().toLocaleString('zh-TW',{hour12:false})
+      };
+      localStorage.setItem(BUDGET_META_KEY, JSON.stringify(meta));
+      showBudgetMeta(meta);
+      reinitBudget();
+      msg.innerHTML = '<span class="upload-ok">✅ 已載入 ' + mapped.length + ' 筆預算資料，資料永久保存於本裝置</span>';
+    }catch(err){
+      msg.innerHTML = '<span class="upload-err">❌ ' + err.message + '</span>';
+    }
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+// 拖曳事件
+(function(){
+  var dz = document.getElementById('budgetDropZone');
+  if(!dz) return;
+  dz.addEventListener('dragover',  function(e){ e.preventDefault(); dz.classList.add('dragover'); });
+  dz.addEventListener('dragleave', function()  { dz.classList.remove('dragover'); });
+  dz.addEventListener('drop', function(e){
+    e.preventDefault(); dz.classList.remove('dragover');
+    var f = e.dataTransfer.files[0];
+    if(f) processBudgetFile(f);
+  });
+  document.getElementById('budgetFileInput').addEventListener('change', function(e){
+    if(e.target.files[0]) processBudgetFile(e.target.files[0]);
+  });
+})();
+
+// 啟動時載入已存數據
+budgetLoadSaved();
+/* ══ end 預算管理上傳邏輯 ══ */
+
 </script>
 <!-- FlexibleBudget 回主頁按鈕 -->
 <button id="fb-home-btn" onclick="window.location.replace('https://argus911.github.io/FlexibleBudget/')">
