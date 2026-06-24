@@ -2842,6 +2842,7 @@
         let td_charts = {}, td_countdown = TD_REFRESH_INTERVAL;
         let td_initialized = false, td_timerID = null;
         let td_paused = false;
+        let td_nextRefreshAt = 0; // 牆鐘時間：下次自動更新的 timestamp(ms)
         const tdGridColor = 'rgba(42,45,58,0.85)';
 
         function tdDestroyChart(id) {
@@ -2851,8 +2852,22 @@
         function initTrendDashboard() {
           if (td_initialized) { tdCheckConn(); return; }
           td_initialized = true;
+          td_nextRefreshAt = Date.now() + TD_REFRESH_INTERVAL * 1000;
           if (td_timerID) clearInterval(td_timerID);
           td_timerID = setInterval(tdTick, 1000);
+          // 分頁切回來時補觸發：若已過到期時間立刻自動更新
+          document.addEventListener('visibilitychange', function() {
+            if (!document.hidden && !td_paused && td_initialized) {
+              const now = Date.now();
+              if (now >= td_nextRefreshAt) {
+                td_nextRefreshAt = now + TD_REFRESH_INTERVAL * 1000;
+                td_countdown = TD_REFRESH_INTERVAL;
+                if (typeof currentSessionId !== 'undefined' && currentSessionId) {
+                  tdAutoRefresh();
+                }
+              }
+            }
+          });
           tdCheckConn();
         }
 
@@ -2912,7 +2927,7 @@
             const body = { session_id: typeof currentSessionId!=='undefined' ? currentSessionId : null };
             const res  = await fetch(`${API_BASE_URL}/trend/refresh`, {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body)});
             const json = await res.json();
-            if (json.success) { await tdLoadData(); icon.textContent = '✅'; td_countdown = TD_REFRESH_INTERVAL; }
+            if (json.success) { await tdLoadData(); icon.textContent = '✅'; td_nextRefreshAt = Date.now() + TD_REFRESH_INTERVAL * 1000; td_countdown = TD_REFRESH_INTERVAL; }
             else { icon.textContent = '❌'; alert('更新失敗：' + (json.message || json.error)); }
           } catch(e) { icon.textContent = '❌'; alert('連線錯誤：' + e.message); }
           setTimeout(() => { btn.disabled = false; icon.textContent = '🔄'; }, 2000);
@@ -3071,19 +3086,23 @@
         }
 
         function tdTick() {
-          // 暫停時：圓環靜止、不觸發自動刷新，僅維持計時器跳動
+          // 暫停時：圓環靜止、不觸發自動刷新
           if (td_paused) return;
 
-          const remaining = td_countdown;
+          // 以牆鐘時間計算剩餘秒數，避免瀏覽器節流(throttle)導致倒數失準
+          const now = Date.now();
+          const remaining = Math.max(0, Math.round((td_nextRefreshAt - now) / 1000));
+          td_countdown = remaining; // 同步 td_countdown 供其他地方參考
           const mins = Math.floor(remaining / 60);
           const secs = remaining % 60;
           const offset = TD_CIRCUMF * (1 - remaining / TD_REFRESH_INTERVAL);
           document.getElementById('tdRingFg').style.strokeDashoffset = offset;
           document.getElementById('tdRingNum').textContent = `${mins}:${secs.toString().padStart(2, '0')}`;
-          td_countdown--;
-          if (td_countdown < 0) {
+
+          if (now >= td_nextRefreshAt) {
+            td_nextRefreshAt = now + TD_REFRESH_INTERVAL * 1000;
             td_countdown = TD_REFRESH_INTERVAL;
-            // ★ 即使不在這個頁籤，背景仍執行更新，切回來時資料是新的
+            // ★ 牆鐘到期即觸發，不受分頁節流影響
             if (typeof currentSessionId !== 'undefined' && currentSessionId) {
               tdAutoRefresh();
             }
