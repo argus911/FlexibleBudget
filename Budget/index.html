@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="預算管理">
@@ -159,6 +160,7 @@ input[type=text]:focus{border-color:#128048}
   border-radius:6px; padding:3px 8px; }
 
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body>
 
@@ -737,15 +739,35 @@ function processBudgetFile(file){
   const ext = file.name.split('.').pop().toLowerCase();
   msg.innerHTML = '<span class="upload-info">⏳ 解析中…</span>';
   if(ext === 'csv'){
-    // CSV 直接用 FileReader 文字讀取 → XLSX 解析
+    // CSV 純文字解析，不依賴 XLSX
     const readerCsv = new FileReader();
     readerCsv.onload = function(ev){
       try{
-        if(typeof XLSX === 'undefined') throw new Error('XLSX.js 尚未載入');
-        const wb = XLSX.read(ev.target.result, {type:'string'});
-        const ws = wb.Sheets[wb.SheetNames[0]];
-        const rows = XLSX.utils.sheet_to_json(ws, {defval:''});
-        if(!rows.length) throw new Error('CSV 無資料');
+        const text = ev.target.result;
+        const lines = text.split(/\r?\n/).filter(function(l){ return l.trim(); });
+        if(lines.length < 2) throw new Error('CSV 無資料');
+        // 解析 header
+        function parseCsvLine(line){
+          var result=[], cur='', inQ=false;
+          for(var i=0;i<line.length;i++){
+            var c=line[i];
+            if(c==='"'){ inQ=!inQ; }
+            else if(c===','&&!inQ){ result.push(cur.trim()); cur=''; }
+            else { cur+=c; }
+          }
+          result.push(cur.trim());
+          return result;
+        }
+        var headers = parseCsvLine(lines[0]);
+        var rows = [];
+        for(var i=1;i<lines.length;i++){
+          var vals = parseCsvLine(lines[i]);
+          if(vals.every(function(v){ return !v; })) continue;
+          var obj = {};
+          headers.forEach(function(h,hi){ obj[h] = vals[hi]||''; });
+          rows.push(obj);
+        }
+        if(!rows.length) throw new Error('CSV 無有效資料列');
         finalizeBudgetRows(rows, file.name);
       }catch(err){
         msg.innerHTML = '<span class="upload-err">❌ ' + err.message + '</span>';
