@@ -1,675 +1,670 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>銷貨成本彈性預算說明</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="銷貨成本">
+<title>🛒 銷貨成本彈性預算｜彰化營運處</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;background:#f0f4f8;color:#1a1a2e;font-size:13px}
-.header{background:linear-gradient(135deg,#1a5276 0%,#2e86c1 100%);color:#fff;padding:14px 20px 0;box-shadow:0 2px 8px rgba(0,0,0,.2)}
-.header h1{font-size:16px;font-weight:700;margin-bottom:2px}
-.header p{font-size:11px;opacity:.8;margin-bottom:10px}
-.tab-bar{display:flex;gap:0;padding:0 20px;background:linear-gradient(135deg,#1a5276 0%,#2e86c1 100%)}
-.tab-btn{background:transparent;border:none;color:rgba(255,255,255,.7);padding:8px 16px;cursor:pointer;font-size:12px;font-weight:600;border-bottom:3px solid transparent;transition:.2s}
-.tab-btn.active{color:#fff;border-bottom-color:#f0e14a}
-.tab-btn:hover:not(.active){color:#fff;background:rgba(255,255,255,.1)}
-.content{display:none;padding:16px 20px}
-.content.active{display:block}
+body{font-family:-apple-system,'Microsoft JhengHei',sans-serif;background:#f0f4f8;min-height:100vh;color:#1a1a2e}
 
-/* Cards */
-.card{background:#fff;border-radius:8px;padding:16px;margin-bottom:14px;box-shadow:0 1px 4px rgba(0,0,0,.08);border-left:4px solid #2e86c1}
-.card.yellow{border-left-color:#f39c12}
-.card.green{border-left-color:#27ae60}
-.card.red{border-left-color:#e74c3c}
-.card.purple{border-left-color:#8e44ad}
-.card h3{font-size:13px;color:#1a5276;margin-bottom:10px;display:flex;align-items:center;gap:6px}
-.card p,.card li{font-size:12px;line-height:1.8;color:#2c3e50}
-.card ul{padding-left:18px}
-.card li{margin-bottom:4px}
+/* ── Header ── */
+.header{background:linear-gradient(135deg,#c0392b,#e74c3c);color:#fff;padding:12px 16px;
+  display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;
+  box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.header h1{font-size:15px;font-weight:700;letter-spacing:.3px}
+.header-meta{font-size:11px;opacity:.85;text-align:right}
+#month-badge{background:rgba(255,255,255,.2);padding:3px 10px;border-radius:20px;
+  font-size:12px;font-weight:600;margin-left:10px}
 
-/* Formula box */
-.formula-box{background:#eaf6ff;border:1px solid #aed6f1;border-radius:6px;padding:12px 16px;margin:10px 0;font-family:monospace;font-size:13px;color:#154360}
-.formula-box .f-title{font-family:"Microsoft JhengHei",sans-serif;font-size:11px;color:#7fb3d3;margin-bottom:6px;font-weight:600}
+/* ── 上傳區 ── */
+#upload-panel{background:#fff;margin:12px 14px 6px;border-radius:12px;
+  border:1px solid #e0e0e0;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+#upload-panel summary{cursor:pointer;padding:12px 16px;font-size:13px;font-weight:600;
+  color:#c0392b;display:flex;align-items:center;gap:8px;list-style:none;
+  user-select:none;-webkit-tap-highlight-color:transparent}
+#upload-panel summary::-webkit-details-marker{display:none}
+#upload-panel summary .arr{margin-left:auto;font-size:11px;color:#999;transition:transform .2s}
+#upload-panel[open] summary .arr{transform:rotate(90deg)}
+.upload-body{padding:12px 16px 14px}
+.drop-zone{border:2px dashed #ddd;border-radius:10px;padding:20px;text-align:center;
+  cursor:pointer;transition:all .2s;background:#fafafa}
+.drop-zone:hover,.drop-zone.dragover{border-color:#c0392b;background:#fff5f5}
+.drop-zone .dz-icon{font-size:26px;margin-bottom:6px}
+.drop-zone p{font-size:13px;color:#888;line-height:1.7}
+.drop-zone input{display:none}
+#upload-msg{margin-top:8px;font-size:12px;min-height:16px}
+.ok{color:#27ae60}.err{color:#e74c3c}.info{color:#2980b9}
+.upload-meta{margin-top:8px;display:flex;gap:8px;flex-wrap:wrap}
+.upload-meta span{font-size:11px;background:#f5f5f5;border:1px solid #e0e0e0;
+  border-radius:6px;padding:3px 8px;color:#555}
 
-/* Table */
-.data-table{width:100%;border-collapse:collapse;margin-top:10px;font-size:11px}
-.data-table th{background:#1a5276;color:#fff;padding:7px 10px;text-align:center;font-weight:600}
-.data-table td{padding:6px 10px;border-bottom:1px solid #e8edf2;text-align:right}
-.data-table td:first-child,.data-table td:nth-child(2){text-align:left}
-.data-table tr:nth-child(even){background:#f8fbff}
-.data-table tr:hover{background:#eaf2ff}
-.data-table .total{font-weight:700;background:#d5f5e3 !important}
-.data-table .adjust{color:#888;font-style:italic}
-.pos{color:#1a5276;font-weight:600}
-.neg{color:#c0392b;font-weight:600}
+/* ── Tab bar ── */
+.tab-bar{display:flex;gap:0;padding:0 14px;margin-top:10px;overflow-x:auto;
+  scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.tab-bar::-webkit-scrollbar{display:none}
+.tab-btn{flex-shrink:0;padding:9px 18px;font-size:13px;font-weight:600;cursor:pointer;
+  border:none;background:transparent;color:#888;border-bottom:3px solid transparent;
+  transition:all .2s;-webkit-tap-highlight-color:transparent}
+.tab-btn.active{color:#c0392b;border-bottom-color:#c0392b}
 
-/* Badge */
-.badge{display:inline-block;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:700;margin-left:6px}
-.badge.b-blue{background:#d6eaf8;color:#1a5276}
-.badge.b-green{background:#d5f5e3;color:#145a32}
-.badge.b-red{background:#fadbd8;color:#922b21}
-.badge.b-yellow{background:#fef9e7;color:#7d6608}
+/* ── 月份選擇 ── */
+.month-bar{display:flex;gap:6px;padding:8px 14px;overflow-x:auto;
+  scrollbar-width:none;-webkit-overflow-scrolling:touch;background:#fff;
+  border-bottom:1px solid #eee}
+.month-bar::-webkit-scrollbar{display:none}
+.month-btn{flex-shrink:0;padding:5px 14px;border-radius:20px;font-size:12px;
+  font-weight:600;cursor:pointer;border:1.5px solid #ddd;background:#f5f5f5;
+  color:#555;transition:all .15s;-webkit-tap-highlight-color:transparent}
+.month-btn.active{background:#c0392b;color:#fff;border-color:#c0392b}
+#month-bar-wrap{display:none}
 
-/* Alert */
-.alert{border-radius:6px;padding:10px 14px;margin:10px 0;font-size:12px;line-height:1.7}
-.alert.info{background:#d6eaf8;border:1px solid #aed6f1;color:#154360}
-.alert.warn{background:#fef9e7;border:1px solid #f9e79f;color:#7d6608}
-.alert.success{background:#d5f5e3;border:1px solid #a9dfbf;color:#145a32}
+/* ── 數據表格 ── */
+.tab-content{display:none;padding:10px 14px 80px}
+.tab-content.active{display:block}
 
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-@media(max-width:600px){.two-col{grid-template-columns:1fr}}
+.info-notice{background:#fef9e7;border:1px solid #f9ca24;border-radius:8px;
+  padding:10px 14px;font-size:12px;color:#7d6608;margin-bottom:10px;line-height:1.6}
 
-.step{display:flex;gap:10px;margin-bottom:12px}
-.step-num{flex-shrink:0;width:26px;height:26px;background:#1a5276;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
-.step-body{flex:1}
-.step-body b{color:#1a5276;display:block;margin-bottom:3px;font-size:12px}
-.step-body p{font-size:11px;color:#555;line-height:1.7}
+/* 統計卡片 */
+.kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.kpi-card{background:#fff;border-radius:10px;padding:12px;
+  box-shadow:0 1px 4px rgba(0,0,0,.07);text-align:center}
+.kpi-card.full{grid-column:1/-1}
+.kpi-label{font-size:11px;color:#888;margin-bottom:4px}
+.kpi-value{font-size:18px;font-weight:700;color:#1a1a2e}
+.kpi-value.red{color:#c0392b}.kpi-value.blue{color:#1a5276}.kpi-value.green{color:#27ae60}
 
-hr{border:none;border-top:1px solid #e0e8f0;margin:14px 0}
+/* 資料表 */
+.data-section{background:#fff;border-radius:10px;margin-bottom:10px;
+  box-shadow:0 1px 4px rgba(0,0,0,.07);overflow:hidden}
+.section-hdr{background:#1a5276;color:#fff;padding:8px 14px;font-size:12px;
+  font-weight:700;letter-spacing:.5px}
+.section-hdr.adjust{background:#7d6608}
+.section-hdr.total{background:#1e8449}
+.data-table{width:100%;border-collapse:collapse;font-size:12px}
+.data-table th{background:#f8f9fa;padding:8px 10px;text-align:center;
+  font-weight:600;color:#555;border-bottom:2px solid #e0e0e0;white-space:nowrap}
+.data-table td{padding:8px 10px;border-bottom:1px solid #f0f0f0;white-space:nowrap}
+.data-table tr:last-child td{border-bottom:none}
+.data-table tr.total-row{background:#d5f5e3;font-weight:700}
+.data-table tr.total-row td{border-top:2px solid #1e8449}
+.text-left{text-align:left}.text-center{text-align:center}.text-right{text-align:right}
+.red{color:#c0392b}.blue{color:#1a5276}.green{color:#27ae60}.gray{color:#888}
 
+/* 彈性預算說明 */
+.explain-card{background:#eaf2ff;border:1px solid #aed6f1;border-radius:10px;
+  padding:14px 16px;margin-bottom:10px;font-size:13px;line-height:1.8;color:#1a5276}
+.formula-box{background:#fff;border:1.5px solid #aed6f1;border-radius:8px;
+  padding:10px 14px;margin:8px 0;font-size:13px;font-weight:600;text-align:center;color:#1a5276}
 
 /* ── 回主頁按鈕 ── */
-#home-btn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 9999;
-  background: linear-gradient(135deg, #005bac, #00a8e0);
-  color: #fff !important;
-  border: none;
-  border-radius: 50px;
-  padding: 10px 18px 10px 14px;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  box-shadow: 0 4px 16px rgba(0,91,172,.45);
-  text-decoration: none !important;
-  transition: transform .15s, box-shadow .15s;
-  font-family: -apple-system, "Microsoft JhengHei", sans-serif;
-  white-space: nowrap;
-  -webkit-tap-highlight-color: transparent;
-}
-#home-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,91,172,.55); }
-#home-btn:active { transform: scale(.96); }
-
-
-/* ── 資料更新區 ── */
-#upload-panel{
-  background:#161b22; border:1px solid #21262d; border-radius:14px;
-  margin:12px 16px 4px; padding:16px;
-}
-#upload-panel summary{
-  cursor:pointer; font-size:13px; font-weight:600; color:#58a6ff;
-  list-style:none; display:flex; align-items:center; gap:8px;
-  user-select:none; -webkit-tap-highlight-color:transparent;
-}
-#upload-panel summary::-webkit-details-marker{ display:none; }
-#upload-panel summary .arrow{ transition:transform .2s; font-size:11px; color:#7d8590; }
-#upload-panel[open] summary .arrow{ transform:rotate(90deg); }
-#upload-panel .panel-body{ margin-top:14px; }
-.drop-zone{
-  border:2px dashed #30363d; border-radius:10px;
-  padding:22px 16px; text-align:center; cursor:pointer;
-  transition:border-color .2s, background .2s; background:rgba(88,166,255,.03);
-}
-.drop-zone:hover,.drop-zone.dragover{ border-color:#58a6ff; background:rgba(88,166,255,.07); }
-.drop-zone p{ font-size:13px; color:#7d8590; margin:0; line-height:1.7; }
-.drop-zone .dz-icon{ font-size:28px; margin-bottom:6px; }
-.drop-zone input[type=file]{ display:none; }
-#upload-msg{ margin-top:10px; font-size:12px; min-height:18px; }
-.upload-ok{ color:#3fb950; } .upload-err{ color:#f85149; } .upload-info{ color:#58a6ff; }
-.upload-meta{ margin-top:10px; font-size:11px; color:#7d8590;
-  display:flex; gap:10px; flex-wrap:wrap; }
-.upload-meta span{ background:#0d1117; border:1px solid #21262d;
-  border-radius:6px; padding:3px 8px; }
-
+#fb-home-btn{position:fixed;bottom:20px;right:20px;z-index:9999;
+  background:linear-gradient(135deg,#005bac,#00a8e0);color:#fff;border:none;
+  border-radius:50px;padding:10px 18px 10px 14px;font-size:13px;font-weight:600;
+  cursor:pointer;display:flex;align-items:center;gap:7px;
+  box-shadow:0 4px 16px rgba(0,91,172,.45);white-space:nowrap;
+  -webkit-tap-highlight-color:transparent;transition:transform .15s}
+#fb-home-btn:active{transform:scale(.95)}
 </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js">
-/* ══ 銷貨成本 上傳邏輯 ══════════════════════════════════════════════ */
-const SALES_LS_KEY   = 'fb_sales_data_v1';
-const SALES_META_KEY = 'fb_sales_meta_v1';
-
-/* 啟動時：若 localStorage 有資料則還原 */
-(function salesLoadSaved(){
-  try{
-    const saved = localStorage.getItem(SALES_LS_KEY);
-    if(!saved) return;
-    const data = JSON.parse(saved);
-    if(data && data.tables) applySalesData(data.tables);
-    const meta = JSON.parse(localStorage.getItem(SALES_META_KEY)||'{}');
-    showSalesMeta(meta);
-  }catch(e){}
-})();
-
-function showSalesMeta(meta){
-  const el = document.getElementById('salesMeta');
-  if(!el) return;
-  el.innerHTML =
-    (meta.filename ? `<span>📄 ${meta.filename}</span>` : '') +
-    (meta.period   ? `<span>📅 ${meta.period}</span>` : '') +
-    (meta.saved    ? `<span>🕐 ${meta.saved}</span>` : '');
-}
-
-/* 將解析後的結構化資料套用至 DOM 表格 */
-function applySalesData(tables){
-  if(!tables || !tables.length) return;
-  const domTables = document.querySelectorAll('table.data-table');
-  tables.forEach(function(tdata, ti){
-    const tbl = domTables[ti];
-    if(!tbl || !tdata.rows) return;
-    const rows = tbl.querySelectorAll('tr');
-    tdata.rows.forEach(function(rowData, ri){
-      const tr = rows[ri+1]; // 跳過 header
-      if(!tr) return;
-      const cells = tr.querySelectorAll('td');
-      rowData.forEach(function(val, ci){
-        if(cells[ci] && val !== null && val !== undefined)
-          cells[ci].textContent = val;
-      });
-    });
-  });
-}
-
-/* 主解析流程 */
-function processSalesFile(file){
-  const msg = document.getElementById('upload-msg');
-  const ext = file.name.split('.').pop().toLowerCase();
-  msg.innerHTML = '<span class="upload-info">⏳ 讀取檔案中…</span>';
-
-  const reader = new FileReader();
-
-  if(ext === 'csv'){
-    reader.onload = function(e){
-      try{
-        if(typeof XLSX === 'undefined') throw new Error('XLSX.js 尚未載入');
-        const wb = XLSX.read(e.target.result, {type:'string'});
-        const ws = wb.Sheets[wb.SheetNames[0]];
-        const csv = XLSX.utils.sheet_to_csv(ws);
-        msg.innerHTML = '<span class="upload-info">🤖 AI 整理 CSV 數據中…</span>';
-        callClaudeForSales(csv, null, file.name, msg);
-      }catch(err){
-        msg.innerHTML = '<span class="upload-err">❌ ' + err.message + '</span>';
-      }
-    };
-    reader.readAsText(file, 'UTF-8');
-    return;
-  }
-  if(ext === 'pdf'){
-    reader.onload = function(e){
-      // PDF → base64 → Claude API 解析
-      const b64 = btoa(String.fromCharCode(...new Uint8Array(e.target.result)));
-      msg.innerHTML = '<span class="upload-info">🤖 AI 解析 PDF 數據中…</span>';
-      callClaudeForSales(null, b64, file.name, msg);
-    };
-    reader.readAsArrayBuffer(file);
-  } else {
-    // Excel → XLSX 解析 → 取文字 → Claude API 整理
-    reader.onload = function(e){
-      try{
-        if(typeof XLSX === 'undefined') throw new Error('XLSX.js 尚未載入');
-        const wb = XLSX.read(e.target.result, {type:'array'});
-        // 收集所有工作表的文字
-        let allText = '';
-        wb.SheetNames.forEach(function(sn){
-          const ws = wb.Sheets[sn];
-          const csv = XLSX.utils.sheet_to_csv(ws);
-          allText += `\n工作表：${sn}\n${csv}`;
-        });
-        msg.innerHTML = '<span class="upload-info">🤖 AI 整理 Excel 數據中…</span>';
-        callClaudeForSales(allText, null, file.name, msg);
-      }catch(err){
-        msg.innerHTML = '<span class="upload-err">❌ ' + err.message + '</span>';
-      }
-    };
-    reader.readAsArrayBuffer(file);
-  }
-}
-
-/* 呼叫 Claude API 解析銷貨成本數據 */
-async function callClaudeForSales(csvText, pdfB64, filename, msg){
-  try{
-    const domTables = document.querySelectorAll('table.data-table');
-    // 收集現有表格結構供 AI 參考
-    let tableStructure = '';
-    domTables.forEach(function(tbl, ti){
-      const headers = Array.from(tbl.querySelectorAll('th')).map(function(th){ return th.textContent.trim(); });
-      const rows    = Array.from(tbl.querySelectorAll('tr')).slice(1).map(function(tr){
-        return Array.from(tr.querySelectorAll('td')).map(function(td){ return td.textContent.trim(); });
-      });
-      tableStructure += `\nTable[${ti}] headers: ${JSON.stringify(headers)}\n`;
-      tableStructure += `Rows: ${JSON.stringify(rows)}\n`;
-    });
-
-    const systemPrompt = `你是財務數據解析專家。使用者會提供銷貨成本相關的 Excel 或 PDF 資料。
-請從中提取財務數字，對應至以下現有表格結構，回傳 JSON。
-現有表格結構：${tableStructure}
-回傳格式（僅 JSON，不加任何說明）：
-{"tables":[{"rows":[["值1","值2","值3"],["值1","值2","值3"]]},...],"period":"115年X月","summary":"一句話說明"}
-若無法對應某儲存格，該位置填 null。`;
-
-    const userContent = pdfB64
-      ? [
-          {type:"document", source:{type:"base64", media_type:"application/pdf", data:pdfB64}},
-          {type:"text", text:"請解析此 PDF 中的銷貨成本財務數據，填入對應表格。"}
-        ]
-      : [{type:"text", text:"以下是 Excel 匯出的 CSV 文字，請解析銷貨成本財務數據：\n" + csvText}];
-
-    const resp = await fetch("https://api.anthropic.com/v1/messages", {
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body: JSON.stringify({
-        model:"claude-sonnet-4-6", max_tokens:2000,
-        system: systemPrompt,
-        messages:[{role:"user", content: userContent}]
-      })
-    });
-    const data = await resp.json();
-    const raw = data.content.map(function(c){ return c.text||''; }).join('');
-    const clean = raw.replace(/```json|```/g,'').trim();
-    const parsed = JSON.parse(clean);
-
-    if(!parsed.tables) throw new Error('AI 未能提取有效數據');
-
-    // 套用至 DOM
-    applySalesData(parsed.tables);
-
-    // 永久儲存
-    localStorage.setItem(SALES_LS_KEY, JSON.stringify(parsed));
-    const meta = {
-      filename: filename,
-      period:   parsed.period || '',
-      saved:    new Date().toLocaleString('zh-TW',{hour12:false})
-    };
-    localStorage.setItem(SALES_META_KEY, JSON.stringify(meta));
-    showSalesMeta(meta);
-
-    msg.innerHTML = '<span class="upload-ok">✅ 數據已更新並永久保存於本裝置'
-      + (parsed.summary ? '：' + parsed.summary : '') + '</span>';
-  }catch(err){
-    msg.innerHTML = '<span class="upload-err">❌ ' + err.message + '</span>';
-  }
-}
-
-/* 拖曳 & 點選 */
-(function(){
-  var dz = document.getElementById('salesDropZone');
-  if(!dz) return;
-  dz.addEventListener('dragover',  function(e){ e.preventDefault(); dz.classList.add('dragover'); });
-  dz.addEventListener('dragleave', function(){ dz.classList.remove('dragover'); });
-  dz.addEventListener('drop', function(e){
-    e.preventDefault(); dz.classList.remove('dragover');
-    var f = e.dataTransfer.files[0];
-    if(f) processSalesFile(f);
-  });
-  document.getElementById('salesFileInput').addEventListener('change', function(e){
-    if(e.target.files[0]) processSalesFile(e.target.files[0]);
-  });
-})();
-/* ══ end 銷貨成本上傳邏輯 ══ */
-
-</script>
 </head>
 <body>
+
+<!-- Header -->
 <div class="header">
-  <h1>🛒 銷貨成本彈性預算說明</h1>
-  <p>115年度 銷貨收入/成本分析 · 彈性預算調整邏輯 · 差異原因說明</p>
+  <div>
+    <h1>🛒 銷貨成本彈性預算</h1>
+    <div style="font-size:11px;opacity:.8;margin-top:2px">中華電信彰化營運處</div>
+  </div>
+  <div class="header-meta">
+    <span id="month-badge">尚無資料</span>
+  </div>
 </div>
 
-<details id="upload-panel" open>
-  <summary>
-    <span>📂 更新銷貨成本數據</span>
-    <span class="arrow">▶</span>
-  </summary>
-  <div class="panel-body">
-    <div class="drop-zone" id="salesDropZone" onclick="document.getElementById('salesFileInput').click()">
-      <div class="dz-icon">📋</div>
-      <p>點擊選擇 Excel 檔案（或 PDF），或拖曳至此處更新最新月份數據<br>
-         <small>支援格式：.xls &nbsp;.xlsx &nbsp;.csv &nbsp;.pdf</small></p>
-      <input type="file" id="salesFileInput" accept=".xls,.xlsx,.csv,.pdf">
+<!-- 上傳區 -->
+<details id="upload-panel">
+  <summary>📂 上傳更新 Excel 數據 <span class="arr">▶</span></summary>
+  <div class="upload-body">
+    <div class="drop-zone" id="dropZone" onclick="document.getElementById('fileInput').click()">
+      <div class="dz-icon">📊</div>
+      <p>點擊選擇 Excel 檔案，或拖曳至此處更新最新月份數據<br>
+        <small>支援格式：.xlsx &nbsp;.xls &nbsp;.csv<br>
+        工作表名稱需為「115年X月」格式</small></p>
+      <input type="file" id="fileInput" accept=".xlsx,.xls,.csv">
     </div>
     <div id="upload-msg"></div>
-    <div class="upload-meta" id="salesMeta"></div>
+    <div class="upload-meta" id="uploadMeta"></div>
   </div>
 </details>
 
+<!-- 月份選擇 -->
+<div id="month-bar-wrap">
+  <div class="month-bar" id="monthBar"></div>
+</div>
+
+<!-- Tab Bar -->
 <div class="tab-bar">
-  <button class="tab-btn active" onclick="showTab('t1',this)">📋 預算編列邏輯</button>
-  <button class="tab-btn" onclick="showTab('t2',this)">🔢 彈性預算計算</button>
-  <button class="tab-btn" onclick="showTab('t3',this)">⚠️ 差異原因分析</button>
-  <button class="tab-btn" onclick="showTab('t4',this)">📊 成本調整項目</button>
-  <button class="tab-btn" onclick="showTab('t5',this)">📅 Q1差異說明</button>
+  <button class="tab-btn active" onclick="switchTab('month')">📅 當月</button>
+  <button class="tab-btn" onclick="switchTab('accum')">📈 累計</button>
+  <button class="tab-btn" onclick="switchTab('flex')">⚖️ 彈性預算</button>
+  <button class="tab-btn" onclick="switchTab('explain')">📋 說明</button>
 </div>
 
-<!-- ── Tab 1：預算編列邏輯 ── -->
-<div id="t1" class="content active">
-  <div class="card">
-    <h3>📌 一、預算編列邏輯</h3>
-    <div class="step">
-      <div class="step-num">1</div>
-      <div class="step-body">
-        <b>銷貨成本預算 ＝ 銷貨收入預算 × 預估成本率</b>
-        <p>成本預算係以各產品別的預算收入，乘以事前設定的預估成本率（即預算毛利率的反向）推算而得。</p>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">2</div>
-      <div class="step-body">
-        <b>預算毛利率 ＝ 事前估定值</b>
-        <p>依各產品別特性、銷售策略及歷史經驗設定，為固定基準值，不隨實際銷售量調整。</p>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">3</div>
-      <div class="step-body">
-        <b>實際入帳邏輯</b>
-        <p>實際銷貨成本依系統認列之「實際銷貨或出貨數量」計入對應成本科目；
-          收入與成本對應認列後，即可計算實際毛利率。</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="two-col">
-    <div class="card green">
-      <h3>✅ 正常情形（收入成本對應）</h3>
-      <ul>
-        <li>收入已認列 → 對應成本同步入帳</li>
-        <li>可計算實際毛利率</li>
-        <li>與預算毛利率之差異反映：<br>
-            ① 產品組合變動<br>
-            ② 售價策略調整<br>
-            ③ 實際成本結構差異</li>
-      </ul>
-    </div>
-    <div class="card red">
-      <h3>⚠️ 時點差異（出貨先於收入）</h3>
-      <ul>
-        <li>已出貨 → 成本先入帳</li>
-        <li>收入尚未認列</li>
-        <li>當期效果：<br>
-            ① 銷貨成本偏高<br>
-            ② 毛利率下降（被稀釋）<br>
-            ③ 成本率呈現偏高</li>
-        <li class="neg">⚡ 此為暫時性，非真實績效問題</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="alert warn">
-    <b>📌 分析建議：</b>遇到成本率異常偏高時，應先確認是否存在「出貨已認列但收入尚未對應」的情形，
-    以「收入對應成本」為基礎判讀，避免誤判經營績效。
-  </div>
+<!-- ── Tab: 當月 ── -->
+<div class="tab-content active" id="tab-month">
+  <div class="info-notice">⚠️ 請上傳 Excel 檔案以載入數據</div>
 </div>
 
-<!-- ── Tab 2：彈性預算計算 ── -->
-<div id="t2" class="content">
-  <div class="card">
-    <h3>🔢 彈性預算核心概念</h3>
-    <p>傳統固定預算（Fixed Budget）以原始預算收入為分母計算成本率，無法反映實際業務量的影響。
-       <b>彈性預算（Flexible Budget）</b>以<b>實際收入</b>為基準，套用<b>預算成本率</b>計算應有成本，
-       使比較更具意義。</p>
-  </div>
+<!-- ── Tab: 累計 ── -->
+<div class="tab-content" id="tab-accum">
+  <div class="info-notice">⚠️ 請上傳 Excel 檔案以載入數據</div>
+</div>
 
-  <div class="card yellow">
-    <h3>📐 計算公式</h3>
-    <div class="formula-box">
-      <div class="f-title">▸ 預算成本率</div>
-      預算成本率 ＝ 累計預算成本 ÷ 累計預算收入淨額
-    </div>
-    <div class="formula-box">
-      <div class="f-title">▸ 彈性預算成本（彈性調整後應有成本）</div>
-      彈性預算成本 ＝ 實際累計收入淨額 × 預算成本率
-    </div>
-    <div class="formula-box">
-      <div class="f-title">▸ 彈性預算差異</div>
-      差異 ＝ 實際累計成本 − 彈性預算成本<br>
-      <span class="neg">正值（>0）→ 實際成本超過彈性預算 → 超支 ⚠️</span><br>
-      <span class="pos">負值（&lt;0）→ 實際成本低於彈性預算 → 節省 ✅</span>
-    </div>
-    <div class="formula-box">
-      <div class="f-title">▸ 毛利率差異（績效判斷）</div>
-      毛利率差異 ＝ 實際毛利率 − 預算毛利率<br>
-      <span class="pos">正值 → 優於預算 ✅</span>　　<span class="neg">負值 → 低於預算 ⚠️</span>
-    </div>
-  </div>
+<!-- ── Tab: 彈性預算 ── -->
+<div class="tab-content" id="tab-flex">
+  <div class="info-notice">⚠️ 請上傳 Excel 檔案以載入數據</div>
+</div>
 
-  <div class="card">
-    <h3>📝 計算範例（手機配件 3311B，115年4月累計）</h3>
+<!-- ── Tab: 說明 ── -->
+<div class="tab-content" id="tab-explain">
+  <div class="explain-card">
+    <strong>【彈性預算說明】</strong><br>
+    彈性預算成本 ＝ 累計實際收入淨額 × 預算成本率（預算成本÷預算收入）。<br>
+    差異為負（藍字）表示實際成本<em>低於</em>彈性預算（節省）；<br>
+    差異為正（紅字）表示實際成本<em>超出</em>彈性預算（超支）。
+  </div>
+  <div class="formula-box">
+    彈性預算成本 ＝ 累計實際收入淨額 × (累計預算成本 ÷ 累計預算收入)
+  </div>
+  <div class="data-section">
+    <div class="section-hdr">欄位說明</div>
     <table class="data-table">
-      <tr><th>項目</th><th>數值</th><th>說明</th></tr>
-      <tr><td>累計實際收入淨額</td><td>14,883,654</td><td>已扣除銷貨退回</td></tr>
-      <tr><td>累計實際成本</td><td>9,357,000</td><td>系統認列成本</td></tr>
-      <tr><td>實際毛利</td><td>5,526,654</td><td>收入 − 成本</td></tr>
-      <tr><td>實際毛利率</td><td class="pos">37.1%</td><td>毛利 ÷ 收入</td></tr>
-      <tr><td colspan="3" style="background:#f0f4f8;font-weight:600;text-align:center;color:#1a5276;">— 彈性預算計算 —</td></tr>
-      <tr><td>累計預算收入淨額</td><td>16,173,000</td><td>原始預算</td></tr>
-      <tr><td>累計預算成本</td><td>10,262,000</td><td>原始預算</td></tr>
-      <tr><td>預算成本率</td><td>63.5%</td><td>10,262,000 ÷ 16,173,000</td></tr>
-      <tr><td>彈性預算成本</td><td>9,451,640</td><td>14,883,654 × 63.5%</td></tr>
-      <tr><td>彈性預算差異</td><td class="pos">−94,640</td><td>9,357,000 − 9,451,640</td></tr>
-      <tr class="total"><td colspan="2">結論</td><td class="pos">✅ 成本節省 94,640 元</td></tr>
+      <tr><th class="text-left">欄位</th><th class="text-left">說明</th></tr>
+      <tr><td>當月/累計收入淨額</td><td>銷貨收入扣除退回後淨額</td></tr>
+      <tr><td>當月/累計成本</td><td>系統認列之銷貨成本</td></tr>
+      <tr><td>毛利率差異</td><td>實際毛利率 − 預算毛利率，正值為優</td></tr>
+      <tr><td>預算成本率%</td><td>預算成本 ÷ 預算收入 × 100%</td></tr>
+      <tr><td>彈性預算成本</td><td>實際收入 × 預算成本率</td></tr>
+      <tr><td>彈性預算差異</td><td>實際成本 − 彈性預算成本（負值=節省）</td></tr>
     </table>
   </div>
-</div>
-
-<!-- ── Tab 3：差異原因分析 ── -->
-<div id="t3" class="content">
-  <div class="card">
-    <h3>⚠️ 三、差異產生原因說明（重點）</h3>
-    <p style="margin-bottom:10px">銷貨成本差異可分為以下三類，性質不同，處理方式亦不同：</p>
-
-    <div class="alert success">
-      <b>① 產品組合差異</b><br>
-      收入與成本均已對應認列，但實際銷售的產品組合（高毛利/低毛利品項比例）
-      與預算假設不同，導致整體成本率偏高或偏低。
-      此為<b>經營策略因素</b>，非單純銷售不足所致。
-    </div>
-
-    <div class="alert info">
-      <b>② 售價策略差異</b><br>
-      實際售價（銷貨收入）高於或低於預算假設，在成本固定的情況下，
-      會直接影響毛利率。
-    </div>
-
-    <div class="alert warn">
-      <b>③ 收入成本認列時點差異（需特別注意）</b><br>
-      出貨後成本已認列，但對應收入尚未認列（如跨月認列），
-      造成當期成本偏高、毛利率被稀釋。<br>
-      → <b>建議：</b>分析時應以「收入對應成本」為基礎，並標注時點差異項目。
-    </div>
-  </div>
-
-  <div class="card purple">
-    <h3>🔍 115年Q1~Q2 差異說明</h3>
+  <div class="data-section">
+    <div class="section-hdr adjust">成本調整項目說明</div>
     <table class="data-table">
-      <tr><th>品項</th><th>差異方向</th><th>主要原因研判</th></tr>
-      <tr><td>節能週邊商品 3311F</td><td class="neg">成本率偏高</td><td>出貨量大、收入認列時點差</td></tr>
-      <tr><td>新品手機 33111</td><td class="pos">毛利率優異</td><td>成本尚未對應（新機備貨）</td></tr>
-      <tr><td>手機配件 3311B</td><td class="pos">成本節省</td><td>實際成本低於彈性預算</td></tr>
-      <tr><td>喇叭組 33114</td><td class="neg">成本超支</td><td>銷量低，固定成本攤提影響</td></tr>
-      <tr><td>健康保養產品 3318</td><td class="pos">節省顯著</td><td>Q1大量認列，成本攤薄</td></tr>
+      <tr><th>科目</th><th>說明</th></tr>
+      <tr><td>R33</td><td>行銷費用重分類（無對應收入）</td></tr>
+      <tr><td>2031A</td><td>行銷費用重分類（無對應收入）</td></tr>
+      <tr><td>2041P</td><td>行銷費用重分類（無對應收入）</td></tr>
+      <tr><td>20418</td><td>行銷費用重分類（無對應收入）</td></tr>
     </table>
-  </div>
-
-  <div class="card">
-    <h3>📌 分析判讀建議步驟</h3>
-    <div class="step">
-      <div class="step-num">1</div>
-      <div class="step-body">
-        <b>先確認收入成本是否已對應認列</b>
-        <p>若成本已入帳但收入未認列 → 標注為「時點差異」，不計入績效判斷</p>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">2</div>
-      <div class="step-body">
-        <b>計算彈性預算成本</b>
-        <p>以實際收入 × 預算成本率，得出應有成本基準</p>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">3</div>
-      <div class="step-body">
-        <b>比較實際成本 vs 彈性預算成本</b>
-        <p>差異 = 實際成本控制能力（剔除銷量影響後）</p>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">4</div>
-      <div class="step-body">
-        <b>判斷差異性質</b>
-        <p>價格因素 / 成本結構因素 / 量差因素 → 分別提出對策</p>
-      </div>
+    <div style="padding:10px 14px;font-size:11px;color:#7d6608">
+      ※ 備註：成本調整項目為行銷費用重分類，無對應銷貨收入，不計入彈性預算成本率計算。
     </div>
   </div>
 </div>
-
-<!-- ── Tab 4：成本調整項目 ── -->
-<div id="t4" class="content">
-  <div class="card">
-    <h3>📂 四、成本調整項目說明</h3>
-    <p style="margin-bottom:10px">
-      以下四個成本科目屬「行銷費用重分類」項目，
-      <b>無對應銷貨收入科目</b>，不計入產品別毛利率計算。
-    </p>
-    <table class="data-table">
-      <tr><th>成本科目</th><th>科目名稱</th><th>性質說明</th><th>彈性預算處理</th></tr>
-      <tr class="adjust">
-        <td>R33</td>
-        <td>商品成本（重分類）</td>
-        <td>調整用，對應銷貨退回沖銷</td>
-        <td class="badge b-yellow">排除計算</td>
-      </tr>
-      <tr class="adjust">
-        <td>2031A</td>
-        <td>行銷業務推廣激勵獎金－銷售商品</td>
-        <td>銷售人員獎金，非直接成本</td>
-        <td class="badge b-yellow">排除計算</td>
-      </tr>
-      <tr class="adjust">
-        <td>2041P</td>
-        <td>行銷業務推廣代理佣金─承攬門市業務</td>
-        <td>門市代理佣金，間接費用</td>
-        <td class="badge b-yellow">排除計算</td>
-      </tr>
-      <tr class="adjust">
-        <td>20418</td>
-        <td>行銷業務推廣代理佣金－銷售商品</td>
-        <td>商品銷售佣金，間接費用</td>
-        <td class="badge b-yellow">排除計算</td>
-      </tr>
-    </table>
-  </div>
-
-  <div class="alert info">
-    <b>🔍 注意：</b>這些科目在「成本分析」面板中以【成本調整項目】獨立顯示（灰底）。
-    計算整體毛利率時應排除，以免與產品別毛利率混淆。
-    其金額反映在「其他行銷費用」管理分析中。
-  </div>
-
-  <div class="card yellow">
-    <h3>📊 115年4月 成本調整項目彙總（累計）</h3>
-    <table class="data-table">
-      <tr><th>科目</th><th>當月金額</th><th>當月止累計</th><th>預算（累計）</th></tr>
-      <tr><td>R33（商品成本重分類）</td><td class="pos">−793,978</td><td class="pos">−3,600,353</td><td>0</td></tr>
-      <tr><td>2031A（激勵獎金）</td><td class="neg">170</td><td class="neg">2,165</td><td>0</td></tr>
-      <tr><td>2041P（門市代理佣金）</td><td class="neg">2,390,000</td><td class="neg">3,230,617</td><td>9,850,000</td></tr>
-      <tr><td>20418（商品佣金）</td><td class="neg">63,095</td><td class="neg">309,603</td><td>167,000</td></tr>
-      <tr class="total"><td>合計</td><td class="neg">1,659,287</td><td class="neg">−57,968</td><td>10,017,000</td></tr>
-    </table>
-    <p style="margin-top:8px;font-size:11px;color:#888">
-      R33 為負值係因商品退回沖銷，實為成本減少；2041P 代理佣金累計低於預算，
-      反映代理銷售量未達預期。
-    </p>
-  </div>
-</div>
-
-<!-- ── Tab 5：Q1差異說明 ── -->
-<div id="t5" class="content">
-  <div class="card">
-    <h3>📅 五、Q1 預算與實績差異說明</h3>
-    <div class="alert info">
-      <b>會計說明：</b>本分析表係依 115年3月及4月各會計科目對應收入、成本及預算數編製，
-      有助於掌握各產品別毛利結構及預算達成情形，供營運決策參考。
-    </div>
-  </div>
-
-  <div class="card">
-    <h3>📊 Q1 產品別毛利率分析（115年3月累計）</h3>
-    <table class="data-table">
-      <tr><th>品名</th><th>累計收入</th><th>累計成本</th><th>實際毛利率</th><th>預算毛利率</th><th>差異</th></tr>
-      <tr><td>手機配件</td><td>11,080,890</td><td>7,187,737</td><td class="pos">35.1%</td><td>36.3%</td><td class="neg">−1.2%</td></tr>
-      <tr><td>節能週邊商品</td><td>12,553,659</td><td>13,664,299</td><td class="neg">−8.9%</td><td>0.0%</td><td class="neg">−8.9%</td></tr>
-      <tr><td>新品手機</td><td>48,017,121</td><td>1,118,886</td><td class="pos">97.7%</td><td>100%</td><td class="neg">−2.3%</td></tr>
-      <tr><td>健康保養產品</td><td>823,335</td><td>702,859</td><td class="pos">14.6%</td><td>17.9%</td><td class="neg">−3.2%</td></tr>
-      <tr><td>電話機</td><td>708,990</td><td>533,119</td><td class="pos">24.8%</td><td>16.6%</td><td class="pos">+8.2%</td></tr>
-      <tr><td>Apple Watch</td><td>1,574,889</td><td>0</td><td class="pos">100%</td><td>100%</td><td>－</td></tr>
-    </table>
-  </div>
-
-  <div class="card green">
-    <h3>📝 Q1 彈性預算執行建議</h3>
-    <div class="step">
-      <div class="step-num">1</div>
-      <div class="step-body">
-        <b>確認 Q1 是否已依彈性預算調整邏輯辦理</b>
-        <p>以實際收入換算對應彈性預算成本，再與原預算比較，判斷差異屬價格/成本因素或量差因素。</p>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">2</div>
-      <div class="step-body">
-        <b>節能週邊商品（3311F）成本率異常</b>
-        <p>3月累計毛利率 −8.9%，遠低於預算 0%。建議確認是否有出貨已認列但收入尚未對應的情形，
-           或實際採購成本高於預算假設。</p>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">3</div>
-      <div class="step-body">
-        <b>將差異適當反映於 4 月後預算執行分析</b>
-        <p>Q1 已確認之差異，應更新為「已知差異」，不影響 Q2 後的預算修正基準，
-           以利後續績效判讀一致。</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="card yellow">
-    <h3>📊 115年4月 累計與彈性預算對比（主要品項）</h3>
-    <table class="data-table">
-      <tr><th>品名</th><th>累計收入</th><th>彈性預算成本</th><th>實際成本</th><th>差異</th><th>判斷</th></tr>
-      <tr><td>手機配件</td><td>14,883,654</td><td>9,451,640</td><td>9,357,000</td><td class="pos">−94,640</td><td class="badge b-green">節省</td></tr>
-      <tr><td>節能週邊商品</td><td>16,645,381</td><td>16,497,413</td><td>15,102,000</td><td class="pos">−1,395,413</td><td class="badge b-green">節省</td></tr>
-      <tr><td>電話機</td><td>910,048</td><td>758,978</td><td>1,047,000</td><td class="neg">+288,022</td><td class="badge b-red">超支</td></tr>
-      <tr><td>喇叭組</td><td>490,700</td><td>462,299</td><td>240,000</td><td class="pos">−222,299</td><td class="badge b-green">節省</td></tr>
-      <tr><td>3C週邊商品</td><td>1,075,829</td><td>1,004,810</td><td>812,000</td><td class="pos">−192,810</td><td class="badge b-green">節省</td></tr>
-    </table>
-    <p style="margin-top:8px;font-size:11px;color:#888">彈性預算成本 ＝ 累計收入 × 預算成本率</p>
-  </div>
-</div>
-
-<script>
-function showTab(id, btn) {
-  document.querySelectorAll('.content').forEach(function(el){ el.classList.remove('active'); });
-  document.querySelectorAll('.tab-btn').forEach(function(el){ el.classList.remove('active'); });
-  document.getElementById(id).classList.add('active');
-  btn.classList.add('active');
-}
-</script>
-
-
 
 <!-- 回主頁按鈕 -->
-<button id="home-btn" onclick="window.location.replace('https://argus911.github.io/FlexibleBudget/')">
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+<button id="fb-home-btn" onclick="window.location.replace('https://argus911.github.io/FlexibleBudget/')">
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
        stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
     <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
     <polyline points="9 22 9 12 15 12 15 22"/>
   </svg>
   彈性預算主頁
 </button>
+
+<script>
+// ══════════════════════════════════════════
+// 欄位索引（對應 Python SalesGrossPanel）
+// ══════════════════════════════════════════
+const C = {
+  NAME:0, _1:1, CODE:2, _3:3, _4:4,
+  M_REV:5, M_CST:6, M_GP:7, M_GPR:8, _9:9, _10:10,
+  M_BREV:11, M_BCST:12, M_BGP:13, M_BGPR:14,
+  _15:15, _16:16,
+  A_REV:17, A_CST:18, A_GP:19, A_GPR:20, _21:21, _22:22,
+  A_BREV:23, A_BCST:24, A_BGP:25, A_BGPR:26
+};
+const ADJUST_CODES = new Set(['R33','2031A','2041P','20418']);
+const LS_KEY   = 'fb_sales_v2_data';
+const META_KEY = 'fb_sales_v2_meta';
+
+// ── 狀態 ──
+let monthData  = {};   // { "11506": [[...], ...] }
+let monthOrder = [];
+let currentMonth = null;
+let currentTab = 'month';
+
+// ── 工具函數 ──
+function n(v){ if(v===null||v===undefined||v==='') return 0; return parseFloat(String(v).replace(/,/g,''))||0; }
+function fmt(v){ var x=n(v); if(x===0 && (v===null||v===''||v===undefined)) return '—'; return x.toLocaleString('zh-TW',{maximumFractionDigits:0}); }
+function pct(v){ if(v===null||v===undefined) return '—'; return (v*100).toFixed(2)+'%'; }
+function pctStr(v){ if(v===null||v===undefined||isNaN(v)) return '—'; var s=(v>0?'+':'')+v.toFixed(1)+'%'; return s; }
+
+// ══════════════════════════════════════════
+// Tab 切換
+// ══════════════════════════════════════════
+function switchTab(name){
+  currentTab = name;
+  document.querySelectorAll('.tab-btn').forEach(function(b,i){
+    var tabs = ['month','accum','flex','explain'];
+    b.classList.toggle('active', tabs[i] === name);
+  });
+  document.querySelectorAll('.tab-content').forEach(function(c){
+    c.classList.remove('active');
+  });
+  document.getElementById('tab-'+name).classList.add('active');
+  if(name !== 'explain') renderTab(name);
+}
+
+// ══════════════════════════════════════════
+// 月份按鈕
+// ══════════════════════════════════════════
+function buildMonthBar(){
+  var bar = document.getElementById('monthBar');
+  bar.innerHTML = '';
+  monthOrder.forEach(function(mk){
+    var yr = mk.slice(0,3), mo = parseInt(mk.slice(3));
+    var btn = document.createElement('button');
+    btn.className = 'month-btn' + (mk === currentMonth ? ' active' : '');
+    btn.textContent = yr+'年'+mo+'月';
+    btn.onclick = function(){
+      currentMonth = mk;
+      document.querySelectorAll('.month-btn').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      document.getElementById('month-badge').textContent = yr+'年'+mo+'月';
+      renderTab(currentTab);
+    };
+    bar.appendChild(btn);
+  });
+  document.getElementById('month-bar-wrap').style.display = monthOrder.length ? 'block' : 'none';
+}
+
+// ══════════════════════════════════════════
+// 渲染各 Tab
+// ══════════════════════════════════════════
+function renderTab(tab){
+  if(tab === 'explain') return;
+  var el = document.getElementById('tab-'+tab);
+  if(!currentMonth || !monthData[currentMonth]){
+    el.innerHTML = '<div class="info-notice">⚠️ 請上傳 Excel 檔案以載入數據</div>';
+    return;
+  }
+  var rows = monthData[currentMonth];
+
+  // 分類
+  var adjustRows=[], productRows=[], totalRow=null;
+  rows.forEach(function(r){
+    var code = r[C.CODE] ? String(r[C.CODE]).trim() : '';
+    var name = r[C.NAME] ? String(r[C.NAME]).trim() : '';
+    if(ADJUST_CODES.has(code))      adjustRows.push(r);
+    else if(!code && !name)          totalRow = r;
+    else                             productRows.push(r);
+  });
+
+  if(tab === 'month')  el.innerHTML = buildMonthTable(adjustRows, productRows, totalRow);
+  if(tab === 'accum')  el.innerHTML = buildAccumTable(adjustRows, productRows, totalRow);
+  if(tab === 'flex')   el.innerHTML = buildFlexTable(adjustRows, productRows, totalRow);
+}
+
+function rowBg(sec){ return sec==='T'?'total-row':''; }
+function shortName(s){ return s && s.length>15 ? s.slice(0,14)+'…' : (s||''); }
+
+// ── KPI 統計卡 ──
+function kpiCards(productRows, totalRow, mode){
+  var aRev=0, aCst=0, aGP=0, aBrev=0, aBcst=0;
+  var srcRows = totalRow ? [totalRow] : productRows;
+  srcRows.forEach(function(r){
+    if(mode==='month'){
+      aRev  += n(r[C.M_REV]);  aCst += n(r[C.M_CST]);
+      aBrev += n(r[C.M_BREV]); aBcst+= n(r[C.M_BCST]);
+    } else {
+      aRev  += n(r[C.A_REV]);  aCst += n(r[C.A_CST]);
+      aBrev += n(r[C.A_BREV]); aBcst+= n(r[C.A_BCST]);
+    }
+  });
+  if(!totalRow){ aGP = aRev - aCst; }
+  else { aGP = mode==='month' ? n(totalRow[C.M_GP]) : n(totalRow[C.A_GP]); }
+  var gpr   = aRev ? aGP/aRev : 0;
+  var bgpr  = aBrev ? (aBrev-aBcst)/aBrev : 0;
+  var diff  = gpr - bgpr;
+  var gprCls = gpr < bgpr ? 'red' : 'green';
+  var diffCls = diff >= 0 ? 'green' : 'red';
+  return `<div class="kpi-grid">
+    <div class="kpi-card"><div class="kpi-label">${mode==='month'?'當月':'累計'}收入淨額</div>
+      <div class="kpi-value blue">${fmt(aRev)}</div></div>
+    <div class="kpi-card"><div class="kpi-label">${mode==='month'?'當月':'累計'}銷貨成本</div>
+      <div class="kpi-value">${fmt(aCst)}</div></div>
+    <div class="kpi-card"><div class="kpi-label">實際毛利率</div>
+      <div class="kpi-value ${gprCls}">${pct(gpr)}</div></div>
+    <div class="kpi-card"><div class="kpi-label">毛利率差異 (實-預)</div>
+      <div class="kpi-value ${diffCls}">${pctStr(diff*100)}</div></div>
+  </div>`;
+}
+
+// ── 當月 Tab ──
+function buildMonthTable(adj, prod, total){
+  var html = kpiCards(prod, total, 'month');
+  html += buildSection('成本調整項目', 'adjust', adj, function(r){
+    var mrev=n(r[C.M_REV]), mcst=n(r[C.M_CST]), mgp=mrev-mcst;
+    var mgpr=mrev?mgp/mrev:null, mbrev=n(r[C.M_BREV]), mbcst=n(r[C.M_BCST]);
+    var mbgpr=mbrev?(mbrev-mbcst)/mbrev:null, diff=mgpr!==null&&mbgpr!==null?mgpr-mbgpr:null;
+    return [shortName(r[C.NAME]),r[C.CODE]||'',fmt(mrev),fmt(mcst),
+      `<span class="${mgp<0?'red':''}">${fmt(mgp)}</span>`,
+      `<span class="${(mgpr||0)<0?'red':''}">${pct(mgpr)}</span>`,
+      pct(mbgpr),
+      diff!==null?`<span class="${diff<0?'red':'green'}">${pctStr(diff*100)}</span>`:'—',
+      fmt(mbrev),fmt(mbcst)];
+  }, ['品名','成本科目','當月收入淨額','當月成本','當月毛利','當月毛利率%','預算毛利率%','毛利率差異','當月預算收入','當月預算成本']);
+  html += buildSection('產品別分析', 'product', prod, function(r){
+    var mrev=n(r[C.M_REV]), mcst=n(r[C.M_CST]), mgp=mrev-mcst;
+    var mgpr=mrev?mgp/mrev:null, mbrev=n(r[C.M_BREV]), mbcst=n(r[C.M_BCST]);
+    var mbgpr=mbrev?(mbrev-mbcst)/mbrev:null, diff=mgpr!==null&&mbgpr!==null?mgpr-mbgpr:null;
+    return [shortName(r[C.NAME]),r[C.CODE]||'',fmt(mrev),fmt(mcst),
+      `<span class="${mgp<0?'red':''}">${fmt(mgp)}</span>`,
+      `<span class="${(mgpr||0)<0?'red':''}">${pct(mgpr)}</span>`,
+      pct(mbgpr),
+      diff!==null?`<span class="${diff<0?'red':'green'}">${pctStr(diff*100)}</span>`:'—',
+      fmt(mbrev),fmt(mbcst)];
+  }, ['品名','成本科目','當月收入淨額','當月成本','當月毛利','當月毛利率%','預算毛利率%','毛利率差異','當月預算收入','當月預算成本'], total, function(r){
+    var mrev=n(r[C.M_REV]), mcst=n(r[C.M_CST]), mgp=n(r[C.M_GP]);
+    var mgpr=mrev?mgp/mrev:null, mbrev=n(r[C.M_BREV]), mbcst=n(r[C.M_BCST]);
+    var mbgpr=mbrev?(mbrev-mbcst)/mbrev:null, diff=mgpr!==null&&mbgpr!==null?mgpr-mbgpr:null;
+    return ['【合計】','',fmt(mrev),fmt(mcst),
+      `<span class="${mgp<0?'red':''}">${fmt(mgp)}</span>`,
+      `<span class="${(mgpr||0)<0?'red':''}">${pct(mgpr)}</span>`,
+      pct(mbgpr),
+      diff!==null?`<span class="${diff<0?'red':'green'}">${pctStr(diff*100)}</span>`:'—',
+      fmt(mbrev),fmt(mbcst)];
+  });
+  return html;
+}
+
+// ── 累計 Tab ──
+function buildAccumTable(adj, prod, total){
+  var html = kpiCards(prod, total, 'accum');
+  html += buildSection('成本調整項目', 'adjust', adj, function(r){
+    var arev=n(r[C.A_REV]), acst=n(r[C.A_CST]), agp=arev-acst;
+    var agpr=arev?agp/arev:null, abrev=n(r[C.A_BREV]), abcst=n(r[C.A_BCST]);
+    var abgpr=abrev?(abrev-abcst)/abrev:null, diff=agpr!==null&&abgpr!==null?agpr-abgpr:null;
+    return [shortName(r[C.NAME]),r[C.CODE]||'',fmt(arev),fmt(acst),
+      `<span class="${agp<0?'red':''}">${fmt(agp)}</span>`,
+      `<span class="${(agpr||0)<0?'red':''}">${pct(agpr)}</span>`,
+      pct(abgpr),
+      diff!==null?`<span class="${diff<0?'red':'green'}">${pctStr(diff*100)}</span>`:'—',
+      fmt(abrev),fmt(abcst)];
+  }, ['品名','成本科目','累計收入淨額','累計成本','累計毛利','累計毛利率%','預算毛利率%','毛利率差異','累計預算收入','累計預算成本']);
+  html += buildSection('產品別分析', 'product', prod, function(r){
+    var arev=n(r[C.A_REV]), acst=n(r[C.A_CST]), agp=arev-acst;
+    var agpr=arev?agp/arev:null, abrev=n(r[C.A_BREV]), abcst=n(r[C.A_BCST]);
+    var abgpr=abrev?(abrev-abcst)/abrev:null, diff=agpr!==null&&abgpr!==null?agpr-abgpr:null;
+    return [shortName(r[C.NAME]),r[C.CODE]||'',fmt(arev),fmt(acst),
+      `<span class="${agp<0?'red':''}">${fmt(agp)}</span>`,
+      `<span class="${(agpr||0)<0?'red':''}">${pct(agpr)}</span>`,
+      pct(abgpr),
+      diff!==null?`<span class="${diff<0?'red':'green'}">${pctStr(diff*100)}</span>`:'—',
+      fmt(abrev),fmt(abcst)];
+  }, ['品名','成本科目','累計收入淨額','累計成本','累計毛利','累計毛利率%','預算毛利率%','毛利率差異','累計預算收入','累計預算成本'], total, function(r){
+    var arev=n(r[C.A_REV]), acst=n(r[C.A_CST]), agp=n(r[C.A_GP]);
+    var agpr=arev?agp/arev:null, abrev=n(r[C.A_BREV]), abcst=n(r[C.A_BCST]);
+    var abgpr=abrev?(abrev-abcst)/abrev:null, diff=agpr!==null&&abgpr!==null?agpr-abgpr:null;
+    return ['【合計】','',fmt(arev),fmt(acst),
+      `<span class="${agp<0?'red':''}">${fmt(agp)}</span>`,
+      `<span class="${(agpr||0)<0?'red':''}">${pct(agpr)}</span>`,
+      pct(abgpr),
+      diff!==null?`<span class="${diff<0?'red':'green'}">${pctStr(diff*100)}</span>`:'—',
+      fmt(abrev),fmt(abcst)];
+  });
+  return html;
+}
+
+// ── 彈性預算 Tab ──
+function buildFlexTable(adj, prod, total){
+  // 整體 KPI
+  var arev=0, acst=0, abrev=0, abcst=0;
+  (total?[total]:prod).forEach(function(r){
+    arev+=n(r[C.A_REV]); acst+=n(r[C.A_CST]);
+    abrev+=n(r[C.A_BREV]); abcst+=n(r[C.A_BCST]);
+  });
+  var bCstRate = abrev ? abcst/abrev : 0;
+  var flexCst  = arev * bCstRate;
+  var flexDiff = acst - flexCst;
+  var diffCls  = flexDiff < -1000 ? 'green' : flexDiff > 1000 ? 'red' : '';
+  var diffDesc = flexDiff < -1000 ? '✅ 整體成本節省' : flexDiff > 1000 ? '⚠️ 整體成本超支' : '➡️ 持平';
+
+  var html = `<div class="kpi-grid">
+    <div class="kpi-card"><div class="kpi-label">預算成本率</div>
+      <div class="kpi-value">${pct(bCstRate)}</div></div>
+    <div class="kpi-card"><div class="kpi-label">彈性預算成本</div>
+      <div class="kpi-value blue">${fmt(flexCst)}</div></div>
+    <div class="kpi-card"><div class="kpi-label">實際累計成本</div>
+      <div class="kpi-value">${fmt(acst)}</div></div>
+    <div class="kpi-card"><div class="kpi-label">彈性預算差異</div>
+      <div class="kpi-value ${diffCls}">${fmt(flexDiff)} ${diffDesc}</div></div>
+  </div>`;
+
+  var headers = ['品名','成本科目','累計收入淨額','累計實際成本','累計毛利率%','預算成本率%','彈性預算成本','彈性預算差異','差異說明'];
+  var rowFn = function(r){
+    var arev=n(r[C.A_REV]), acst=n(r[C.A_CST]);
+    var agpr=arev?(arev-acst)/arev:null, abrev=n(r[C.A_BREV]), abcst=n(r[C.A_BCST]);
+    var bRate=abrev?abcst/abrev:null;
+    var fCst=bRate!==null?arev*bRate:null;
+    var fDiff=fCst!==null?acst-fCst:null;
+    var desc=fDiff!==null?(fDiff<-1000?'✅ 成本節省':fDiff>1000?'⚠️ 成本超支':'➡️ 持平'):'—';
+    var diffCls2=fDiff!==null?(fDiff<-1000?'green':fDiff>1000?'red':''):'';
+    return [shortName(r[C.NAME]),r[C.CODE]||'',fmt(arev),fmt(acst),
+      `<span class="${(agpr||0)<0?'red':''}">${pct(agpr)}</span>`,
+      pct(bRate),
+      fCst!==null?fmt(fCst):'—',
+      fDiff!==null?`<span class="${diffCls2}">${fmt(fDiff)}</span>`:'—',
+      `<span class="${diffCls2}">${desc}</span>`];
+  };
+  html += buildSection('成本調整項目', 'adjust', adj, rowFn, headers);
+  html += buildSection('產品別分析', 'product', prod, rowFn, headers, total, function(r){
+    var arev=n(r[C.A_REV]), acst=n(r[C.A_CST]);
+    var agpr=arev?(arev-acst)/arev:null, abrev=n(r[C.A_BREV]), abcst=n(r[C.A_BCST]);
+    var bRate=abrev?abcst/abrev:null;
+    var fCst=bRate!==null?arev*bRate:null;
+    var fDiff=fCst!==null?acst-fCst:null;
+    var desc=fDiff!==null?(fDiff<-1000?'✅ 成本節省':fDiff>1000?'⚠️ 成本超支':'➡️ 持平'):'—';
+    var diffCls2=fDiff!==null?(fDiff<-1000?'green':fDiff>1000?'red':''):'';
+    return ['【合計】','',fmt(arev),fmt(acst),
+      `<span class="${(agpr||0)<0?'red':''}">${pct(agpr)}</span>`,
+      pct(bRate),
+      fCst!==null?fmt(fCst):'—',
+      fDiff!==null?`<span class="${diffCls2}">${fmt(fDiff)}</span>`:'—',
+      `<span class="${diffCls2}">${desc}</span>`];
+  });
+  return html;
+}
+
+// ── 通用 Section 建構 ──
+function buildSection(title, type, rows, rowFn, headers, totalRow, totalFn){
+  if(rows.length === 0 && !totalRow) return '';
+  var hdrCls = type==='adjust'?'adjust':type==='total'?'total':'';
+  var thHtml = headers.map(function(h){
+    return `<th class="${h==='品名'?'text-left':'text-center'}">${h}</th>`;
+  }).join('');
+
+  var bodyHtml = '';
+  if(rows.length > 0){
+    bodyHtml += `<div class="data-section">
+      <div class="section-hdr ${hdrCls}">【${title}】</div>
+      <div style="overflow-x:auto">
+      <table class="data-table"><thead><tr>${thHtml}</tr></thead><tbody>`;
+    rows.forEach(function(r){
+      var cells = rowFn(r);
+      bodyHtml += '<tr>' + cells.map(function(c,i){
+        var cls = i===0?'text-left':i===1?'text-center':'text-right';
+        return `<td class="${cls}">${c}</td>`;
+      }).join('') + '</tr>';
+    });
+    if(totalRow && totalFn){
+      var tcells = totalFn(totalRow);
+      bodyHtml += '<tr class="total-row">' + tcells.map(function(c,i){
+        var cls = i===0?'text-left':i===1?'text-center':'text-right';
+        return `<td class="${cls}">${c}</td>`;
+      }).join('') + '</tr>';
+    }
+    bodyHtml += '</tbody></table></div></div>';
+  } else if(totalRow && totalFn && type!=='adjust'){
+    // 只有合計列
+    bodyHtml += `<div class="data-section">
+      <div class="section-hdr ${hdrCls}">【${title}】</div>
+      <div style="overflow-x:auto">
+      <table class="data-table"><thead><tr>${thHtml}</tr></thead><tbody>`;
+    var tcells = totalFn(totalRow);
+    bodyHtml += '<tr class="total-row">' + tcells.map(function(c,i){
+      var cls = i===0?'text-left':i===1?'text-center':'text-right';
+      return `<td class="${cls}">${c}</td>`;
+    }).join('') + '</tr>';
+    bodyHtml += '</tbody></table></div></div>';
+  }
+  return bodyHtml;
+}
+
+// ══════════════════════════════════════════
+// Excel 解析（動態載入 XLSX，不預先載入 CDN）
+// ══════════════════════════════════════════
+function processFile(file){
+  var msg = document.getElementById('upload-msg');
+  var ext = file.name.split('.').pop().toLowerCase();
+  msg.innerHTML = '<span class="info">⏳ 讀取中…</span>';
+
+  var reader = new FileReader();
+  reader.onload = function(e){
+    if(ext === 'csv'){
+      parseCsv(e.target.result, file.name);
+    } else {
+      // 動態載入 XLSX
+      if(typeof XLSX !== 'undefined'){
+        parseExcel(e.target.result, file.name);
+      } else {
+        msg.innerHTML = '<span class="info">⏳ 載入 Excel 解析器…</span>';
+        var buf = e.target.result;
+        var s = document.createElement('script');
+        s.src = 'https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js';
+        s.onload = function(){ parseExcel(buf, file.name); };
+        s.onerror = function(){ msg.innerHTML = '<span class="err">❌ 解析器載入失敗，請改用 CSV</span>'; };
+        document.head.appendChild(s);
+      }
+    }
+  };
+  ext === 'csv' ? reader.readAsText(file, 'UTF-8') : reader.readAsArrayBuffer(file);
+}
+
+function parseExcel(buf, fname){
+  var msg = document.getElementById('upload-msg');
+  try{
+    var wb = XLSX.read(buf, {type:'array'});
+    var loaded = [];
+    wb.SheetNames.forEach(function(sn){
+      var m = sn.match(/(\d+)年(\d+)月/);
+      if(!m) return;
+      var mk = m[1] + ('0'+parseInt(m[2])).slice(-2);
+      var ws = wb.Sheets[sn];
+      var rows = XLSX.utils.sheet_to_json(ws, {header:1, defval:null});
+      if(rows.length < 2) return;
+      // 跳過第一列（標頭）
+      var dataRows = rows.slice(1).map(function(r){
+        return r.map(function(v){
+          if(v===null||v===undefined||v==='') return null;
+          if(typeof v==='string' && v.startsWith('=')) return null;
+          return v;
+        });
+      });
+      monthData[mk] = dataRows;
+      if(!monthOrder.includes(mk)) monthOrder.push(mk);
+      loaded.push(mk);
+    });
+    if(!loaded.length){ msg.innerHTML = '<span class="err">❌ 找不到「115年X月」工作表</span>'; return; }
+    finalize(loaded, fname);
+  }catch(e){ msg.innerHTML = '<span class="err">❌ 解析失敗：'+e.message+'</span>'; }
+}
+
+function parseCsv(text, fname){
+  var msg = document.getElementById('upload-msg');
+  // CSV 假設單月，從檔名取月份
+  var m = fname.match(/(\d{3})[\-_年]?(\d{1,2})[\-_月]?/);
+  if(!m){ msg.innerHTML = '<span class="err">❌ 無法從檔名識別年月（如 11506.csv）</span>'; return; }
+  var mk = m[1] + ('0'+parseInt(m[2])).slice(-2);
+  var lines = text.split(/\r?\n/).filter(function(l){ return l.trim(); });
+  if(lines.length < 2){ msg.innerHTML = '<span class="err">❌ CSV 無資料</span>'; return; }
+  // CSV 格式：每列對應 openpyxl 讀取的欄
+  var headers = lines[0].split(',').map(function(h){ return h.trim().replace(/^"|"$/g,''); });
+  var rows = lines.slice(1).map(function(l){
+    var vals = l.split(',').map(function(v){ return v.trim().replace(/^"|"$/g,''); });
+    return vals.map(function(v){ return v===''?null:isNaN(v)?v:parseFloat(v); });
+  });
+  monthData[mk] = rows;
+  if(!monthOrder.includes(mk)) monthOrder.push(mk);
+  finalize([mk], fname);
+}
+
+function finalize(loaded, fname){
+  var msg = document.getElementById('upload-msg');
+  monthOrder.sort();
+  currentMonth = monthOrder[monthOrder.length-1];
+  var yr = currentMonth.slice(0,3), mo = parseInt(currentMonth.slice(3));
+  document.getElementById('month-badge').textContent = yr+'年'+mo+'月';
+  buildMonthBar();
+  // 存 localStorage
+  try{
+    localStorage.setItem(LS_KEY, JSON.stringify(monthData));
+    var meta = {fname:fname, months:monthOrder, saved:new Date().toLocaleString('zh-TW',{hour12:false})};
+    localStorage.setItem(META_KEY, JSON.stringify(meta));
+    showMeta(meta);
+  }catch(e){}
+  renderTab(currentTab);
+  msg.innerHTML = '<span class="ok">✅ 已載入月份：'+loaded.map(function(mk){ return mk.slice(0,3)+'年'+parseInt(mk.slice(3))+'月'; }).join('、')+'，資料永久保存</span>';
+}
+
+function showMeta(meta){
+  var el = document.getElementById('uploadMeta');
+  if(!el || !meta) return;
+  el.innerHTML = (meta.fname?'<span>📄 '+meta.fname+'</span>':'') +
+    (meta.months&&meta.months.length?'<span>📅 共'+meta.months.length+'個月份</span>':'') +
+    (meta.saved?'<span>🕐 '+meta.saved+'</span>':'');
+}
+
+// ══════════════════════════════════════════
+// localStorage 還原
+// ══════════════════════════════════════════
+(function loadSaved(){
+  try{
+    var saved = localStorage.getItem(LS_KEY);
+    if(!saved) return;
+    monthData = JSON.parse(saved);
+    monthOrder = Object.keys(monthData).sort();
+    if(!monthOrder.length) return;
+    currentMonth = monthOrder[monthOrder.length-1];
+    var yr=currentMonth.slice(0,3), mo=parseInt(currentMonth.slice(3));
+    document.getElementById('month-badge').textContent = yr+'年'+mo+'月';
+    buildMonthBar();
+    var meta = JSON.parse(localStorage.getItem(META_KEY)||'{}');
+    showMeta(meta);
+    renderTab('month');
+  }catch(e){ console.warn('Sales load error:', e); }
+})();
+
+// ══════════════════════════════════════════
+// 拖曳 & 點選
+// ══════════════════════════════════════════
+(function(){
+  var dz = document.getElementById('dropZone');
+  dz.addEventListener('dragover', function(e){ e.preventDefault(); dz.classList.add('dragover'); });
+  dz.addEventListener('dragleave', function(){ dz.classList.remove('dragover'); });
+  dz.addEventListener('drop', function(e){
+    e.preventDefault(); dz.classList.remove('dragover');
+    var f = e.dataTransfer.files[0]; if(f) processFile(f);
+  });
+  document.getElementById('fileInput').addEventListener('change', function(e){
+    if(e.target.files[0]) processFile(e.target.files[0]);
+  });
+})();
+</script>
 </body>
 </html>
