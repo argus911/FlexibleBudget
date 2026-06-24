@@ -96,13 +96,230 @@ hr{border:none;border-top:1px solid #e0e8f0;margin:14px 0}
 #home-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,91,172,.55); }
 #home-btn:active { transform: scale(.96); }
 
+
+/* ── 資料更新區 ── */
+#upload-panel{
+  background:#161b22; border:1px solid #21262d; border-radius:14px;
+  margin:12px 16px 4px; padding:16px;
+}
+#upload-panel summary{
+  cursor:pointer; font-size:13px; font-weight:600; color:#58a6ff;
+  list-style:none; display:flex; align-items:center; gap:8px;
+  user-select:none; -webkit-tap-highlight-color:transparent;
+}
+#upload-panel summary::-webkit-details-marker{ display:none; }
+#upload-panel summary .arrow{ transition:transform .2s; font-size:11px; color:#7d8590; }
+#upload-panel[open] summary .arrow{ transform:rotate(90deg); }
+#upload-panel .panel-body{ margin-top:14px; }
+.drop-zone{
+  border:2px dashed #30363d; border-radius:10px;
+  padding:22px 16px; text-align:center; cursor:pointer;
+  transition:border-color .2s, background .2s; background:rgba(88,166,255,.03);
+}
+.drop-zone:hover,.drop-zone.dragover{ border-color:#58a6ff; background:rgba(88,166,255,.07); }
+.drop-zone p{ font-size:13px; color:#7d8590; margin:0; line-height:1.7; }
+.drop-zone .dz-icon{ font-size:28px; margin-bottom:6px; }
+.drop-zone input[type=file]{ display:none; }
+#upload-msg{ margin-top:10px; font-size:12px; min-height:18px; }
+.upload-ok{ color:#3fb950; } .upload-err{ color:#f85149; } .upload-info{ color:#58a6ff; }
+.upload-meta{ margin-top:10px; font-size:11px; color:#7d8590;
+  display:flex; gap:10px; flex-wrap:wrap; }
+.upload-meta span{ background:#0d1117; border:1px solid #21262d;
+  border-radius:6px; padding:3px 8px; }
+
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js">
+/* ══ 銷貨成本 上傳邏輯 ══════════════════════════════════════════════ */
+const SALES_LS_KEY   = 'fb_sales_data_v1';
+const SALES_META_KEY = 'fb_sales_meta_v1';
+
+/* 啟動時：若 localStorage 有資料則還原 */
+(function salesLoadSaved(){
+  try{
+    const saved = localStorage.getItem(SALES_LS_KEY);
+    if(!saved) return;
+    const data = JSON.parse(saved);
+    if(data && data.tables) applySalesData(data.tables);
+    const meta = JSON.parse(localStorage.getItem(SALES_META_KEY)||'{}');
+    showSalesMeta(meta);
+  }catch(e){}
+})();
+
+function showSalesMeta(meta){
+  const el = document.getElementById('salesMeta');
+  if(!el) return;
+  el.innerHTML =
+    (meta.filename ? `<span>📄 ${meta.filename}</span>` : '') +
+    (meta.period   ? `<span>📅 ${meta.period}</span>` : '') +
+    (meta.saved    ? `<span>🕐 ${meta.saved}</span>` : '');
+}
+
+/* 將解析後的結構化資料套用至 DOM 表格 */
+function applySalesData(tables){
+  if(!tables || !tables.length) return;
+  const domTables = document.querySelectorAll('table.data-table');
+  tables.forEach(function(tdata, ti){
+    const tbl = domTables[ti];
+    if(!tbl || !tdata.rows) return;
+    const rows = tbl.querySelectorAll('tr');
+    tdata.rows.forEach(function(rowData, ri){
+      const tr = rows[ri+1]; // 跳過 header
+      if(!tr) return;
+      const cells = tr.querySelectorAll('td');
+      rowData.forEach(function(val, ci){
+        if(cells[ci] && val !== null && val !== undefined)
+          cells[ci].textContent = val;
+      });
+    });
+  });
+}
+
+/* 主解析流程 */
+function processSalesFile(file){
+  const msg = document.getElementById('upload-msg');
+  const ext = file.name.split('.').pop().toLowerCase();
+  msg.innerHTML = '<span class="upload-info">⏳ 讀取檔案中…</span>';
+
+  const reader = new FileReader();
+
+  if(ext === 'pdf'){
+    reader.onload = function(e){
+      // PDF → base64 → Claude API 解析
+      const b64 = btoa(String.fromCharCode(...new Uint8Array(e.target.result)));
+      msg.innerHTML = '<span class="upload-info">🤖 AI 解析 PDF 數據中…</span>';
+      callClaudeForSales(null, b64, file.name, msg);
+    };
+    reader.readAsArrayBuffer(file);
+  } else {
+    // Excel → XLSX 解析 → 取文字 → Claude API 整理
+    reader.onload = function(e){
+      try{
+        if(typeof XLSX === 'undefined') throw new Error('XLSX.js 尚未載入');
+        const wb = XLSX.read(e.target.result, {type:'array'});
+        // 收集所有工作表的文字
+        let allText = '';
+        wb.SheetNames.forEach(function(sn){
+          const ws = wb.Sheets[sn];
+          const csv = XLSX.utils.sheet_to_csv(ws);
+          allText += `\n工作表：${sn}\n${csv}`;
+        });
+        msg.innerHTML = '<span class="upload-info">🤖 AI 整理 Excel 數據中…</span>';
+        callClaudeForSales(allText, null, file.name, msg);
+      }catch(err){
+        msg.innerHTML = '<span class="upload-err">❌ ' + err.message + '</span>';
+      }
+    };
+    reader.readAsArrayBuffer(file);
+  }
+}
+
+/* 呼叫 Claude API 解析銷貨成本數據 */
+async function callClaudeForSales(csvText, pdfB64, filename, msg){
+  try{
+    const domTables = document.querySelectorAll('table.data-table');
+    // 收集現有表格結構供 AI 參考
+    let tableStructure = '';
+    domTables.forEach(function(tbl, ti){
+      const headers = Array.from(tbl.querySelectorAll('th')).map(function(th){ return th.textContent.trim(); });
+      const rows    = Array.from(tbl.querySelectorAll('tr')).slice(1).map(function(tr){
+        return Array.from(tr.querySelectorAll('td')).map(function(td){ return td.textContent.trim(); });
+      });
+      tableStructure += `\nTable[${ti}] headers: ${JSON.stringify(headers)}\n`;
+      tableStructure += `Rows: ${JSON.stringify(rows)}\n`;
+    });
+
+    const systemPrompt = `你是財務數據解析專家。使用者會提供銷貨成本相關的 Excel 或 PDF 資料。
+請從中提取財務數字，對應至以下現有表格結構，回傳 JSON。
+現有表格結構：${tableStructure}
+回傳格式（僅 JSON，不加任何說明）：
+{"tables":[{"rows":[["值1","值2","值3"],["值1","值2","值3"]]},...],"period":"115年X月","summary":"一句話說明"}
+若無法對應某儲存格，該位置填 null。`;
+
+    const userContent = pdfB64
+      ? [
+          {type:"document", source:{type:"base64", media_type:"application/pdf", data:pdfB64}},
+          {type:"text", text:"請解析此 PDF 中的銷貨成本財務數據，填入對應表格。"}
+        ]
+      : [{type:"text", text:"以下是 Excel 匯出的 CSV 文字，請解析銷貨成本財務數據：\n" + csvText}];
+
+    const resp = await fetch("https://api.anthropic.com/v1/messages", {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({
+        model:"claude-sonnet-4-6", max_tokens:2000,
+        system: systemPrompt,
+        messages:[{role:"user", content: userContent}]
+      })
+    });
+    const data = await resp.json();
+    const raw = data.content.map(function(c){ return c.text||''; }).join('');
+    const clean = raw.replace(/```json|```/g,'').trim();
+    const parsed = JSON.parse(clean);
+
+    if(!parsed.tables) throw new Error('AI 未能提取有效數據');
+
+    // 套用至 DOM
+    applySalesData(parsed.tables);
+
+    // 永久儲存
+    localStorage.setItem(SALES_LS_KEY, JSON.stringify(parsed));
+    const meta = {
+      filename: filename,
+      period:   parsed.period || '',
+      saved:    new Date().toLocaleString('zh-TW',{hour12:false})
+    };
+    localStorage.setItem(SALES_META_KEY, JSON.stringify(meta));
+    showSalesMeta(meta);
+
+    msg.innerHTML = '<span class="upload-ok">✅ 數據已更新並永久保存於本裝置'
+      + (parsed.summary ? '：' + parsed.summary : '') + '</span>';
+  }catch(err){
+    msg.innerHTML = '<span class="upload-err">❌ ' + err.message + '</span>';
+  }
+}
+
+/* 拖曳 & 點選 */
+(function(){
+  var dz = document.getElementById('salesDropZone');
+  if(!dz) return;
+  dz.addEventListener('dragover',  function(e){ e.preventDefault(); dz.classList.add('dragover'); });
+  dz.addEventListener('dragleave', function(){ dz.classList.remove('dragover'); });
+  dz.addEventListener('drop', function(e){
+    e.preventDefault(); dz.classList.remove('dragover');
+    var f = e.dataTransfer.files[0];
+    if(f) processSalesFile(f);
+  });
+  document.getElementById('salesFileInput').addEventListener('change', function(e){
+    if(e.target.files[0]) processSalesFile(e.target.files[0]);
+  });
+})();
+/* ══ end 銷貨成本上傳邏輯 ══ */
+
+</script>
 </head>
 <body>
 <div class="header">
   <h1>🛒 銷貨成本彈性預算說明</h1>
   <p>115年度 銷貨收入/成本分析 · 彈性預算調整邏輯 · 差異原因說明</p>
 </div>
+
+<details id="upload-panel" open>
+  <summary>
+    <span>📂 更新銷貨成本數據</span>
+    <span class="arrow">▶</span>
+  </summary>
+  <div class="panel-body">
+    <div class="drop-zone" id="salesDropZone" onclick="document.getElementById('salesFileInput').click()">
+      <div class="dz-icon">📋</div>
+      <p>點擊選擇 Excel 檔案（或 PDF），或拖曳至此處更新最新月份數據<br>
+         <small>支援格式：.xls &nbsp;.xlsx &nbsp;.pdf</small></p>
+      <input type="file" id="salesFileInput" accept=".xls,.xlsx,.pdf">
+    </div>
+    <div id="upload-msg"></div>
+    <div class="upload-meta" id="salesMeta"></div>
+  </div>
+</details>
+
 <div class="tab-bar">
   <button class="tab-btn active" onclick="showTab('t1',this)">📋 預算編列邏輯</button>
   <button class="tab-btn" onclick="showTab('t2',this)">🔢 彈性預算計算</button>
