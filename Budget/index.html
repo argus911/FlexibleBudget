@@ -278,7 +278,10 @@ var CAT_COLORS = {
 
 var UNIT_PALETTE = ['#128048','#1565c0','#e65100','#6a1b9a','#00695c','#c62828','#0277bd','#558b2f','#4527a0','#ad1457','#37474f','#bf360c','#1b5e20'];
 var unitColorMap = {};
-var unitList = [];
+var catColorMap  = {};
+var catList      = [];
+var unitList     = [];
+var CAT_PALETTE  = ['#128048','#1565c0','#e65100','#c62828','#6a1b9a','#00695c','#888888'];
 (function(){
   var us = {};
   RAW.forEach(function(r){ if(r['預算主管單位']) us[r['預算主管單位']] = true; });
@@ -357,13 +360,21 @@ function filtered(){
 }
 
 // ── 格式化 ────────────────────────────────────────────────
+function toNum(n){
+  if(n === '' || n === null || n === undefined) return NaN;
+  if(typeof n === 'number') return n;
+  // 移除千分位逗號，再轉數字
+  return Number(String(n).replace(/,/g, ''));
+}
 function fmt(n){
-  if(n === '' || n === null || n === undefined) return '—';
-  return Number(n).toLocaleString();
+  var v = toNum(n);
+  if(isNaN(v)) return '—';
+  return v.toLocaleString();
 }
 function pct(n){
-  if(n === '' || n === null || n === undefined) return '—';
-  return Number(n).toFixed(2) + '%';
+  var v = toNum(n);
+  if(isNaN(v)) return '—';
+  return v.toFixed(2) + '%';
 }
 function rateColor(r){
   return r >= 90 ? 'val-red' : r >= 70 ? 'val-orange' : 'val-green';
@@ -408,7 +419,7 @@ function render(){
   pageItems.forEach(function(r){
     var cc = CAT_COLORS[r['費用分類']] || CAT_COLORS['其他'];
     var uc = unitColorMap[r['預算主管單位']] || '#888';
-    var yr = Number(r['年度動支率']) || 0;
+    var yr = toNum(r['年度動支率']) || 0;
     var unitBadge = r['預算主管單位']
       ? '<span class="unit-badge" style="background:'+uc+'1a;color:'+uc+'">'+r['預算主管單位']+'</span>'
       : '';
@@ -427,9 +438,9 @@ function render(){
       '<div class="card-name">'+r['會計項目']+'</div>'+
       '<div class="card-grid">'+
         '<div class="card-item"><div class="lbl">本月餘額（累計）</div><div class="val val-blue">'+fmt(r['本月餘額'])+'</div></div>'+
-        '<div class="card-item"><div class="lbl">累計動支率</div><div class="val '+rateColor(Number(r['累計動支率'])||0)+'">'+pct(r['累計動支率'])+'</div></div>'+
+        '<div class="card-item"><div class="lbl">累計動支率</div><div class="val '+rateColor(toNum(r['累計動支率'])||0)+'">'+pct(r['累計動支率'])+'</div></div>'+
         '<div class="card-item"><div class="lbl">本年度預算</div><div class="val">'+fmt(r['本年度預算'])+'</div></div>'+
-        '<div class="card-item"><div class="lbl">剩餘可動支數</div><div class="val '+(Number(r['剩餘可動支數']||0)<0?'val-red':'val-green')+'">'+fmt(r['剩餘可動支數'])+'</div></div>'+
+        '<div class="card-item"><div class="lbl">剩餘可動支數</div><div class="val '+((toNum(r['剩餘可動支數'])||0)<0?'val-red':'val-green')+'">'+fmt(r['剩餘可動支數'])+'</div></div>'+
       '</div>'+
       '<div style="margin-top:8px;font-size:11px;color:#888">年度動支率 <strong class="'+rateColor(yr)+'">'+pct(r['年度動支率'])+'</strong></div>'+
       '<div class="progress-bar"><div class="progress-fill '+progressClass(yr)+'" style="width:'+barW+'%"></div></div>';
@@ -461,7 +472,7 @@ function openSheet(acc){
   sb.innerHTML = '<span class="cat-badge" style="background:'+cc.bg+';color:'+cc.color+'">'+r['費用分類']+'</span>'
     + (r['預算主管單位'] ? '<span class="unit-badge" style="background:'+uc+'1a;color:'+uc+'">'+r['預算主管單位']+'</span>' : '')
     + '<span style="font-size:12px;color:#888;padding:2px 6px">'+r['明細帳']+'</span>';
-  var yr = Number(r['年度動支率']) || 0;
+  var yr = toNum(r['年度動支率']) || 0;
   var barW = Math.min(yr, 100);
   document.getElementById('sheetBody').innerHTML =
     '<div class="sheet-section"><h4>本月數據</h4><div class="sheet-grid">'+
@@ -469,11 +480,11 @@ function openSheet(acc){
       '<div class="sheet-item"><div class="lbl">本月餘額（累計）</div><div class="val val-blue">'+fmt(r['本月餘額'])+'</div></div>'+
       '<div class="sheet-item"><div class="lbl">本月預算數</div><div class="val">'+fmt(r['本月預算數'])+'</div></div>'+
       '<div class="sheet-item"><div class="lbl">至本月預算數累計</div><div class="val">'+fmt(r['至本月預算數累計'])+'</div></div>'+
-      '<div class="sheet-item"><div class="lbl">累計動支率</div><div class="val '+rateColor(Number(r['累計動支率'])||0)+'">'+pct(r['累計動支率'])+'</div></div>'+
+      '<div class="sheet-item"><div class="lbl">累計動支率</div><div class="val '+rateColor(toNum(r['累計動支率'])||0)+'">'+pct(r['累計動支率'])+'</div></div>'+
     '</div></div>'+
     '<div class="sheet-section"><h4>年度數據</h4><div class="sheet-grid">'+
       '<div class="sheet-item"><div class="lbl">本年度預算</div><div class="val">'+fmt(r['本年度預算'])+'</div></div>'+
-      '<div class="sheet-item"><div class="lbl">剩餘可動支數</div><div class="val '+(Number(r['剩餘可動支數']||0)<0?'val-red':'val-green')+'">'+fmt(r['剩餘可動支數'])+'</div></div>'+
+      '<div class="sheet-item"><div class="lbl">剩餘可動支數</div><div class="val '+((toNum(r['剩餘可動支數'])||0)<0?'val-red':'val-green')+'">'+fmt(r['剩餘可動支數'])+'</div></div>'+
     '</div></div>'+
     '<div class="sheet-section"><h4>年度動支進度</h4>'+
       '<div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px"><span>年度動支率</span><strong class="'+rateColor(yr)+'">'+pct(r['年度動支率'])+'</strong></div>'+
@@ -491,15 +502,15 @@ function renderSummary(){
   RAW.forEach(function(r){
     var c = r['費用分類'];
     if(!catMap[c]) catMap[c] = {budget:0, used:0, remain:0, acc:0};
-    catMap[c].budget += Number(r['本年度預算'])||0;
-    catMap[c].used   += Number(r['本月餘額'])||0;
-    catMap[c].remain += Number(r['剩餘可動支數'])||0;
+    catMap[c].budget += toNum(r['本年度預算'])||0;
+    catMap[c].used   += toNum(r['本月餘額'])||0;
+    catMap[c].remain += toNum(r['剩餘可動支數'])||0;
     catMap[c].acc    += 1;
     var u = r['預算主管單位'];
     if(u){
       if(!unitMap2[u]) unitMap2[u] = {budget:0, used:0};
-      unitMap2[u].budget += Number(r['本年度預算'])||0;
-      unitMap2[u].used   += Number(r['本月餘額'])||0;
+      unitMap2[u].budget += toNum(r['本年度預算'])||0;
+      unitMap2[u].used   += toNum(r['本月餘額'])||0;
     }
   });
 
@@ -547,11 +558,11 @@ function renderSummary(){
 
 // ── 高用率預警 ────────────────────────────────────────────
 function renderWarning(){
-  var warns = RAW.filter(function(r){ return (Number(r['年度動支率'])||0) >= 70; })
+  var warns = RAW.filter(function(r){ return (toNum(r['年度動支率'])||0) >= 70; })
     .sort(function(a,b){ return (Number(b['年度動支率'])||0) - (Number(a['年度動支率'])||0); });
   var html = '<div style="font-size:13px;color:#666;margin-bottom:10px">年度動支率 ≥ 70% 共 '+warns.length+' 筆</div>';
   warns.forEach(function(r){
-    var yr = Number(r['年度動支率'])||0;
+    var yr = toNum(r['年度動支率'])||0;
     var uc = unitColorMap[r['預算主管單位']] || '#888';
     var unitBadge = r['預算主管單位']
       ? '<span class="unit-badge" style="background:'+uc+'1a;color:'+uc+';margin-left:6px">'+r['預算主管單位']+'</span>' : '';
@@ -576,7 +587,7 @@ function renderCharts(){
 
   // KPI 卡片（不需 Chart.js）
   var totalBgt=0, totalUsed=0;
-  RAW.forEach(function(r){ totalBgt+=Number(r['本年度預算'])||0; totalUsed+=Number(r['本月餘額'])||0; });
+  RAW.forEach(function(r){ totalBgt+=toNum(r['本年度預算'])||0; totalUsed+=toNum(r['本月餘額'])||0; });
   var overallRate = totalBgt > 0 ? (totalUsed/totalBgt*100) : 0;
   var rateCol = overallRate>=90?'#c62828':overallRate>=70?'#e07b00':'#128048';
   root.innerHTML =
@@ -609,15 +620,15 @@ function drawCharts(){
   RAW.forEach(function(r){
     var c = r['費用分類'];
     if(catMap[c]){
-      catMap[c].budget += Number(r['本年度預算'])||0;
-      catMap[c].used   += Number(r['本月餘額'])||0;
-      catMap[c].remain += Math.max(0, Number(r['剩餘可動支數'])||0);
+      catMap[c].budget += toNum(r['本年度預算'])||0;
+      catMap[c].used   += toNum(r['本月餘額'])||0;
+      catMap[c].remain += Math.max(0, toNum(r['剩餘可動支數'])||0);
     }
     var u = r['預算主管單位'];
     if(u){
       if(!unitMap3[u]) unitMap3[u] = {budget:0, used:0};
-      unitMap3[u].budget += Number(r['本年度預算'])||0;
-      unitMap3[u].used   += Number(r['本月餘額'])||0;
+      unitMap3[u].budget += toNum(r['本年度預算'])||0;
+      unitMap3[u].used   += toNum(r['本月餘額'])||0;
     }
   });
 
@@ -877,6 +888,17 @@ function finalizeBudgetRows(rows, fname){
       else if(code.startsWith('E')) obj['費用分類'] = '設備及折舊';
       else                          obj['費用分類'] = '管銷費用';
     }
+    // 數字欄位去逗號、轉浮點數
+    var NUM_FIELDS = ['本月動支數','本月餘額','本月預算數','至本月預算數累計',
+      '累計動支率','本年度預算','年度動支率','剩餘可動支數',
+      '去年同期','上月累計','DAMTTM','CAMTTM','本月動支增減','累計動支數',
+      '至本月預算數','年度預算數'];
+    NUM_FIELDS.forEach(function(f){
+      if(obj[f] !== undefined && obj[f] !== ''){
+        var v = parseFloat(String(obj[f]).replace(/,/g,''));
+        obj[f] = isNaN(v) ? '' : v;
+      }
+    });
     return obj;
   }).filter(function(r){ return r['明細帳']||r['會計項目']; });
   if(!mapped.length){ msg.innerHTML='<span class="upload-err">❌ 無法辨識欄位，請確認格式</span>'; return; }
