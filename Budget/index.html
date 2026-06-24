@@ -745,7 +745,8 @@ function reinitBudget(){
   unitList.forEach(function(u,i){ unitColorMap[u] = UNIT_PALETTE[i % UNIT_PALETTE.length]; });
   catList.forEach(function(c,i){ catColorMap[c]   = CAT_PALETTE[i  % CAT_PALETTE.length];  });
   buildChips();
-  filterKw = ''; filterUnit = ''; filterCat = '';
+  filterKw = ''; filterUnit = 'all'; filterCat = 'all'; curPage = 1;
+  _summaryDone = false; _warnDone = false; _chartsDone = false; _chartsReady = false;
   render();
   document.getElementById('totalBadge').textContent = RAW.length + ' 筆';
 }
