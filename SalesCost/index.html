@@ -182,6 +182,22 @@ function processSalesFile(file){
 
   const reader = new FileReader();
 
+  if(ext === 'csv'){
+    reader.onload = function(e){
+      try{
+        if(typeof XLSX === 'undefined') throw new Error('XLSX.js 尚未載入');
+        const wb = XLSX.read(e.target.result, {type:'string'});
+        const ws = wb.Sheets[wb.SheetNames[0]];
+        const csv = XLSX.utils.sheet_to_csv(ws);
+        msg.innerHTML = '<span class="upload-info">🤖 AI 整理 CSV 數據中…</span>';
+        callClaudeForSales(csv, null, file.name, msg);
+      }catch(err){
+        msg.innerHTML = '<span class="upload-err">❌ ' + err.message + '</span>';
+      }
+    };
+    reader.readAsText(file, 'UTF-8');
+    return;
+  }
   if(ext === 'pdf'){
     reader.onload = function(e){
       // PDF → base64 → Claude API 解析
@@ -312,8 +328,8 @@ async function callClaudeForSales(csvText, pdfB64, filename, msg){
     <div class="drop-zone" id="salesDropZone" onclick="document.getElementById('salesFileInput').click()">
       <div class="dz-icon">📋</div>
       <p>點擊選擇 Excel 檔案（或 PDF），或拖曳至此處更新最新月份數據<br>
-         <small>支援格式：.xls &nbsp;.xlsx &nbsp;.pdf</small></p>
-      <input type="file" id="salesFileInput" accept=".xls,.xlsx,.pdf">
+         <small>支援格式：.xls &nbsp;.xlsx &nbsp;.csv &nbsp;.pdf</small></p>
+      <input type="file" id="salesFileInput" accept=".xls,.xlsx,.csv,.pdf">
     </div>
     <div id="upload-msg"></div>
     <div class="upload-meta" id="salesMeta"></div>
