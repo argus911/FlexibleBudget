@@ -1,0 +1,2047 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=5.0,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="KPI 字典">
+<meta name="theme-color" content="#0066B3">
+<link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxODAgMTgwIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZyIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiMwMDY2QjMiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMDBBQ0I2Ii8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICA8cmVjdCB3aWR0aD0iMTgwIiBoZWlnaHQ9IjE4MCIgcng9IjQwIiBmaWxsPSJ1cmwoI2cpIi8+CiAgPHRleHQgeD0iOTAiIHk9Ijc4IiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI0NCIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5LUEk8L3RleHQ+CiAgPHRleHQgeD0iOTAiIHk9IjEyMCIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjIiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBvcGFjaXR5PSIwLjkiPjExNeWtl+WFuDwvdGV4dD4KICA8cmVjdCB4PSIzNiIgeT0iMTM4IiB3aWR0aD0iMjAiIGhlaWdodD0iMTgiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjkiLz4KICA8cmVjdCB4PSI2MiIgeT0iMTI4IiB3aWR0aD0iMjAiIGhlaWdodD0iMjgiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjkiLz4KICA8cmVjdCB4PSI4OCIgeT0iMTE4IiB3aWR0aD0iMjAiIGhlaWdodD0iMzgiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjkiLz4KICA8cmVjdCB4PSIxMTQiIHk9IjEwOCIgd2lkdGg9IjIwIiBoZWlnaHQ9IjQ4IiBmaWxsPSJ3aGl0ZSIgb3BhY2l0eT0iMC45Ii8+Cjwvc3ZnPg==">
+<link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxODAgMTgwIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZyIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiMwMDY2QjMiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMDBBQ0I2Ii8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICA8cmVjdCB3aWR0aD0iMTgwIiBoZWlnaHQ9IjE4MCIgcng9IjQwIiBmaWxsPSJ1cmwoI2cpIi8+CiAgPHRleHQgeD0iOTAiIHk9Ijc4IiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI0NCIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5LUEk8L3RleHQ+CiAgPHRleHQgeD0iOTAiIHk9IjEyMCIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjIiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBvcGFjaXR5PSIwLjkiPjExNeWtl+WFuDwvdGV4dD4KICA8cmVjdCB4PSIzNiIgeT0iMTM4IiB3aWR0aD0iMjAiIGhlaWdodD0iMTgiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjkiLz4KICA8cmVjdCB4PSI2MiIgeT0iMTI4IiB3aWR0aD0iMjAiIGhlaWdodD0iMjgiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjkiLz4KICA8cmVjdCB4PSI4OCIgeT0iMTE4IiB3aWR0aD0iMjAiIGhlaWdodD0iMzgiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjkiLz4KICA8cmVjdCB4PSIxMTQiIHk9IjEwOCIgd2lkdGg9IjIwIiBoZWlnaHQ9IjQ4IiBmaWxsPSJ3aGl0ZSIgb3BhY2l0eT0iMC45Ii8+Cjwvc3ZnPg==">
+<title>115 年度 KPI 字典 — 中華電信彰化營運處</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+/* ═══════════════════════════════════════════════════════
+   KPI 上傳 & 解析模組
+   ═══════════════════════════════════════════════════════ */
+const KPI_UPLOAD_KEY = 'kpi_uploaded_months_v1';
+
+function loadUploadedMonths(){
+  try{ return JSON.parse(localStorage.getItem(KPI_UPLOAD_KEY)||'[]'); }
+  catch(e){ return []; }
+}
+function saveUploadedMonths(arr){
+  localStorage.setItem(KPI_UPLOAD_KEY, JSON.stringify(arr));
+}
+
+// 合併上傳資料到 HISTORY.months（填補 placeholder）
+// ★ 不在此立即執行，改由 DOMContentLoaded 後呼叫（HISTORY 須先定義）
+function normalizeMonthRecords(month){
+  // ★ v1.3.5 統一欄位格式：kpis→scores, groupRank→group_rank
+  if(!month || !month.records) return month;
+  month.records.forEach(r=>{
+    if(r.kpis && !r.scores){ r.scores = r.kpis; delete r.kpis; }
+    if(r.groupRank != null && r.group_rank == null){ r.group_rank = r.groupRank; delete r.groupRank; }
+  });
+  return month;
+}
+
+function mergeUploadedOnLoad(){
+  if(typeof HISTORY==='undefined') return;
+  const uploaded = loadUploadedMonths();
+  if(!uploaded.length) return;
+  uploaded.forEach(upMonth=>{
+    normalizeMonthRecords(upMonth);
+    const existing = HISTORY.months.find(m=>m.month===upMonth.month && m.year===upMonth.year);
+    if(existing && existing.placeholder){
+      Object.assign(existing, upMonth, {placeholder:false});
+    } else if(!existing){
+      HISTORY.months.push(upMonth);
+      HISTORY.months.sort((a,b)=>a.month-b.month);
+    }
+  });
+  // ★ 統一正規化所有 history months（含已內嵌資料）
+  HISTORY.months.forEach(m=>normalizeMonthRecords(m));
+  // ★ 同步更新 ACTUAL 為最新月份（讓儀表板/比較頁在重新整理後也顯示最新資料）
+  const valid = HISTORY.months.filter(m=>!m.placeholder && m.records && m.records.length>0);
+  if(valid.length>0){
+    const latest = valid.reduce((a,b)=>(parseInt(b.month)>parseInt(a.month)?b:a));
+    ACTUAL = latest;
+    if(typeof DATA!=='undefined') DATA.actual = latest;
+  }
+}
+
+/* ── 拖放 / 選擇檔案 ── */
+function handleKpiDrop(e){
+  e.preventDefault();
+  document.getElementById('kpiDropzone').classList.remove('drag');
+  const file = e.dataTransfer.files[0];
+  if(file) processKpiFile(file);
+}
+function handleKpiFileUpload(e){
+  const file = e.target.files[0];
+  if(file) processKpiFile(file);
+}
+function processKpiFile(file){
+  const ext = file.name.split('.').pop().toLowerCase();
+  if(ext==='pdf') processKpiPdf(file);
+  else             processKpiExcel(file);
+}
+
+/* ── Excel 解析 ── */
+function processKpiExcel(file){
+  const msg = document.getElementById('kpiUploadMsg');
+  msg.innerHTML = '<div class="info-msg">⏳ 解析 Excel 中…</div>';
+  const reader = new FileReader();
+  reader.onload = function(e){
+    try{
+      if(typeof XLSX==='undefined') throw new Error('XLSX.js 尚未載入，請確認網路連線');
+      const wb = XLSX.read(e.target.result, {type:'array'});
+      const ws = wb.Sheets[wb.SheetNames[0]];
+
+      // 取得原始二維陣列（header:1 表示全部當資料，不自動抓首行為欄位名）
+      const raw = XLSX.utils.sheet_to_json(ws, {header:1, defval:''});
+      if(!raw.length) throw new Error('工作表無資料');
+
+      // ── 月份偵測 ──
+      // 先從檔名抓，抓不到再掃整份 raw 找「115年5月」格式
+      let year='115', month=0;
+      const nameMatch = (file.name+' '+wb.SheetNames[0]).match(/(\d{1,3})\s*年?\s*(\d{1,2})\s*月/);
+      if(nameMatch){ year=nameMatch[1]; month=parseInt(nameMatch[2]); }
+      if(!month){
+        for(const row of raw){
+          for(const cell of row){
+            const cm = String(cell).match(/(\d{1,3})\s*年\s*(\d{1,2})\s*月/);
+            if(cm){ year=cm[1]; month=parseInt(cm[2]); break; }
+          }
+          if(month) break;
+        }
+      }
+      if(!month) throw new Error('無法辨識月份，請確認檔名或表頭含「XX年X月」');
+
+      // ── 格式判斷 ──
+      // 格式A（直排）：第一欄是「營運處」/「處別」，各處為列
+      // 格式B（橫排）：總公司標準格式，KPI編號在第一欄，各處是欄位（第2列是欄標題）
+      const OFFICES_ALL=['台北','新北','基隆','桃園','新竹','苗栗','花蓮','宜蘭',
+                         '台中','彰化','南投','雲林','嘉義','台南','高雄','屏東','台東'];
+      const KPI_IDS=['O1','O2','L1','L2','L3','L4','M1','M2','M3','M4','M5','M6','M7','E'];
+
+      // 找標題列：包含最多個辦事處名稱的那列
+      let headerRowIdx = -1, maxOfficeHits = 0;
+      raw.forEach((row, i)=>{
+        const hits = row.filter(c=>OFFICES_ALL.includes(String(c).trim())).length;
+        if(hits>maxOfficeHits){ maxOfficeHits=hits; headerRowIdx=i; }
+      });
+
+      let records=[], maxScore=0;
+
+      if(headerRowIdx>=0 && maxOfficeHits>=3){
+        // ── 格式B：橫排（總公司標準格式）──
+        // 標題列：[KPIs編號, 評核項目, 權重, 目標, 台北, 新北, …, 台東, ...]
+        const headerRow = raw[headerRowIdx].map(c=>String(c).trim());
+
+        // 找各辦事處欄位索引（標題列中出現辦事處名稱的欄）
+        const officeColMap={}; // { '台北':4, '新北':5, … }
+        headerRow.forEach((h,i)=>{ if(OFFICES_ALL.includes(h)) officeColMap[h]=i; });
+
+        // 找「年度得分」列（第一欄含「年度得分」/「合計」）
+        let annualRow=null, rankRow=null;
+        for(let i=headerRowIdx+1;i<raw.length;i++){
+          const first=String(raw[i][0]).trim();
+          if(/年度得分|合計|總分/.test(first)) annualRow=raw[i];
+          if(/^排名$/.test(first)) rankRow=raw[i];
+        }
+
+        // 收集各 KPI 列資料
+        const kpiData={}; // { O1:[17個值], O2:[...], ... }
+        KPI_IDS.forEach(k=>kpiData[k]=Array(17).fill(null));
+
+        for(let i=headerRowIdx+1;i<raw.length;i++){
+          const kpiId=String(raw[i][0]).trim().toUpperCase();
+          if(KPI_IDS.map(k=>k.toUpperCase()).includes(kpiId)){
+            const canonId = kpiId==='E'?'E':kpiId; // ESG 欄位可能是 'E' 或 'ESG'
+            OFFICES_ALL.forEach((o,oi)=>{
+              const colIdx=officeColMap[o];
+              if(colIdx!==undefined){
+                const v=parseFloat(raw[i][colIdx]);
+                kpiData[canonId][oi]=isNaN(v)?null:v;
+              }
+            });
+          }
+        }
+
+        // 自動計算排名（禁止手動抄錄，避免錯位）
+        const annuals=OFFICES_ALL.map((o,i)=>{
+          if(annualRow){ const v=parseFloat(annualRow[officeColMap[o]]); return isNaN(v)?null:v; }
+          return null;
+        });
+        const GROUPS={A:['台北','新北','桃園','台中','台南','高雄'],
+                      B:['基隆','新竹','彰化','雲林','嘉義','屏東'],
+                      C:['苗栗','宜蘭','花蓮','南投','台東']};
+        const ranks=Array(17).fill(0), gRanks=Array(17).fill(0);
+        const sortedAll=[...Array(17).keys()].sort((a,b)=>(annuals[b]||0)-(annuals[a]||0));
+        sortedAll.forEach((idx,r)=>ranks[idx]=r+1);
+        Object.values(GROUPS).forEach(members=>{
+          const idxs=members.map(o=>OFFICES_ALL.indexOf(o)).filter(i=>i>=0);
+          idxs.sort((a,b)=>(annuals[b]||0)-(annuals[a]||0)).forEach((idx,r)=>gRanks[idx]=r+1);
+        });
+
+        OFFICES_ALL.forEach((o,i)=>{
+          const annual=annuals[i];
+          if(annual&&annual>maxScore) maxScore=annual;
+          const scores={};
+          KPI_IDS.forEach(k=>scores[k]=kpiData[k][i]);
+          records.push({office:o, annual, rank:ranks[i]||null,
+                        group_rank:gRanks[i]||null, scores});
+        });
+
+      } else {
+        // ── 格式A：直排（每列一個辦事處）──
+        // 找標題列（含「營運處」或「處別」的列）
+        let hdrIdx=-1;
+        raw.forEach((row,i)=>{
+          if(row.some(c=>['營運處','處別','office','名稱'].includes(String(c).toLowerCase().trim())))
+            hdrIdx=i;
+        });
+        if(hdrIdx<0) throw new Error('找不到欄位標題列（需含「營運處」或「處別」）');
+        const headers=raw[hdrIdx].map(c=>String(c).trim());
+        const findCol=(cands)=>headers.findIndex(h=>cands.includes(h.toLowerCase()));
+        const offC=findCol(['營運處','處別','office','名稱']);
+        const totC=findCol(['年度合計','總分','合計','annual','total']);
+        const rC  =findCol(['排名','名次','rank']);
+        if(offC<0) throw new Error('找不到「營運處」欄位');
+        for(let i=hdrIdx+1;i<raw.length;i++){
+          const row=raw[i];
+          const office=String(row[offC]||'').trim();
+          if(!office||['合計','總計',''].includes(office)) continue;
+          const annual=totC>=0?parseFloat(row[totC])||null:null;
+          const rank=rC>=0?parseInt(row[rC])||null:null;
+          if(annual&&annual>maxScore) maxScore=annual;
+          const scores={};
+          KPI_IDS.forEach(k=>{
+            const ci=headers.findIndex(h=>h.toUpperCase()===k);
+            scores[k]=ci>=0?(parseFloat(row[ci])||null):null;
+          });
+          records.push({office,annual,rank,group_rank:null,scores});
+        }
+      }
+
+      if(records.length<3) throw new Error(`僅解析到 ${records.length} 個營運處，請確認 Excel 格式`);
+
+      const newMonth = {
+        period:`${year}年${month}月累計`, year, month,
+        pub_date: new Date().toISOString().slice(0,10),
+        max_score: maxScore||100, records
+      };
+      applyUploadedMonth(newMonth, file.name, msg);
+    }catch(err){
+      msg.innerHTML='<div class="err">❌ Excel 解析失敗：'+err.message+'</div>';
+    }
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+/* ── PDF 解析 ── */
+async function processKpiPdf(file){
+  const msg = document.getElementById('kpiUploadMsg');
+  msg.innerHTML='<div class="info-msg">⏳ 解析 PDF 中（使用位置比對法）…</div>';
+  try{
+    if(typeof pdfjsLib==='undefined') throw new Error('PDF.js 尚未載入，請確認網路連線');
+    const buf = await file.arrayBuffer();
+    const pdf = await pdfjsLib.getDocument({data:buf}).promise;
+
+    const OFFICES=['台北','新北','基隆','桃園','新竹','苗栗','花蓮','宜蘭',
+                   '台中','彰化','南投','雲林','嘉義','台南','高雄','屏東','台東'];
+    const KPI_IDS=['O1','O2','L1','L2','L3','L4','M1','M2','M3','M4','M5','M6','M7','E'];
+
+    // 取得所有頁面文字項目（含 X/Y 座標）
+    let allItems=[];
+    for(let p=1;p<=pdf.numPages;p++){
+      const page=await pdf.getPage(p);
+      const tc=await page.getTextContent();
+      const vp=page.getViewport({scale:1});
+      tc.items.forEach(item=>{
+        const str=item.str.trim();
+        if(!str) return;
+        allItems.push({str, x:item.transform[4], y:vp.height-item.transform[5], page:p});
+      });
+    }
+
+    // 月份偵測
+    const fullText=allItems.map(i=>i.str).join(' ');
+    const mm=(file.name+' '+fullText).match(/(\d{1,3})\s*年?\s*(\d{1,2})\s*月/);
+    const year=mm?mm[1]:'115';
+    const month=mm?parseInt(mm[2]):0;
+    if(!month) throw new Error('無法辨識月份，請確認 PDF 標題含「X月」');
+
+    // 找辦事處標題列（含最多辦事處名稱的 Y 座標群）
+    const officeItems=allItems.filter(i=>OFFICES.includes(i.str));
+    if(officeItems.length<10) throw new Error('PDF 中辦事處名稱不足，無法解析表格');
+
+    const yBuckets={};
+    officeItems.forEach(item=>{
+      const yKey=Math.round(item.y/6)*6;
+      if(!yBuckets[yKey]) yBuckets[yKey]=[];
+      yBuckets[yKey].push(item);
+    });
+    const headerItems=Object.values(yBuckets).sort((a,b)=>b.length-a.length)[0];
+
+    // 辦事處名稱 → X座標
+    const officeXMap={};
+    headerItems.forEach(item=>{ officeXMap[item.str]=item.x; });
+
+    const TOL=20; // X軸容忍 ±20pt
+    const ROW_TOL=8; // Y軸容忍 ±8pt
+
+    const getValAtYX=(targetY, targetX)=>{
+      const cands=allItems.filter(i=>Math.abs(i.y-targetY)<ROW_TOL&&Math.abs(i.x-targetX)<TOL);
+      if(!cands.length) return null;
+      cands.sort((a,b)=>Math.abs(a.x-targetX)-Math.abs(b.x-targetX));
+      const v=parseFloat(cands[0].str);
+      return isNaN(v)?null:v;
+    };
+
+    // 找各 KPI 列 Y 座標
+    const kpiRowYMap={};
+    allItems.forEach(item=>{
+      const s=item.str.toUpperCase().trim();
+      const matched=KPI_IDS.find(k=>k.toUpperCase()===s)||(s==='ESG'?'E':null);
+      if(matched&&!kpiRowYMap[matched]) kpiRowYMap[matched]=item.y;
+    });
+
+    // 找年度得分列 Y
+    let annualY=null;
+    allItems.forEach(item=>{ if(/年度得分/.test(item.str)&&!annualY) annualY=item.y; });
+
+    // 自動計算排名
+    const annuals={};
+    OFFICES.forEach(o=>{
+      if(officeXMap[o]!==undefined&&annualY!==null)
+        annuals[o]=getValAtYX(annualY,officeXMap[o]);
+    });
+    const annualArr=OFFICES.map(o=>annuals[o]||0);
+    const GROUPS={A:['台北','新北','桃園','台中','台南','高雄'],
+                  B:['基隆','新竹','彰化','雲林','嘉義','屏東'],
+                  C:['苗栗','宜蘭','花蓮','南投','台東']};
+    const ranks=Array(17).fill(0), gRanks=Array(17).fill(0);
+    [...Array(17).keys()].sort((a,b)=>annualArr[b]-annualArr[a]).forEach((idx,r)=>ranks[idx]=r+1);
+    Object.values(GROUPS).forEach(members=>{
+      const idxs=members.map(o=>OFFICES.indexOf(o)).filter(i=>i>=0);
+      idxs.sort((a,b)=>annualArr[b]-annualArr[a]).forEach((idx,r)=>gRanks[idx]=r+1);
+    });
+
+    let maxScore=0;
+    const records=OFFICES.map((o,oi)=>{
+      const annual=annuals[o]||null;
+      if(annual&&annual>maxScore) maxScore=annual;
+      const scores={};
+      KPI_IDS.forEach(k=>{
+        const ky=kpiRowYMap[k], ox=officeXMap[o];
+        scores[k]=(ky!==undefined&&ox!==undefined)?getValAtYX(ky,ox):null;
+      });
+      return {office:o, annual, rank:ranks[oi]||null, group_rank:gRanks[oi]||null, scores};
+    });
+
+    const ch=records.find(r=>r.office==='彰化');
+    if(!ch||!ch.annual) throw new Error('無法取得彰化年度得分，PDF 格式可能不相容，建議改用 xlsx');
+
+    const newMonth={
+      period:`${year}年${month}月累計`, year, month,
+      pub_date:new Date().toISOString().slice(0,10),
+      max_score:maxScore||100, records
+    };
+    applyUploadedMonth(newMonth, file.name, msg);
+  }catch(err){
+    try{
+      msg.innerHTML=`<div class="err">
+        ⚠️ PDF 自動解析失敗：${err.message}<br>
+        建議改用 <b>.xlsx</b> 格式（如附件的 xlsx 檔）上傳，解析更穩定。
+      </div>`;
+    }catch(e2){
+      msg.innerHTML='<div class="err">❌ PDF 解析失敗：'+err.message+'</div>';
+    }
+  }
+}
+
+/* ── 套用上傳月份至 HISTORY ── */
+function applyUploadedMonth(newMonth, fileName, msg){
+  normalizeMonthRecords(newMonth); // ★ v1.3.5 統一欄位格式
+  const uploaded = loadUploadedMonths();
+  const dupIdx = uploaded.findIndex(m=>m.month===newMonth.month&&m.year===newMonth.year);
+  if(dupIdx>=0) uploaded.splice(dupIdx,1);  // 覆寫同月
+  uploaded.push(newMonth);
+  saveUploadedMonths(uploaded);
+
+  // 即時合併到 HISTORY
+  const existing = HISTORY.months.find(m=>m.month===newMonth.month&&m.year===newMonth.year);
+  if(existing){ Object.assign(existing, newMonth, {placeholder:false}); }
+  else{ HISTORY.months.push(newMonth); HISTORY.months.sort((a,b)=>a.month-b.month); }
+
+  const me = newMonth.records.find(r=>r.office===MY_OFFICE);
+  msg.innerHTML=`<div class="ok">
+    ✅ ${newMonth.period}資料已更新！<br>
+    來源：${fileName}<br>
+    彰化得分：<b>${me?me.annual:'—'}</b>｜排名：<b>${me&&me.rank?me.rank:'—'}</b>／17
+  </div>`;
+
+  // ★ 更新 ACTUAL → 讓儀表板、比較頁也能看到最新資料
+  // 找 HISTORY 中最新月份（month 最大且非 placeholder）作為新的 ACTUAL
+  const validMonths = HISTORY.months.filter(m=>!m.placeholder && m.records && m.records.length>0);
+  if(validMonths.length>0){
+    const latest = validMonths.reduce((a,b)=> (parseInt(b.month)>parseInt(a.month)?b:a));
+    ACTUAL = latest;
+    DATA.actual = latest;  // 同步 DATA.actual
+  }
+
+  // 重繪所有頁籤
+  renderKpiHistoryList();
+  if(typeof renderDashboard==='function') renderDashboard();
+  if(typeof renderCompareControls==='function') renderCompareControls();
+  if(typeof renderCompareChart==='function') renderCompareChart();
+  if(typeof renderTrendChart==='function') renderTrendChart();
+  if(typeof renderTrendControls==='function') renderTrendControls();
+
+  // ★ v5.37: 通知 PyQt「有新 KPI 月份資料」，Python 端再用 runJavaScript 讀取並寫回 HTML
+  try{
+    // window.location.href 觸發 acceptNavigationRequest（無 payload，避免 URL 長度限制）
+    // PyQt 收到後呼叫 _flush_kpi_history_to_html()
+    if(typeof window.__in_pyqt__ !== 'undefined' && window.__in_pyqt__){
+      window.location.href = 'pyqtapp://save_kpi_history';
+    }
+  }catch(e){ /* 非 PyQt 環境略過 */ }
+}
+
+/* ── 顯示已上傳清單 ── */
+function renderKpiHistoryList(){
+  const uploaded = loadUploadedMonths();
+  const list = document.getElementById('kpiHistoryList');
+  if(!uploaded.length){ list.innerHTML=''; return; }
+  list.innerHTML='<div style="font-size:11px;font-weight:600;color:var(--muted);margin:8px 0 4px">已上傳月份資料：</div>';
+  uploaded.sort((a,b)=>a.month-b.month).forEach((m,i)=>{
+    const me=m.records&&m.records.find(r=>r.office===MY_OFFICE);
+    const div=document.createElement('div');
+    div.className='history-item';
+    div.innerHTML=`
+      <div>
+        <span class="hi-name">${m.period}</span>
+        <span class="hi-badge">${m.records?m.records.length:0} 處</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <span style="font-size:11px;color:var(--muted)">彰化 ${me?me.annual:'—'} 分</span>
+        <button class="hi-del" onclick="deleteUploadedMonth(${i})" title="刪除此月份">🗑</button>
+      </div>`;
+    list.appendChild(div);
+  });
+}
+
+function deleteUploadedMonth(idx){
+  const uploaded=loadUploadedMonths();
+  const m=uploaded[idx];
+  if(!confirm('確定移除「'+m.period+'」的上傳資料？')) return;
+  uploaded.splice(idx,1);
+  saveUploadedMonths(uploaded);
+  // 還原 placeholder
+  const existing=HISTORY.months.find(x=>x.month===m.month&&x.year===m.year);
+  if(existing) existing.placeholder=true;
+  renderKpiHistoryList();
+  if(typeof renderTrendControls==='function') renderTrendControls();
+  if(typeof renderTrendChart==='function') renderTrendChart();
+  document.getElementById('kpiUploadMsg').innerHTML='';
+}
+
+// 頁面切換到上傳頁時初始化清單
+document.addEventListener('DOMContentLoaded',()=>{
+  // 監聽 tab 切換
+  document.querySelectorAll('.tab[data-page="upload"]').forEach(btn=>{
+    btn.addEventListener('click',()=>{ renderKpiHistoryList(); });
+  });
+});
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
+<script>
+  if(typeof pdfjsLib!=='undefined'){
+    pdfjsLib.GlobalWorkerOptions.workerSrc=
+      'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
+  }
+</script>
+<style>
+:root{
+  --cht-blue:#0066B3; --cht-teal:#00ACB6; --cht-deep:#003D6E;
+  --bg:#f5f7fa; --card:#ffffff; --text:#1a1f2e; --muted:#5a6478;
+  --border:#e2e6ec; --border2:#d0d6df;
+  --ok:#16a34a; --warn:#f59e0b; --bad:#dc2626;
+  --cat-O:#0066B3; --cat-L:#16a34a; --cat-M:#dc2626; --cat-E:#7c3aed; --cat-C:#5a6478;
+  --safe-top:env(safe-area-inset-top); --safe-bot:env(safe-area-inset-bottom);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;background:var(--bg)}
+html{min-height:100%}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang TC','Microsoft JhengHei',sans-serif;
+  color:var(--text);font-size:15px;line-height:1.5;-webkit-text-size-adjust:100%;
+  padding-top:var(--safe-top);
+  min-height:100vh;
+}
+.hdr{
+  display:none;
+}
+.hdr h1{margin:0;font-size:12px;font-weight:600;letter-spacing:.3px;white-space:nowrap}
+.hdr .sub{font-size:10px;opacity:.75;display:none}
+.hdr .badge{display:inline-block;background:rgba(255,255,255,.18);padding:1px 5px;border-radius:4px;font-size:9px;margin-left:4px}
+
+/* Tab Bar — 底部固定 */
+/* ── Tab bar 右側功能按鈕 ── */
+.hdr-actions{margin-left:auto;display:flex;align-items:center;gap:4px;padding:0 4px}
+.hdr-btn{
+  background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);
+  color:#fff;border-radius:5px;width:30px;height:26px;font-size:15px;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:background .15s;padding:0;line-height:1;
+}
+.hdr-btn:hover{background:rgba(255,255,255,.3)}
+.hdr-btn.reload:hover{background:#27ae60}
+.hdr-btn.upload:hover{background:#2e86c1}
+.hdr-btn.browser:hover{background:#7d3c98}
+.tabbar{
+  background:var(--cht-blue);display:flex;gap:0;overflow-x:auto;
+  padding:0 8px;position:sticky;top:0;z-index:200;
+  box-shadow:0 2px 6px rgba(0,0,0,.15);
+  scrollbar-width:none;
+}
+.tabbar::-webkit-scrollbar{display:none}
+.tab{
+  background:transparent;border:none;color:rgba(255,255,255,.7);
+  padding:10px 14px;cursor:pointer;font-size:0.85rem;white-space:nowrap;
+  border-bottom:3px solid transparent;transition:all .2s;font-family:inherit;
+  display:flex;align-items:center;gap:4px;
+}
+.tab .icn{font-size:14px;line-height:1}
+.tab.active{color:#fff;border-bottom-color:#FFD700;font-weight:600}
+.tab:hover:not(.active){color:#fff;background:rgba(255,255,255,.1)}
+
+main{padding:12px 12px 24px}
+.page > *:last-child{margin-bottom:16px}
+
+/* ─── 總覽分頁 ─────────────────────────────── */
+.summary-bar{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:12px;
+}
+.sum-card{
+  background:var(--card);border-radius:8px;padding:8px 6px;text-align:center;
+  border:1px solid var(--border);
+}
+.sum-card .v{font-size:18px;font-weight:700;color:var(--cht-blue)}
+.sum-card .l{font-size:10px;color:var(--muted);margin-top:2px}
+
+.cat-section{margin-bottom:14px}
+.cat-title{
+  display:flex;align-items:center;gap:8px;margin:8px 2px 8px;
+  font-size:13px;font-weight:600;
+}
+.cat-dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+.cat-weight{margin-left:auto;font-size:11px;color:var(--muted);font-weight:500}
+
+.kpi-card{
+  background:var(--card);border-radius:10px;padding:11px 12px;margin-bottom:8px;
+  border:1px solid var(--border);cursor:pointer;
+  transition:transform .15s,box-shadow .15s;
+}
+.kpi-card:active{transform:scale(.98);box-shadow:0 4px 12px rgba(0,0,0,.08)}
+.kpi-head{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.kpi-id{
+  background:var(--cht-blue);color:#fff;font-size:11px;font-weight:700;
+  padding:2px 7px;border-radius:4px;letter-spacing:.5px;flex-shrink:0;
+}
+.kpi-name{font-size:14px;font-weight:600;flex:1;line-height:1.3}
+.kpi-meta{
+  display:flex;flex-wrap:wrap;gap:4px 10px;font-size:11px;color:var(--muted);
+}
+.kpi-meta span{display:inline-flex;align-items:center;gap:2px}
+.kpi-meta b{color:var(--text);font-weight:600}
+
+/* ─── 字典分頁 ─────────────────────────────── */
+.search-bar{
+  position:sticky;top:calc(var(--safe-top) + 56px);z-index:50;
+  background:var(--bg);padding:8px 0 8px;margin:-4px -12px 8px;padding-left:12px;padding-right:12px;
+}
+.search-bar input{
+  width:100%;padding:9px 12px;border:1px solid var(--border2);border-radius:8px;
+  font-size:14px;background:#fff;-webkit-appearance:none;
+}
+.search-bar input:focus{outline:none;border-color:var(--cht-blue);box-shadow:0 0 0 2px rgba(0,102,179,.1)}
+.filter-chips{display:flex;gap:5px;margin-top:8px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
+.filter-chips::-webkit-scrollbar{display:none}
+.chip{
+  padding:4px 10px;border-radius:14px;background:#fff;border:1px solid var(--border2);
+  font-size:11px;white-space:nowrap;cursor:pointer;flex-shrink:0;
+}
+.chip.active{background:var(--cht-blue);color:#fff;border-color:var(--cht-blue)}
+
+.detail-card{
+  background:var(--card);border-radius:10px;margin-bottom:8px;
+  border:1px solid var(--border);overflow:hidden;
+}
+.detail-head{padding:11px 12px;cursor:pointer;display:flex;align-items:center;gap:8px}
+.detail-head .arrow{
+  margin-left:auto;font-size:12px;color:var(--muted);
+  transition:transform .2s;
+}
+.detail-card.open .detail-head .arrow{transform:rotate(90deg)}
+.detail-body{display:none;padding:0 12px 12px;border-top:1px solid var(--border)}
+.detail-card.open .detail-body{display:block}
+
+.sec{margin-top:10px}
+.sec-title{
+  font-size:11px;font-weight:700;color:var(--cht-blue);letter-spacing:.5px;
+  text-transform:uppercase;margin-bottom:4px;display:flex;align-items:center;gap:4px;
+}
+.sec-body{
+  font-size:13px;line-height:1.6;color:var(--text);white-space:pre-wrap;
+  background:#f8fafc;padding:8px 10px;border-radius:6px;border-left:3px solid var(--cht-teal);
+}
+.sec-body.mono{font-family:'SF Mono','Consolas','Monaco',monospace;font-size:12.5px}
+
+.target-grid{
+  display:grid;grid-template-columns:1fr auto;gap:4px 12px;margin-top:6px;
+  background:#f0f9fc;padding:8px 10px;border-radius:6px;border:1px solid #d0e8ee;
+}
+.target-grid .k{font-size:12px;color:var(--muted)}
+.target-grid .v{font-size:13px;font-weight:600;color:var(--cht-blue);text-align:right;font-variant-numeric:tabular-nums}
+
+/* ─── 彰化目標分頁 ─────────────────────────── */
+.my-card{
+  background:linear-gradient(135deg,#fff,#f0f9fc);
+  border-radius:10px;padding:12px;margin-bottom:8px;
+  border:1px solid #c0dde6;border-left:4px solid var(--cht-teal);
+}
+.my-card .h{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.my-card .h .nm{font-size:14px;font-weight:600;flex:1}
+.my-table{width:100%;border-collapse:collapse;font-size:13px}
+.my-table td{padding:5px 0;border-bottom:1px dashed #d0e8ee}
+.my-table td:last-child{text-align:right;font-weight:600;font-variant-numeric:tabular-nums;color:var(--cht-deep)}
+.my-table tr:last-child td{border-bottom:none}
+
+.comp-banner{
+  background:linear-gradient(135deg,#fff7e6,#fef3c7);
+  border-radius:8px;padding:10px 12px;margin-bottom:10px;
+  border:1px solid #fde68a;font-size:12.5px;color:#92400e;
+}
+
+/* ─── 試算器 ─────────────────────────────── */
+.calc-wrap{background:var(--card);border-radius:10px;padding:14px;border:1px solid var(--border)}
+.calc-row{margin-bottom:14px}
+.calc-row label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px;font-weight:600}
+.calc-row select,.calc-row input{
+  width:100%;padding:9px 11px;border:1px solid var(--border2);border-radius:6px;
+  font-size:14px;background:#fff;-webkit-appearance:none;
+}
+.calc-row select:focus,.calc-row input:focus{outline:none;border-color:var(--cht-blue)}
+.calc-input-grp{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+
+.calc-result{
+  margin-top:14px;padding:14px;border-radius:10px;
+  background:linear-gradient(135deg,#f0f9fc,#e0f2f7);
+  border:1px solid #b8dce5;
+}
+.calc-result .lbl{font-size:11px;color:var(--muted);font-weight:600;margin-bottom:4px}
+.calc-result .score{
+  font-size:38px;font-weight:700;color:var(--cht-deep);
+  font-variant-numeric:tabular-nums;line-height:1;
+}
+.calc-result .unit{font-size:14px;color:var(--muted);margin-left:4px}
+.calc-result .grade{
+  display:inline-block;margin-top:6px;padding:3px 10px;border-radius:12px;
+  font-size:12px;font-weight:600;
+}
+.grade-ok{background:#dcfce7;color:#166534}
+.grade-warn{background:#fef3c7;color:#92400e}
+.grade-bad{background:#fee2e2;color:#991b1b}
+.calc-formula{font-size:11px;color:var(--muted);margin-top:8px;line-height:1.6;font-family:monospace}
+
+/* ─── 筆記 ─────────────────────────────── */
+.note-bar{display:flex;gap:6px;margin-bottom:10px}
+.note-bar input{
+  flex:1;padding:9px 11px;border:1px solid var(--border2);border-radius:6px;
+  font-size:13px;background:#fff;
+}
+.note-bar button{
+  padding:9px 14px;border:none;background:var(--cht-blue);color:#fff;
+  font-size:13px;font-weight:600;border-radius:6px;cursor:pointer;
+}
+.note-item{
+  background:var(--card);border-radius:8px;padding:10px 12px;margin-bottom:6px;
+  border:1px solid var(--border);position:relative;
+}
+.note-item .kpi-tag{font-size:10px;color:var(--cht-blue);font-weight:600;margin-bottom:3px}
+.note-item .txt{font-size:13px;line-height:1.5;white-space:pre-wrap}
+.note-item .meta{font-size:10px;color:var(--muted);margin-top:4px;display:flex;align-items:center;gap:8px}
+.note-del{
+  position:absolute;top:6px;right:8px;background:none;border:none;color:var(--muted);
+  font-size:18px;cursor:pointer;padding:2px 6px;line-height:1;
+}
+.note-del:active{color:var(--bad)}
+
+/* ─── 通用 ─────────────────────────────── */
+.empty{
+  text-align:center;padding:40px 16px;color:var(--muted);font-size:13px;
+}
+.empty .icn{font-size:42px;opacity:.4;margin-bottom:8px;display:block}
+
+.page{display:none}
+.page.active{display:block;animation:fadeIn .2s ease-out}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+
+/* ─── v1.1 實績儀表板 ─── */
+.hero-rank{
+  background:linear-gradient(135deg,var(--cht-deep),var(--cht-blue));
+  color:#fff;border-radius:12px;padding:14px 16px;margin-bottom:12px;
+  display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:center;
+}
+.hero-rank .big{font-size:42px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
+.hero-rank .lbl{font-size:11px;opacity:.85;margin-top:3px}
+.hero-rank .info{display:flex;flex-direction:column;gap:4px}
+.hero-rank .info .row{display:flex;gap:8px;font-size:12px;align-items:baseline}
+.hero-rank .info .row b{font-size:18px;font-weight:700;font-variant-numeric:tabular-nums}
+.hero-rank .info .row .sub{opacity:.7;font-size:10px}
+
+.alert-bar{
+  background:#fef2f2;border:1px solid #fecaca;border-left:4px solid var(--bad);
+  border-radius:8px;padding:9px 11px;margin-bottom:10px;
+  font-size:12px;color:#991b1b;line-height:1.5;
+}
+.alert-bar .ttl{font-weight:700;margin-bottom:3px;font-size:12.5px}
+
+.kpi-actual{
+  background:var(--card);border-radius:10px;padding:11px 12px;margin-bottom:7px;
+  border:1px solid var(--border);cursor:pointer;
+  display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;
+}
+.kpi-actual:active{transform:scale(.98)}
+.kpi-actual .id-tag{
+  background:var(--cht-blue);color:#fff;font-size:10.5px;font-weight:700;
+  padding:2px 6px;border-radius:4px;letter-spacing:.5px;flex-shrink:0;
+}
+.kpi-actual .body{min-width:0}
+.kpi-actual .nm{font-size:13.5px;font-weight:600;line-height:1.3;margin-bottom:3px}
+.kpi-actual .meta{font-size:11px;color:var(--muted);display:flex;gap:8px;flex-wrap:wrap}
+.kpi-actual .score-block{text-align:right;flex-shrink:0}
+.kpi-actual .sv{font-size:20px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1}
+.kpi-actual .sb{font-size:10px;color:var(--muted);margin-top:2px}
+.kpi-actual.ok .sv{color:var(--ok)}
+.kpi-actual.warn .sv{color:var(--warn)}
+.kpi-actual.bad .sv{color:var(--bad)}
+.kpi-actual.year .sv{color:var(--muted);font-size:14px}
+.kpi-actual.ok{border-left:3px solid var(--ok)}
+.kpi-actual.warn{border-left:3px solid var(--warn)}
+.kpi-actual.bad{border-left:3px solid var(--bad)}
+
+.prog-bar{
+  height:5px;background:var(--border);border-radius:3px;overflow:hidden;margin-top:5px;
+}
+.prog-bar .fill{height:100%;transition:width .4s}
+.prog-bar .fill.ok{background:var(--ok)}
+.prog-bar .fill.warn{background:var(--warn)}
+.prog-bar .fill.bad{background:var(--bad)}
+
+/* ─── v1.1 全處比較 ─── */
+.cmp-controls{
+  background:var(--card);border-radius:10px;padding:10px 12px;margin-bottom:10px;
+  border:1px solid var(--border);
+}
+.cmp-controls label{display:block;font-size:11px;color:var(--muted);margin-bottom:4px;font-weight:600}
+.cmp-controls select{
+  width:100%;padding:8px 10px;border:1px solid var(--border2);border-radius:6px;
+  font-size:13px;background:#fff;-webkit-appearance:none;margin-bottom:8px;
+}
+.cmp-controls select:last-child{margin-bottom:0}
+
+.cmp-mode-tabs{display:flex;gap:4px;margin-bottom:8px}
+.cmp-mode-tab{
+  flex:1;padding:6px 4px;border:1px solid var(--border2);background:#fff;
+  font-size:11px;border-radius:6px;cursor:pointer;
+}
+.cmp-mode-tab.active{background:var(--cht-blue);color:#fff;border-color:var(--cht-blue)}
+
+.chart-card{
+  background:var(--card);border-radius:10px;padding:12px;margin-bottom:10px;
+  border:1px solid var(--border);
+}
+.chart-card .title{font-size:13px;font-weight:700;margin-bottom:8px;color:var(--cht-deep)}
+.chart-card .sub{font-size:11px;color:var(--muted);margin-bottom:8px}
+.chart-wrap{position:relative;width:100%}
+.chart-wrap.tall{height:430px}
+.chart-wrap.short{height:280px}
+.chart-wrap.radar{height:340px}
+
+.rank-table{width:100%;border-collapse:collapse;font-size:12px;margin-top:4px}
+.rank-table th,.rank-table td{padding:6px 4px;border-bottom:1px solid var(--border);text-align:center}
+.rank-table th{background:#f8fafc;font-size:10.5px;color:var(--muted);font-weight:600}
+.rank-table td.office{text-align:left;font-weight:600;padding-left:8px}
+.rank-table td.score{font-variant-numeric:tabular-nums;font-weight:600}
+.rank-table tr.me{background:#fef9c3}
+.rank-table tr.me td{font-weight:700;color:#854d0e}
+.rank-table .pos-1,.rank-table .pos-2,.rank-table .pos-3{color:var(--ok);font-weight:700}
+.rank-table .pos-last{color:var(--bad);font-weight:700}
+
+/* ─── v1.2 趨勢分頁 ─── */
+.trend-hdr{
+  background:var(--card);border-radius:10px;padding:11px 12px;margin-bottom:10px;
+  border:1px solid var(--border);
+}
+.trend-hdr .ttl{font-size:13px;font-weight:600;margin-bottom:6px;color:var(--cht-deep)}
+.trend-hdr select{
+  width:100%;padding:8px 10px;border:1px solid var(--border2);border-radius:6px;
+  font-size:13px;background:#fff;-webkit-appearance:none;margin-bottom:6px;
+}
+
+.month-pills{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:6px}
+.month-pill{
+  padding:5px 9px;border-radius:12px;background:#f0f9fc;border:1px solid #c0dde6;
+  font-size:11px;color:var(--cht-deep);font-weight:600;
+}
+.month-pill.placeholder{background:#fef3c7;border-color:#fde68a;color:#92400e}
+.month-pill.placeholder::before{content:'⚠️ ';font-size:9px}
+
+.trend-summary{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px;
+}
+.tsum-card{
+  background:var(--card);border-radius:8px;padding:9px 8px;text-align:center;
+  border:1px solid var(--border);
+}
+.tsum-card .v{font-size:18px;font-weight:700;font-variant-numeric:tabular-nums}
+.tsum-card .l{font-size:10px;color:var(--muted);margin-top:2px}
+.tsum-card.up .v{color:var(--ok)}
+.tsum-card.down .v{color:var(--bad)}
+.tsum-card.flat .v{color:var(--muted)}
+
+.placeholder-tip{
+  background:#fffbeb;border:1px solid #fde68a;border-left:3px solid var(--warn);
+  border-radius:6px;padding:8px 10px;margin-bottom:10px;font-size:11.5px;
+  color:#92400e;line-height:1.6;
+}
+.placeholder-tip b{color:#7c2d12}
+
+@media (min-width:600px){
+  main{max-width:720px;margin:0 auto}
+}
+
+/* ── 上傳頁 ────────────────────────────────── */
+.upload-wrap{padding:12px 4px 80px}
+.upload-card{background:var(--card);border-radius:12px;padding:20px 18px;
+  box-shadow:0 1px 4px rgba(0,0,0,.07);margin-bottom:14px}
+.upload-card h3{font-size:14px;font-weight:700;color:var(--cht-deep);margin-bottom:6px}
+.upload-card p{font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:12px}
+.dropzone{
+  border:2px dashed var(--cht-blue);border-radius:10px;padding:28px 16px;
+  text-align:center;cursor:pointer;transition:all .2s;background:#f8fbff;
+}
+.dropzone:hover,.dropzone.drag{border-color:var(--cht-teal);background:#e6f7f8}
+.dropzone .dz-icon{font-size:2.2rem;margin-bottom:8px}
+.dropzone .dz-main{font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px}
+.dropzone .dz-sub{font-size:11px;color:var(--muted)}
+.fmt-badge{display:inline-block;padding:1px 7px;border-radius:4px;
+  font-size:10px;font-weight:700;margin:0 2px}
+.fmt-xlsx{background:#E0F2FE;color:#0369A1}
+.fmt-pdf{background:#FEF9C3;color:#854D0E}
+.upload-msg{margin-top:10px;font-size:12px}
+.upload-msg .ok{background:#dcfce7;color:#166534;border:1px solid #bbf7d0;
+  padding:8px 12px;border-radius:7px}
+.upload-msg .err{background:#fee2e2;color:#991b1b;border:1px solid #fecaca;
+  padding:8px 12px;border-radius:7px}
+.upload-msg .info-msg{background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe;
+  padding:8px 12px;border-radius:7px}
+.history-list{margin-top:12px}
+.history-item{display:flex;align-items:center;justify-content:space-between;
+  background:#f8fbff;border:1px solid var(--border);border-radius:8px;
+  padding:8px 12px;margin-bottom:6px;font-size:12px}
+.history-item .hi-name{font-weight:600;color:var(--cht-deep)}
+.history-item .hi-badge{font-size:10px;background:var(--cht-blue);color:#fff;
+  padding:1px 7px;border-radius:10px;margin-left:6px}
+.history-item .hi-del{background:none;border:none;color:#cbd5e1;cursor:pointer;
+  font-size:14px;padding:0 4px}
+.history-item .hi-del:hover{color:#dc2626}
+.col-guide{width:100%;border-collapse:collapse;font-size:11px;margin-top:8px}
+.col-guide th{background:var(--cht-blue);color:#fff;padding:5px 8px;text-align:left}
+.col-guide td{padding:5px 8px;border-bottom:1px solid var(--border)}
+.col-guide tr:hover td{background:#eff6ff}
+.pdf-iframe{width:100%;height:480px;border:1px solid var(--border2);
+  border-radius:8px;margin-top:8px}
+
+/* ── FlexibleBudget 回主頁按鈕 ── */
+#fb-home-btn {
+  position: fixed; bottom: 20px; right: 20px; z-index: 99999;
+  background: linear-gradient(135deg, #005bac, #00a8e0);
+  color: #fff; border: none; border-radius: 50px;
+  padding: 11px 20px 11px 15px; font-size: 13px; font-weight: 600;
+  cursor: pointer; display: flex; align-items: center; gap: 8px;
+  box-shadow: 0 4px 18px rgba(0,91,172,.5);
+  font-family: -apple-system,"Microsoft JhengHei",sans-serif;
+  white-space: nowrap; -webkit-tap-highlight-color: transparent;
+  transition: transform .15s, box-shadow .15s;
+  letter-spacing: .3px;
+}
+#fb-home-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,91,172,.6); }
+#fb-home-btn:active { transform: scale(.95); }
+
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <h1>📊 KPI 字典與指標管理 <span class="badge">v1.2</span></h1>
+</header>
+
+<nav class="tabbar">
+  <button class="tab active" data-page="dashboard"><span class="icn">📈</span>儀表板</button>
+  <button class="tab" data-page="dict"><span class="icn">📖</span>字典</button>
+  <button class="tab" data-page="compare"><span class="icn">🏆</span>比較</button>
+  <button class="tab" data-page="trend"><span class="icn">📉</span>趨勢</button>
+  <button class="tab" data-page="calc"><span class="icn">🧮</span>試算</button>
+  <button class="tab" data-page="notes"><span class="icn">📝</span>筆記</button>
+  <button class="tab" data-page="upload"><span class="icn">📤</span>上傳</button>
+  <!-- ── 右側功能按鈕（呼叫 PyQt6 透過 pyqtapp:// scheme）── -->
+  <div class="hdr-actions">
+    <button class="hdr-btn reload"  onclick="window.location.href='pyqtapp://reload'"  title="重新載入">🔄</button>
+    <button class="hdr-btn upload"  onclick="window.location.href='pyqtapp://upload'"  title="上傳更新 HTML">📂</button>
+    <button class="hdr-btn browser" onclick="window.location.href='pyqtapp://browser'" title="瀏覽器開啟">🌐</button>
+  </div>
+</nav>
+
+<main>
+
+  <!-- ─── Tab 1: 實績儀表板 (v1.1) ─── -->
+  <section class="page active" id="page-dashboard">
+    <div class="hero-rank">
+      <div>
+        <div class="big" id="heroScore">—</div>
+        <div class="lbl" id="heroLabel">115/5 累計得分</div>
+      </div>
+      <div class="info">
+        <div class="row"><b id="heroRank">—</b><span class="sub">/ 17 處</span></div>
+        <div class="row"><span class="sub" style="font-size:11px">B 組</span><b id="heroGRank" style="font-size:14px">—</b><span class="sub">/ 6</span></div>
+        <div class="row" style="font-size:10.5px;opacity:.85;margin-top:2px" id="heroPeriod">—</div>
+      </div>
+    </div>
+    <div id="alertBox"></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin:14px 2px 8px">
+      <span style="font-size:13px;font-weight:600">📋 各項 KPI 累計成績</span>
+      <span style="font-size:10px;color:var(--muted)">點擊查看完整定義</span>
+    </div>
+    <div id="actualList"></div>
+  </section>
+
+  <!-- ─── Tab 2: 字典 ─── -->
+  <section class="page" id="page-dict">
+    <div class="search-bar">
+      <input id="searchInput" type="search" placeholder="🔍 搜尋指標、定義、公式…" autocomplete="off">
+      <div class="filter-chips" id="filterChips"></div>
+    </div>
+    <div id="dict-list"></div>
+  </section>
+
+  <!-- ─── Tab: 全處比較 (v1.1) ─── -->
+  <section class="page" id="page-compare">
+    <div class="cmp-controls">
+      <label>選擇比較指標</label>
+      <select id="cmpKpi"></select>
+      <div class="cmp-mode-tabs">
+        <button class="cmp-mode-tab active" data-mode="rank">📊 排名橫條</button>
+        <button class="cmp-mode-tab" data-mode="group">🎯 A/B/C 組</button>
+        <button class="cmp-mode-tab" data-mode="radar">🕸️ 彰化雷達</button>
+      </div>
+    </div>
+    <div class="chart-card">
+      <div class="title" id="cmpChartTitle">—</div>
+      <div class="sub" id="cmpChartSub">—</div>
+      <div class="chart-wrap" id="cmpChartWrap"><canvas id="cmpChart"></canvas></div>
+    </div>
+    <div id="cmpTable"></div>
+  </section>
+
+  <!-- ─── Tab: 月度趨勢 (v1.2) ─── -->
+  <section class="page" id="page-trend">
+    <div class="trend-hdr">
+      <div class="ttl">📈 月度趨勢分析(彰化)</div>
+      <select id="trendKpi"></select>
+      <div class="month-pills" id="monthPills"></div>
+    </div>
+    <div id="trendPlaceholderTip"></div>
+    <div class="trend-summary" id="trendSummary"></div>
+    <div class="chart-card">
+      <div class="title" id="trendChartTitle">趨勢曲線</div>
+      <div class="sub" id="trendChartSub">—</div>
+      <div class="chart-wrap short"><canvas id="trendChart"></canvas></div>
+    </div>
+    <div id="trendTable"></div>
+  </section>
+
+  <!-- ─── Tab 4: 試算器 ─── -->
+  <section class="page" id="page-calc">
+    <div class="calc-wrap">
+      <div class="calc-row">
+        <label>選擇 KPI</label>
+        <select id="calcKpi"></select>
+      </div>
+      <div class="calc-input-grp">
+        <div class="calc-row">
+          <label id="calcLabelA">實績值</label>
+          <input id="calcA" type="number" inputmode="decimal" step="any" placeholder="0">
+        </div>
+        <div class="calc-row">
+          <label id="calcLabelB">目標值</label>
+          <input id="calcB" type="number" inputmode="decimal" step="any" placeholder="0">
+        </div>
+      </div>
+      <div class="calc-result">
+        <div class="lbl">推算得分</div>
+        <div><span class="score" id="calcScore">—</span><span class="unit">分</span></div>
+        <div id="calcGrade"></div>
+        <div class="calc-formula" id="calcFormula">請選擇 KPI 並輸入數值</div>
+      </div>
+    </div>
+    <div style="margin-top:10px;padding:10px;background:#fff7e6;border-radius:8px;border:1px solid #fde68a;font-size:11.5px;color:#92400e;line-height:1.6">
+      ⚠️ 試算結果為單一指標粗估，實際得分需依完整公式(權重組合、子項計算、特殊扣分等)結算，僅供概略參考。
+    </div>
+  </section>
+
+  <!-- ─── Tab 5: 筆記 ─── -->
+  <section class="page" id="page-notes">
+    <div class="note-bar">
+      <select id="noteKpi" style="flex:0 0 90px;padding:9px 8px;border:1px solid var(--border2);border-radius:6px;font-size:12px;background:#fff;-webkit-appearance:none"></select>
+      <input id="noteInput" type="text" placeholder="輸入筆記內容…">
+      <button id="noteAddBtn">＋</button>
+    </div>
+    <div id="notes-list"></div>
+  </section>
+
+
+  <!-- ─── Tab: 上傳更新 ─── -->
+  <section class="page" id="page-upload">
+    <div class="upload-wrap">
+
+      <div class="upload-card">
+        <h3>📤 上傳月份 KPI 成績</h3>
+        <p>支援總公司業管處發布的「累計 KPI 成績」Excel 或 PDF 檔案。<br>
+           上傳後系統自動解析並填入月度趨勢圖，資料儲存於本機瀏覽器。</p>
+        <div class="dropzone" id="kpiDropzone"
+          onclick="document.getElementById('kpiFileInput').click()"
+          ondragover="event.preventDefault();this.classList.add('drag')"
+          ondragleave="this.classList.remove('drag')"
+          ondrop="handleKpiDrop(event)">
+          <div class="dz-icon">📂</div>
+          <div class="dz-main">點擊選擇 Excel 檔案（或 PDF），或拖曳至此處更新最新月份數據</div>
+          <div class="dz-sub" style="margin-top:6px">
+            支援格式：
+            <span class="fmt-badge fmt-xlsx">.xlsx</span>
+            <span class="fmt-badge fmt-pdf">.pdf</span>
+            ｜建議命名：累計至115年X月KPI成績.xlsx / .pdf
+          </div>
+        </div>
+        <input type="file" id="kpiFileInput" accept=".xlsx,.xls,.pdf"
+          onchange="handleKpiFileUpload(event)" style="display:none">
+        <div class="upload-msg" id="kpiUploadMsg"></div>
+        <div class="history-list" id="kpiHistoryList"></div>
+      </div>
+
+      <div class="upload-card">
+        <h3>📋 Excel 欄位對應說明</h3>
+        <p>請確認 Excel 工作表包含以下欄位（欄名需完全相符）：</p>
+        <table class="col-guide">
+          <thead><tr><th>欄位名稱</th><th>說明</th><th>範例</th></tr></thead>
+          <tbody>
+            <tr><td>營運處</td><td>17 個營運處名稱</td><td>彰化、台北、高雄…</td></tr>
+            <tr><td>O1～M7、ESG</td><td>各 KPI 得分</td><td>99.07</td></tr>
+            <tr><td>年度合計 / 總分 / 合計</td><td>累計總分（擇一）</td><td>43.06</td></tr>
+            <tr><td>排名 / 全處排名</td><td>全處排名（1–17）</td><td>5</td></tr>
+          </tbody>
+        </table>
+        <div class="upload-msg" style="margin-top:8px">
+          <div class="info-msg">💡 若 PDF 無法自動解析，系統會顯示 PDF 預覽供人工核對。</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<script>
+/* ──────────────── 資料區 ──────────────── */
+const DATA = {"version":"v1.0","year":"115","publish_date":"2026/04/03","my_office":"彰化","kpi":[{"id":"O1","cat":"整體績效","cat_short":"O","name":"交易機構營收","owner":"業管","weight":25,"target_unit":"億元","target_total":"1,832.12 億元","freq":"月","attr":"愈大愈好","formula":"營運處 = 營業收入(交易機構)達成得分 × 100%\n註:得分 = 年度計分(含不可控)","definition":"一、營業收入(交易機構):\n(一)營運處考核交易機構營收(排除會館收入、國際分公司營收),係指會計處營業收入資料的交易機構欄位為所屬營運處代碼之營收。\n(二)營業收入(交易機構)達成率 = 實績值 ÷ 目標值。","scoring":"達目標者得 95 分,每增(減) 1%,加(減) 0.5 分,最高 100 分。","source":"會計系統、MAS 管會系統","deadline":"每月 10 日","ch_target":{"個家":53.243,"企客":18.268,"總產發":0.296,"合計":71.807},"scoring_base":95,"scoring_step":0.5,"scoring_max":100,"scoring_min":null},{"id":"O2","cat":"整體績效","cat_short":"O","name":"成本費用控制","owner":"會計","weight":20,"target_unit":"億元","target_total":"441.00 億元","freq":"月","attr":"愈小愈好","formula":"成本及費用控制績效 = (年度營業成本費用及內部碳費實際動支數 / 年度營業成本費用及內部碳費預算數) × 100%","definition":"1. 營業成本及費用(重分類前),不包含 153 企業化特別獎金、157 員工酬勞、1613 退休金-專案離退、164 優惠專案離職金、185 提撥福利金、231 系列旅費、251 土地改良物維護費、25211 修繕費等。\n2. 每季以交易機構基本版預算為基礎,參酌列帳機構 FR 預估調整。\n3. 市售商品成本、紅利積點成本依標準成本率同步調整。\n4. 年度中承作之虧損或評損專標案,結算時將虧損影響數納入為成本費用實績動支數之加項。\n5. 評核交易機構內部碳費損益。","scoring":"達年度目標得 98 分,營業成本及費用動支率每減(增) 1%,加(減) 0.5 分;得分最高 100 分。","source":"TAIS 及 AS400 系統","deadline":"每月 15 日(遇假日或重大關帳事項則順延)","ch_target":{"目標值":19.39},"scoring_base":98,"scoring_step":0.5,"scoring_max":100,"scoring_min":null},{"id":"L1","cat":"鞏固核心","cat_short":"L","name":"行動營運量_個家+企客","owner":"業管","weight":4,"target_unit":"分","target_total":"95 分","freq":"月","attr":"依子項而定","formula":"行動績效得分 = 月租型離網數達成率得分 × 15%\n + 新客戶數達成率得分 × 10%\n + 月租客戶營收變動數達成率得分 × 65%\n + 5G 累計客戶數達成率得分 × 10%\n + 行動物聯網門號達成率得分(加分項)\n最高 101 分(含加分項)","definition":"一、月租型離網數達成率 = 2 - 實績值 ÷ 目標值\n(NP-out、退租、拆機數,不含公司公務、測試、行動上網試用、預付卡、040 物聯網)\n\n二、新客戶數達成率 = 實績值 ÷ 目標值\n(含新申租及 NP-in 月租型門號)\n\n三、月租客戶營收變動數達成率 = 實績值 ÷ 目標值\n計算: (A)新增金額 + (B)續約金額 - (C)流失金額 + (D)企客 040 物聯網新增 - (E)企客 040 物聯網流失\n\n四、5G 累計客戶數達成率 = 實績值 ÷ 目標值 (115/12/31 計算)\n\n五、行動物聯網淨增數達成率(加分項):企客證號申辦之 040 物聯網淨增門號數","scoring":"各項超目標者皆以實際得分計算,合計最高 101 分。\n一、月租型離網數:達目標得 95 分,每加(減) 1%,加(減) 0.5 分\n二、新客戶數:達目標得 95 分,每加(減) 1%,加(減) 0.5 分\n三、月租客戶營收變動數:達目標得 95 分,每加(減) 1%,加(減) 0.5 分\n四、5G 累計客戶數:達目標得 95 分,每加(減) 1%,加(減) 0.5 分\n五、行動物聯網淨增門號數加分項:\n  • 100 門(含)以下:每加 10%,加 0.1 分,最高 1 分\n  • 100-999 門:每加 5%,加 0.1 分,最高 1 分\n  • 1,000 門(含)以上:每加 1%,加 0.1 分,最高 1 分","source":"M-BMS 系統、會計系統","deadline":"每月 10 日","ch_target":{"月租型離網數(門)":20551,"月租客戶營收變動數(千元)":11184,"新客戶數(門)":23294,"5G累計客戶數(門)":219957,"行動物聯網淨增數(門)":100,"114/12/31 5G總客戶數(門)":195045,"114/12/31 行動物聯網總客戶數(門)":439},"scoring_base":95,"scoring_step":0.5,"scoring_max":101,"scoring_min":null},{"id":"L2","cat":"鞏固核心","cat_short":"L","name":"寬頻營運量_個家+企客","owner":"業管","weight":4,"target_unit":"分","target_total":"95 分","freq":"月","attr":"愈大愈好","formula":"寬頻績效得分 = 升速電路數達成率得分 × 45%\n + 300M(含)以上淨增電路數達成率得分 × 28%\n + HiNet 新裝電路數達成率得分 × 14%\n + HiNet 退租電路數達成率得分 × 13%\n + 客戶月租變動營收達成得分(加分項)\n最高 101 分","definition":"一、升速電路數達成率 = (升速電路數 + 跨階升高速權重數) ÷ 升速電路目標數\n  跨階權重:16M/3M(1.0)、35M/6M(1.0)、100M/40M(1.25)、300M/300M(1.5)、500M/500M(1.75)、1G/600M(2.0)、1G/1G家用型(2.0)、1G/1G商用型(2.25)、2G/2G(2.5)\n\n二、300M(含)以上淨增電路數達成率\n  = (115/12/31 300M(含)以上總電路數 - 114/12/31 總電路數) ÷ 淨增目標 + 1G(含)以上淨增加分\n\n三、HiNet 新裝電路數達成率 = 新裝竣工數 ÷ 新裝目標數\n\n四、HiNet 退租電路數達成率 = 2 - [(退租竣工數 + 待拆減少數) ÷ 退租目標數]\n\n五、客戶月租變動營收達成率(個家加分項,年度計分)","scoring":"各項超目標皆以實際得分計算,合計最高 101 分。\n一、升速電路數:達目標 95 分,每增(減) 1%,加(減) 0.5 分\n二、300M(含)以上淨增:達目標 95 分,每增(減) 1%,加(減) 0.5 分\n三、1G(含)以上淨增加分:達目標每增 1%,加 0.5 分,最多加 2 分\n四、HiNet 新裝:達目標 95 分,每增(減) 1%,加(減) 0.5 分\n五、HiNet 退租:達目標 95 分,每增(減) 1%,加(減) 0.5 分\n六、客戶月租變動營收加分項:達目標 +0.5 分,每增 0.1% +0.1 分,最高加至 1 分","source":"TOPS/fORDER、BOPS、會計系統","deadline":"每月 10 日","ch_target":{"升速電路數(路)":30709,"300M(含)以上淨增數(路)":8948,"HiNet新裝電路數(路)":9370,"HiNet退租電路數(路)":7092,"1G(含)以上淨增數(路)":4920,"客戶月租變動營收(個家群)(千元)":5073,"114/12/31 300M(含)以上總電路數(路)":71503,"114/12/31 HiNet寬頻待拆數(路)":98},"scoring_base":95,"scoring_step":0.5,"scoring_max":101,"scoring_min":null},{"id":"L3","cat":"鞏固核心","cat_short":"L","name":"網路品質與韌性","owner":"經規","weight":5,"target_unit":"分","target_total":"98 分","freq":"月","attr":"達到公司管考要求","formula":"L3 得分 = (網路品質提升得分 × 50%) + (QoS 績效評核得分 × 10/9 × 50%)\n註:QoS 滿分 90 分,須乘 10/9 換算為 100 分\n\n網路品質提升得分 = (客戶申告率得分 × 50%) + (客戶滿意度得分 × 50%)","definition":"一、客戶申告率:\n  申告率 = 當月客戶進線量 / ((前月底電路數 + 前前月底電路數)/2) × 100%\n  目標:申告率 ≦ 2.45%、重複申告率 ≦ 0.4%\n\n二、客戶滿意度:\n  滿意度扣分 A1 = N3 × 0.1 + N2 × 0.3 + N1 × 0.5\n  (N3 尚可、N2 不滿意、N1 非常不滿意)\n  目標:滿意度 ≧ 96 分、非常滿意率 ≧ 77%\n\n各項計算式使用 TRUNC 函數計算","scoring":"網路品質提升績效目標值 98 分,最高 100 分。\n1. 申告率(A):達目標 98 分,每增(減) 0.2%,減(加) 1 分,80~100 分\n   計算式 = 98 + TRUNC[(目標值 - 申告率) / 0.2%] × 1\n2. 重複申告率(B):達目標 98 分,每增(減) 0.05%,減(加) 1 分,80~100 分\n3. 客戶申告率得分 = (A) × 60% + (B) × 40%\n4. 滿意度(A):最高 100,最低 80 = 100 - TRUNC(A3)\n5. 非常滿意率(B):達目標 98 分,每增(減) 4%,加(減) 1 分\n6. 客戶滿意度得分 = 滿意度(A) × 80% + 非常滿意率(B) × 20%\n\n發生甲乙級重大障礙依責任歸屬扣分(詳附件)","source":"TOPS、CAS、QoS、ARGUS、NCC、媒體","deadline":"每月 10 日","ch_target":{"申告率(A)":"≦ 2.45%","重複申告率(B)":"≦ 0.4%","滿意度(X)":"≧ 96 分","非常滿意率(Y)":"≧ 77%"},"scoring_base":98,"scoring_step":1,"scoring_max":100,"scoring_min":80},{"id":"L4","cat":"鞏固核心","cat_short":"L","name":"資安與個資保護","owner":"資安","weight":1,"target_unit":"分","target_total":"95 分","freq":"年","attr":"愈大愈好","formula":"資安與個資保護成效 = 資安保護成效 × 70%\n + 個資保護成效 × 15%\n + 資安與個資查核 × 15%\n + 年度特殊事蹟(加扣分項)\n合計最高 100 分\n\n1. 資安保護成效 = 遵守資安紀律 × 50% + 電子郵件社交工程演練 × 25% + 資安事故發生及處理 × 25%\n2. 個資保護成效 = 個資事故發生及處理\n3. 資安與個資查核 = 資安查核 × 50% + 個資查核 × 50%","definition":"1. 遵守資安紀律(統計模型公式)\n  機構母體 = 伺服器 + 系統 + 終端\n  違規扣分項目:\n  • 未完成弱掃自檢系統:扣 5 分/系統\n  • 舊 Pattern 弱點:扣 5 分/系統\n  • 弱點修補逾期:扣 5 分/系統\n  • 開源軟體弱點未修補:扣 5 分/系統\n  • CHT SOC 通報漏洞未盤點:扣 3 分/設備\n  • 私架 Proxy / 未落實承商管理:扣 5 分\n  • 終端使用風險軟體:扣 0.5 分/終端\n\n2. 電子郵件社交工程演練(統計模型)\n3. 資安事故:Z(0.5) / C(1) / B(2) / A(3) / 重複(5) / 未依程序通報(5)\n4. 個資事故:一級(1) / 二級(3) / 三級(5) / 重複(5) / 未依程序通報(5)","scoring":"採統計模型排名給分,最高 100 分,排名每一級距差 0.6 分:\n第一名:100 分\n第二名:99.4 分\n第三名:98.8 分\n...最後一名:90.4 分\n\n年度特殊事蹟加扣分:\n• 特殊貢獻:加 0~4 分\n• 主管機關稽核通過:加 0~1 分,不通過扣 0~1 分\n• 機敏資料外洩 GitHub/ChatGPT 等:每案扣 1 分","source":"CHT SOC 監控、檢測、鑑識、外部通報、電子郵件警覺性測試、資安與個資查核、資分提供 OSS 弱掃及 ICTINV 資料","deadline":"年度","ch_target":{"目標值":"95 分(統計模型排名)"},"scoring_base":95,"scoring_step":0.6,"scoring_max":100,"scoring_min":90.4},{"id":"M1","cat":"創價成長","cat_short":"M","name":"加值業務營運量","owner":"業管","weight":2,"target_unit":"分","target_total":"95 分","freq":"月","attr":"愈大愈好","formula":"加值業務營運量得分 = 策略型服務新增客戶數達成率得分 × 55%\n + 加值服務推廣率得分 × 25%\n + 保險保固服務新增客戶數達成率得分 × 20%\n + 加值營收達成率得分(加分項)\n最高 101 分","definition":"一、策略型服務新增客戶數達成率\n  = Google One × 30% + YouTube Premium × 20% + 消費資安 × 30% + Hami Cam × 20%\n  (四項目標達成率皆以 120% 為上限)\n\n二、加值服務推廣率\n  = Σ(推廣加值服務權重數) ÷ Σ(行動方案新增及續約數)\n  權重表:\n  • 資費搭贈或選搭(免費):+0.1\n  • 資費搭贈(有營收免費):+0.3\n  • 贈送到期轉付費:+1.4\n  • 綁約付費方案:+1.6\n  • 服務開通-資費搭贈:+1\n  • 服務開通-綁約付費:+1\n  • 計次型加值綁定開通:+0.5\n\n三、保險保固服務(行動裝置保險、電池安心服務 2.0、智慧放(FUN)心家)\n\n四、加值營收 = 重點加值 + 消費資安 + 智慧家庭","scoring":"各項合計最高 101 分(含加分項):\n一、策略型服務新增客戶:達目標 95 分,每加(減) 1%,加(減) 0.5 分,最高 101\n二、加值服務推廣率:達目標 95 分,每加(減) 1%,加(減) 0.5 分,最高 101\n三、保險保固服務新增:達目標 95 分,每加(減) 1%,加(減) 0.5 分,最高 101\n四、加值營收加分項:\n  • 104%(含)以上:+1.0\n  • 103%~104%:+0.8\n  • 102%~103%:+0.6\n  • 101%~102%:+0.4\n  • 100%~101%:+0.2","source":"DSIS 報表、居家安防平台、ELK、MBMS 系統、會計報表","deadline":"每月 10 日","ch_target":{"Google One新增客戶數(門)":21535,"YouTube Premium新增客戶數(門)":3140,"資安付費新增客戶數(路)":7921,"Hami Cam客戶數(路)":961,"加值服務推廣率":"60%","保險保固服務新增客戶數(筆)":21999,"加值營收(千元)":42859},"scoring_base":95,"scoring_step":0.5,"scoring_max":101,"scoring_min":null},{"id":"M2","cat":"創價成長","cat_short":"M","name":"影視營運量","owner":"業管","weight":2,"target_unit":"分","target_total":"95 分","freq":"月","attr":"愈大愈好","formula":"影視營運量得分 = 影視服務新裝數達成率得分 × 60%\n + 影視服務退租數達成率得分 × 10%\n + MOD 指定餐包新裝與退租數達成率得分 × 30%\n + OTT 指定產品年約新增數達成率得分(加分項)\n最高 102 分","definition":"一、影視服務新裝數達成率\n  = MOD 新裝數達成率 × 30% + Hami Video 年約付費新增數達成率 × 70%\n  (MOD 新裝數達成率須達 70%,Hami Video 超過 100% 部分始可納入)\n\n二、影視服務退租數達成率\n  = MOD 退租數達成率 × 60% + Hami Video 年約付費退租數達成率 × 40%\n\n三、MOD 指定餐包新裝與退租數\n  = 影劇館+ 新裝 × 30% + 自選餐(全選)新裝 × 20% + 影劇館+ 退租 × 30% + 自選餐退租 × 20%\n\n四、OTT 指定產品(Netflix):年約新增數達成率(加分項)","scoring":"合計最高 102 分(含加分項):\n一、影視服務新裝數:達目標 95 分,每增(減) 1%,加(減) 0.5 分\n二、影視服務退租數:達目標 95 分,每增(減) 1%,加(減) 0.5 分\n三、MOD 指定餐包:達目標 95 分,每增(減) 1%,加(減) 0.5 分\n四、OTT 加分項:Netflix 年約新增達目標 +1 分,之後每增 1% +0.03 分,最高 +2 分","source":"fORDER、MBMS、fORDER 系統","deadline":"每月 10 日","ch_target":{"MOD新裝竣工數(戶)":4148,"Hami Video年約付費新增數(包)":18853,"MOD退租數(戶)":5271,"Hami Video年約付費退租數(包)":7699,"影劇館+新裝數(包)":4030,"自選餐(全選)新裝數(包)":2885,"影劇館+退租數(包)":2327,"自選餐(全選)退租數(包)":1933,"OTT指定產品年約新增數(戶)":3600},"scoring_base":95,"scoring_step":0.5,"scoring_max":102,"scoring_min":null},{"id":"M3","cat":"創價成長","cat_short":"M","name":"重點新興業務營收","owner":"業管","weight":5,"target_unit":"億元","target_total":"118.36 億元","freq":"月","attr":"愈大愈好","formula":"(本項考核績效採年度計分)\n各營運處得分 = 重點新興業務營收達成率","definition":"一、各營運處重點新興業務營收計算規則:\n  企客重點新興業務營收,指 BCRM 系統 ICT 入帳營收統計報表中產品線之企業客戶營收,包含:\n  • 資通安全\n  • IDC/雲端\n  • IoT(智慧交通、智慧環境、智慧安防、智慧建築/家庭、智慧醫療)\n  • M 化應用\n  • 大數據\n\n二、集團合作案件(僅中華資安國際、資拓宏宇子公司)若以淨額承接,將還原總額營收納入績效計算(於年度結算時還原)。\n\n三、本績效僅企客目標數,依「企客事業群」範疇計算","scoring":"重點新興業務營收達成率得分,達目標者得 95 分,每加(減) 1%,加(減) 0.5 分,最高 100 分。","source":"BCRM","deadline":"每月 10 日","ch_target":{"目標值(百萬元)":405.75},"scoring_base":95,"scoring_step":0.5,"scoring_max":100,"scoring_min":null},{"id":"M4","cat":"創價成長","cat_short":"M","name":"ICT 專標案毛利額","owner":"業管","weight":5,"target_unit":"億元","target_total":"未公告","freq":"年","attr":"愈大愈好","formula":"(本項考核績效採年度計分)\n各營運處得分 = ICT 專標案毛利額達成率得分\n\n各營運處 ICT 專標案毛利額達成率\n= 115 年 ICT 專標案毛利額 ÷ 115 年 ICT 專標案毛利額目標數","definition":"一、ICT 專標案毛利額:指依據管理會計系統專標案績效-執行機構(M127)報表所結算之各營運處年度毛利額。\n\n二、ICT 專標案毛利額 = ICT 專標案收入(會計科目 46xx) - ICT 專標案成本(會計科目 56xx)\n\n三、115 年租賃型案件,若因採用系統出帳導致無收入但有成本之案件,扣減其專標案成本。\n\n四、115 年無收入但有存貨跌價損失之會計列管案件,扣減其存貨跌價損失。","scoring":"ICT 專標案毛利額達成率得分,達目標者得 95 分,每加 1%,加 0.5 分;每減 1%,減 0.2 分,最高 100 分。","source":"管會系統","deadline":"每月 18 日","ch_target":{"目標值":"(未公告)"},"scoring_base":95,"scoring_step_up":0.5,"scoring_step_down":0.2,"scoring_max":100,"scoring_min":null},{"id":"M5","cat":"創價成長","cat_short":"M","name":"Order Taking","owner":"業管","weight":4,"target_unit":"億元","target_total":"128.32 億元","freq":"年、月","attr":"愈大愈好","formula":"各營運處得分 = Order Taking 得分\n(採年度計分,最低 85 分,最高 100 分)","definition":"一、以總公司業管處提供之 115 年 ICT 簽約案件統計表為各營運處之實績。\n\n二、營運處成績:\n(一)契約編號前四碼為營運處所屬機構代碼之案件簽約金額。\n(二)契約編號前 4 碼為 4040,且執行單位為營運處,總公司業管處於製表時得依此規則調整至營運處成績。\n\n三、報表來源為「已成案案件盤點與預估入帳月份」及「商機藍圖」,排除純 CT 案(語音/數據/銷貨收入/一般 CT 案,或 ICT 產品簽約金額中,語音(CT)/數據(CT)/銷貨收入之合計等於全案簽約金額)。ICT 產品簽約金額合計大於 0 不予排除。","scoring":"Order Taking 達目標得 95 分,每加 1%,加 0.5 分,每減 1%,減 0.2 分,最低至 85 分,最高至 100 分。","source":"BCRM","deadline":"每月 10 日","ch_target":{"目標值(主標簽約金額,百萬元)":437},"scoring_base":95,"scoring_step_up":0.5,"scoring_step_down":0.2,"scoring_max":100,"scoring_min":85},{"id":"M6","cat":"創價成長","cat_short":"M","name":"5G 企業專網","owner":"業管","weight":2,"target_unit":"億元","target_total":"2.26 億元","freq":"月","attr":"愈大愈好","formula":"(本項考核績效採年度計分,最高 100 分(含加分項))\n各營運處得分 = 5G 企業專網簽約金額總和得分\n年度加分項 = 115 年重點行業別經營得分","definition":"一、5G 企業專網簽約金額:\n  指 115 年 5G 企業專網之各營運處成案簽約金額總和。\n  本項採全案簽約金額認定,案件需於 BCRM 業務項目選擇「企業專網」,且專案內容需至少包含企業專網產品。\n\n二、115 年重點行業別經營(年度加分項):\n  5G 企業專網/應用成案之客戶於 BCRM 上之行業別屬以下五類別之一即符合加分:\n  • 製造業\n  • 學術教育\n  • 政府公營\n  • 醫療衛生\n  • 文化觀光\n  以簽約單位為準。\n\n三、本績效僅企客目標數,依「企客事業群」範疇計算","scoring":"本項合計最高 100 分(含加分項):\n一、5G 企業專網簽約金額達成率:達目標 95 分,每加 1% +0.5 分;每減 1% -0.2 分;最高 100 分\n二、年度加分項(重點行業別):各營運處符合加分之簽約案件金額,每累計 200 萬元,加 0.1 分,最高加至 3 分","source":"BCRM","deadline":"每月 10 日","ch_target":{"目標值(百萬元)":12.07},"scoring_base":95,"scoring_step_up":0.5,"scoring_step_down":0.2,"scoring_max":100,"scoring_min":null},{"id":"M7","cat":"創價成長","cat_short":"M","name":"衛星業務營收","owner":"業管","weight":1,"target_unit":"億元","target_total":"10.92 億元","freq":"年","attr":"愈大愈好","formula":"(本項考核績效採年度計分)\n各營運處得分 = 衛星業務營收(交易機構)達成率得分","definition":"一、各營運處衛星業務營收達成率\n  = 115 年衛星業務營收 ÷ 115 年衛星業務營收目標數\n\n  衛星業務營收 = 衛星通信 + 衛星 ICT + 衛星銷貨\n  • 國際網路 - 衛星通信:4473.17\n  • ICT 及專標案 - 衛星 ICT:4609.1104\n  • 銷貨收入 - 衛星銷貨:4111.0220, 4171.0220\n\n二、依「企客事業群」範疇計算","scoring":"衛星業務營收達成率得分,達目標者得 95 分,每加 1%,加 0.5 分;每減 1%,減 0.2 分;最高 100 分。","source":"MAS 管會系統","deadline":"每月 10 日","ch_target":{"目標值(百萬元)":11.035},"scoring_base":95,"scoring_step_up":0.5,"scoring_step_down":0.2,"scoring_max":100,"scoring_min":null},{"id":"E","cat":"永續發展","cat_short":"E","name":"ESG 永續發展","owner":"經規","weight":5,"target_unit":"分","target_total":"95 分","freq":"年","attr":"依子項而定","formula":"ESG 永續發展 = Σ(各指標得分 × 各指標權重 / 權重合計)\n + 評比及參獎\n + 在地社區議合","definition":"1.1 用電量(經規處):彰化基本目標 1,584 萬度,挑戰目標 1,478 萬度\n1.2 廢棄物(產發處):彰化目標 40 公噸\n1.3A 數位賦能弱勢族群:3 案\n1.3B 數位賦能中小企業:彰化目標 778 家\n1.4 內部碳費基金運用:彰化核可案 2 件\n\n用電量實績計算:1~11 月用電量 ÷ 11 個月用電占比(92.2%)\n廢棄物實績計算:1~11 月生活廢棄物總量 ÷ 11 個月廢棄物占比(91.67%)\n\n2. 評比參獎及參展(企通處)\n3. 在地社區議合(企通處、規劃處)","scoring":"一、1.1 指標:用電量達基本目標 90 分,挑戰目標 100 分,最高 102 分\n  • 高於基本目標,每增 1% -2 分\n  • 低於基本目標 0%~2%,每減 1% +1 分\n  • 2%~5%,每減 1% +1.5 分\n  • >5%,每減 1% +2 分\n  • 低於挑戰目標,每減 1% 再加 1 分(最多 2 分)\n\n二、1.2 指標:達成率 100% 得 95 分,每減(增) 0.2%,加(減) 1 分,70~100 分\n\n三、1.3A 數位賦能弱勢族群:完成 3 案 80 分,每減 1 案 -5 分,完成 0 案 0 分\n\n四、1.3B 數位賦能中小企業:基本目標達成率 100% 得 80 分,每增(減) 1% 加(減) 0.5 分,達挑戰目標(120%)得 90 分\n\n五、1.4 內部碳費基金:有提案 80 分,未提案 70 分,核可案達成目標數 95 分,創新案每案 +1 分\n\n六、評比參獎及參展:最高加 2 分\n七、在地社區議合:最高加 2 分","source":"網分、產發處、業管處、經規處","deadline":"年度結束次月 10 日","ch_target":{"1.1 用電量基本目標(萬度)":1584,"1.1 用電量挑戰目標(萬度)":1478,"1.2 廢棄物目標(公噸)":40,"1.3A 數位賦能弱勢族群(案)":3,"1.3B 數位賦能中小企業(家)":778,"1.4 內部碳費基金核可案":2},"scoring_base":95,"scoring_step":null,"scoring_max":100,"scoring_min":null}],"composite":[{"id":"C1","name":"營運活動控管績效","owner":"稽核","weight_note":"機構綜合表現 15%","formula":"營運活動控管績效 = 基本分數 + 優良成效加分合計 - 缺失異常減分合計","definition":"1. 基本分數:88 分\n2. 優良成效加分合計:依年度稽核計畫查核機構內部控制制度執行情形,發現優良項目評定加分\n3. 缺失異常減分合計:依稽核計畫發現缺失異常項目評定減分\n4. 各機構加分合計或減分合計,原則上均不超過 8 分","scoring":"加分項:\n• 表率優點:每項 +0.5~1 分\n• 未發現任何缺失:+0.5~1 分\n• 審計委員會嘉勉:+1~2 分\n• 自評複核接受率高於平均:+0.2~1 分\n\n減分項:\n• 缺失:循環平均每個缺失 -0.5~1 分\n• 缺失未積極處理:-0.5~1 分\n• 審計委員會要求改善:-1~2 分\n• 自評複核接受率低於平均:-0.2~1 分","base_score":88,"target_score":85},{"id":"C2","name":"人才培育、接班養成及員工職涯發展引導","owner":"人發","weight_note":"機構綜合表現 15%","formula":"總分 = 人才培育得分 × 50% + 接班養成得分 × 50% + 員工職涯發展引導得分(加分項 10%)\n\n人才培育 = 新人訓練完成率 + 管理職能參訓率,平均\n接班養成 = 人才庫建置率 + Coach 實施率 + 主管遞補率,平均\n員工職涯發展引導 = 引導達成率","definition":"1. 人才培育構面:\n  (1) 新人訓練 — 完成新人 eLearning 課程比例\n  (2) 提升管理職能 — 績效面談主管完成電信學院管理類課程,每年 ≧ 9 小時\n  (3) 跨機構或單位歷練(分機構參考項)\n\n2. 接班養成構面:\n  (1) 建置接班人才庫(每年上、下半年提供總公司組織暨人才發展處)\n     人才庫建置率 = 已建置接班人名單之績效面談主管職位數 / 績效面談主管職位數\n  (2) Coach 培育部屬(1對1面談)\n     績效面談主管實施率 = (年度面談員工數 / 單位員工數) × 90%\n     達 90% 且兩次面談員工 ≧ 單位員工 × 10% 視為 100%\n  (3) 主管遞補率 = 績效面談主管到位數 / 績效面談主管職位數\n\n3. 員工職涯發展引導(加分項):\n  引導達成率 = 完成人數 / 單位人數","scoring":"1. 人才培育得分(50%):新人訓練完成率與管理職能參訓率二子項之平均\n2. 接班養成得分(50%):三子項加總後平均\n3. 員工職涯發展引導(額外加分 10%):引導達成率對應百分制\n4. 跨機構或單位歷練(參考項)","base_score":100,"target_score":100},{"id":"C3","name":"員工紀律","owner":"人發","weight_note":"機構綜合表現 15%(評分主管:業務執副)","formula":"機構年度內之記過以上案件數","definition":"計算機構年度內之記過以上案件數","scoring":"依案件數核計(具體細則由業務執副評定)","base_score":null,"target_score":null},{"id":"C4","name":"成本費用控制(專案試行)","owner":"會計","weight_note":"機構綜合表現 15%(評分主管:業務執副)","formula":"考核專案成本試行成效","definition":"考核專案成本試行成效","scoring":"由業務執副評定","base_score":null,"target_score":null},{"id":"C5","name":"業管/事業群/網分評分參考","owner":"經規","weight_note":"機構綜合表現 15%(評分主管:業務執副)","formula":"業管處、事業群及網分提供評分,供業務執副評分參考","definition":"業管處、事業群及網分提供評分","scoring":"由業務執副綜合評分","base_score":null,"target_score":null}],"all_o1":{"台北":411.821,"新北":228.52,"桃園":166.286,"台中":210.964,"台南":126.869,"高雄":185.489,"基隆":47.562,"新竹":105.223,"彰化":71.807,"雲林":41.89,"嘉義":52.343,"屏東":38.064,"苗栗":37.52,"宜蘭":30.289,"花蓮":27.944,"南投":33.331,"台東":16.197},"all_o2":{"台北":75.14,"新北":49.97,"基隆":14.64,"桃園":37.33,"新竹":19.27,"苗栗":11.53,"花蓮":10.44,"宜蘭":11.04,"台中":46.05,"彰化":19.39,"南投":12.13,"雲林":12.69,"高雄":48.88,"嘉義":15.09,"台南":36.53,"屏東":14.24,"台東":6.64},"groups":{"A 組":["台北","新北","桃園","台中","台南","高雄"],"B 組":["基隆","新竹","彰化","雲林","嘉義","屏東"],"C 組":["苗栗","宜蘭","花蓮","南投","台東"]},"history":{"current_period":"115年4月累計","current_year":"115","current_month":4,"months":[{"period":"115年1月累計","year":"115","month":1,"pub_date":"2026-02-16","max_score":45,"records":[{"office":"台北","annual":43.46,"rank":3,"group_rank":3,"scores":{"O1":99.07,"O2":null,"L1":99.19,"L2":97.52,"L3":null,"L4":null,"M1":80.67,"M2":88.12,"M3":100.0,"M4":null,"M5":null,"M6":75.0,"M7":94.35,"E":null}},{"office":"新北","annual":43.55,"rank":2,"group_rank":2,"scores":{"O1":97.59,"O2":null,"L1":93.88,"L2":97.8,"L3":null,"L4":null,"M1":91.72,"M2":102.0,"M3":100.0,"M4":null,"M5":null,"M6":80.73,"M7":100.0,"E":null}},{"office":"基隆","annual":42.53,"rank":8,"group_rank":2,"scores":{"O1":98.34,"O2":null,"L1":100.6,"L2":82.54,"L3":null,"L4":null,"M1":83.65,"M2":91.7,"M3":96.65,"M4":null,"M5":null,"M6":75.0,"M7":77.92,"E":null}},{"office":"桃園","annual":41.69,"rank":12,"group_rank":6,"scores":{"O1":95.53,"O2":null,"L1":101.0,"L2":92.86,"L3":null,"L4":null,"M1":87.11,"M2":88.0,"M3":81.06,"M4":null,"M5":null,"M6":75.0,"M7":100.0,"E":null}},{"office":"新竹","annual":42.7,"rank":7,"group_rank":1,"scores":{"O1":95.82,"O2":null,"L1":101.0,"L2":94.9,"L3":null,"L4":null,"M1":90.3,"M2":90.49,"M3":100.0,"M4":null,"M5":null,"M6":75.0,"M7":79.44,"E":null}},{"office":"苗栗","annual":41.65,"rank":14,"group_rank":4,"scores":{"O1":95.04,"O2":null,"L1":101.0,"L2":99.82,"L3":null,"L4":null,"M1":96.66,"M2":91.84,"M3":76.83,"M4":null,"M5":null,"M6":75.0,"M7":75.0,"E":null}},{"office":"花蓮","annual":43.06,"rank":5,"group_rank":2,"scores":{"O1":96.92,"O2":null,"L1":101.0,"L2":95.7,"L3":null,"L4":null,"M1":88.75,"M2":96.7,"M3":100.0,"M4":null,"M5":null,"M6":75.0,"M7":75.36,"E":null}},{"office":"宜蘭","annual":41.02,"rank":15,"group_rank":5,"scores":{"O1":93.93,"O2":null,"L1":101.0,"L2":90.53,"L3":null,"L4":null,"M1":89.54,"M2":89.5,"M3":80.02,"M4":null,"M5":null,"M6":75.0,"M7":79.22,"E":null}},{"office":"台中","annual":42.95,"rank":6,"group_rank":4,"scores":{"O1":97.39,"O2":null,"L1":96.84,"L2":91.48,"L3":null,"L4":null,"M1":88.21,"M2":94.26,"M3":100.0,"M4":null,"M5":null,"M6":75.0,"M7":92.26,"E":null}},{"office":"彰化","annual":40.35,"rank":16,"group_rank":5,"scores":{"O1":93.7,"O2":null,"L1":101.0,"L2":96.18,"L3":null,"L4":null,"M1":92.12,"M2":93.42,"M3":56.57,"M4":null,"M5":null,"M6":75.0,"M7":100.0,"E":null}},{"office":"南投","annual":41.73,"rank":11,"group_rank":3,"scores":{"O1":95.43,"O2":null,"L1":100.27,"L2":101.0,"L3":null,"L4":null,"M1":96.14,"M2":96.57,"M3":73.94,"M4":null,"M5":null,"M6":75.0,"M7":77.11,"E":null}},{"office":"雲林","annual":39.75,"rank":17,"group_rank":6,"scores":{"O1":92.99,"O2":null,"L1":96.23,"L2":101.0,"L3":null,"L4":null,"M1":91.06,"M2":98.61,"M3":51.19,"M4":null,"M5":null,"M6":75.0,"M7":76.12,"E":null}},{"office":"嘉義","annual":41.69,"rank":13,"group_rank":4,"scores":{"O1":95.39,"O2":null,"L1":97.4,"L2":99.04,"L3":null,"L4":null,"M1":84.81,"M2":92.55,"M3":78.74,"M4":null,"M5":null,"M6":75.0,"M7":100.0,"E":null}},{"office":"台南","annual":43.58,"rank":1,"group_rank":1,"scores":{"O1":99.82,"O2":null,"L1":101.0,"L2":86.35,"L3":null,"L4":null,"M1":91.2,"M2":90.39,"M3":100.0,"M4":null,"M5":null,"M6":75.0,"M7":100.0,"E":null}},{"office":"高雄","annual":42.2,"rank":9,"group_rank":5,"scores":{"O1":96.09,"O2":null,"L1":100.29,"L2":99.77,"L3":null,"L4":null,"M1":92.65,"M2":94.19,"M3":78.82,"M4":null,"M5":null,"M6":75.0,"M7":100.0,"E":null}},{"office":"屏東","annual":41.97,"rank":10,"group_rank":3,"scores":{"O1":95.73,"O2":null,"L1":101.0,"L2":97.97,"L3":null,"L4":null,"M1":94.07,"M2":87.56,"M3":82.7,"M4":null,"M5":null,"M6":75.0,"M7":80.82,"E":null}},{"office":"台東","annual":43.13,"rank":4,"group_rank":1,"scores":{"O1":96.76,"O2":null,"L1":101.0,"L2":94.41,"L3":null,"L4":null,"M1":91.79,"M2":89.27,"M3":100.0,"M4":null,"M5":null,"M6":75.0,"M7":100.0,"E":null}}],"placeholder":false},{"period":"115年2月累計","year":"115","month":2,"pub_date":"2026-03-16","max_score":65,"records":[{"office":"台北","annual":62.76,"rank":3,"group_rank":3,"scores":{"O1":97.18,"O2":99.65,"L1":92.72,"L2":95.1,"L3":null,"L4":null,"M1":84.29,"M2":93.05,"M3":100.0,"M4":null,"M5":null,"M6":75.0,"M7":97.51,"E":null}},{"office":"新北","annual":63.01,"rank":2,"group_rank":2,"scores":{"O1":97.25,"O2":98.85,"L1":92.18,"L2":95.1,"L3":null,"L4":null,"M1":91.61,"M2":102.0,"M3":100.0,"M4":null,"M5":null,"M6":77.86,"M7":100.0,"E":null}},{"office":"基隆","annual":61.51,"rank":10,"group_rank":2,"scores":{"O1":96.71,"O2":99.43,"L1":99.13,"L2":80.57,"L3":null,"L4":null,"M1":83.57,"M2":92.76,"M3":88.83,"M4":null,"M5":null,"M6":75.0,"M7":79.06,"E":null}},{"office":"桃園","annual":61.49,"rank":11,"group_rank":6,"scores":{"O1":94.71,"O2":99.01,"L1":98.32,"L2":95.64,"L3":null,"L4":null,"M1":91.08,"M2":91.22,"M3":82.15,"M4":null,"M5":null,"M6":75.0,"M7":100.0,"E":null}},{"office":"新竹","annual":62.33,"rank":6,"group_rank":1,"scores":{"O1":95.52,"O2":100.0,"L1":101.0,"L2":94.66,"L3":null,"L4":null,"M1":91.85,"M2":88.66,"M3":94.44,"M4":null,"M5":null,"M6":75.0,"M7":79.12,"E":null}},{"office":"苗栗","annual":60.94,"rank":14,"group_rank":4,"scores":{"O1":95.0,"O2":100.0,"L1":101.0,"L2":101.0,"L3":null,"L4":null,"M1":98.54,"M2":92.35,"M3":60.84,"M4":null,"M5":null,"M6":75.0,"M7":75.0,"E":null}},{"office":"花蓮","annual":61.92,"rank":8,"group_rank":2,"scores":{"O1":94.78,"O2":99.38,"L1":101.0,"L2":96.45,"L3":null,"L4":null,"M1":91.53,"M2":99.88,"M3":87.33,"M4":null,"M5":null,"M6":75.0,"M7":75.37,"E":null}},{"office":"宜蘭","annual":61.75,"rank":9,"group_rank":3,"scores":{"O1":95.0,"O2":99.93,"L1":100.68,"L2":93.52,"L3":null,"L4":null,"M1":88.35,"M2":91.96,"M3":86.85,"M4":null,"M5":null,"M6":75.0,"M7":79.39,"E":null}},{"office":"台中","annual":62.65,"rank":5,"group_rank":5,"scores":{"O1":96.94,"O2":98.65,"L1":98.82,"L2":90.84,"L3":null,"L4":null,"M1":89.51,"M2":94.71,"M3":100.0,"M4":null,"M5":null,"M6":75.0,"M7":91.47,"E":null}},{"office":"彰化","annual":60.29,"rank":17,"group_rank":6,"scores":{"O1":93.84,"O2":98.53,"L1":100.71,"L2":94.49,"L3":null,"L4":null,"M1":94.2,"M2":98.0,"M3":59.5,"M4":null,"M5":null,"M6":75.0,"M7":100.0,"E":null}},{"office":"南投","annual":60.94,"rank":15,"group_rank":5,"scores":{"O1":94.12,"O2":99.87,"L1":101.0,"L2":101.0,"L3":null,"L4":null,"M1":96.57,"M2":97.56,"M3":63.89,"M4":null,"M5":null,"M6":75.0,"M7":78.11,"E":null}},{"office":"雲林","annual":60.48,"rank":16,"group_rank":5,"scores":{"O1":92.87,"O2":100.0,"L1":96.92,"L2":101.0,"L3":null,"L4":null,"M1":90.6,"M2":99.86,"M3":55.48,"M4":null,"M5":null,"M6":100.0,"M7":76.18,"E":null}},{"office":"嘉義","annual":60.95,"rank":13,"group_rank":4,"scores":{"O1":94.49,"O2":98.39,"L1":100.12,"L2":99.68,"L3":null,"L4":null,"M1":86.6,"M2":97.76,"M3":69.43,"M4":null,"M5":null,"M6":75.0,"M7":100.0,"E":null}},{"office":"台南","annual":63.19,"rank":1,"group_rank":1,"scores":{"O1":98.04,"O2":99.08,"L1":101.0,"L2":90.79,"L3":null,"L4":null,"M1":91.33,"M2":93.1,"M3":100.0,"M4":null,"M5":null,"M6":75.0,"M7":100.0,"E":null}},{"office":"高雄","annual":62.76,"rank":4,"group_rank":4,"scores":{"O1":95.58,"O2":100.0,"L1":97.11,"L2":98.2,"L3":null,"L4":null,"M1":93.92,"M2":94.61,"M3":95.63,"M4":null,"M5":null,"M6":75.0,"M7":100.0,"E":null}},{"office":"屏東","annual":60.97,"rank":12,"group_rank":3,"scores":{"O1":94.82,"O2":99.11,"L1":101.0,"L2":99.96,"L3":null,"L4":null,"M1":94.21,"M2":88.89,"M3":68.67,"M4":null,"M5":null,"M6":75.0,"M7":80.96,"E":null}},{"office":"台東","annual":62.09,"rank":7,"group_rank":1,"scores":{"O1":96.0,"O2":100.0,"L1":101.0,"L2":94.18,"L3":null,"L4":null,"M1":94.41,"M2":91.6,"M3":81.2,"M4":null,"M5":null,"M6":75.0,"M7":100.0,"E":null}}],"placeholder":false},{"period":"115年3月累計","year":"115","month":3,"pub_date":"2026-04-16","max_score":74,"records":[{"office":"台北","annual":71.97,"rank":6,"group_rank":3,"scores":{"O1":97.76,"O2":100.0,"L1":89.88,"L2":96.36,"L3":null,"L4":null,"M1":83.81,"M2":95.11,"M3":100.0,"M4":100.0,"M5":100.0,"M6":75.0,"M7":100.0,"E":null}},{"office":"新北","annual":72.04,"rank":5,"group_rank":2,"scores":{"O1":96.91,"O2":99.61,"L1":92.27,"L2":95.72,"L3":null,"L4":null,"M1":90.67,"M2":100.99,"M3":100.0,"M4":100.0,"M5":100.0,"M6":76.91,"M7":100.0,"E":null}},{"office":"基隆","annual":70.99,"rank":10,"group_rank":2,"scores":{"O1":96.1,"O2":100.0,"L1":92.26,"L2":85.73,"L3":null,"L4":null,"M1":84.7,"M2":93.07,"M3":100.0,"M4":100.0,"M5":100.0,"M6":75.0,"M7":78.6,"E":null}},{"office":"桃園","annual":70.34,"rank":12,"group_rank":6,"scores":{"O1":94.33,"O2":99.68,"L1":93.88,"L2":96.64,"L3":null,"L4":null,"M1":87.67,"M2":95.6,"M3":78.88,"M4":91.92,"M5":100.0,"M6":100.0,"M7":100.0,"E":null}},{"office":"新竹","annual":72.11,"rank":4,"group_rank":1,"scores":{"O1":99.73,"O2":100.0,"L1":101.0,"L2":98.11,"L3":null,"L4":null,"M1":92.57,"M2":92.38,"M3":91.96,"M4":92.53,"M5":100.0,"M6":75.0,"M7":78.74,"E":null}},{"office":"苗栗","annual":73.41,"rank":1,"group_rank":1,"scores":{"O1":99.6,"O2":100.0,"L1":100.76,"L2":101.0,"L3":null,"L4":null,"M1":95.69,"M2":96.53,"M3":100.0,"M4":96.82,"M5":100.0,"M6":100.0,"M7":75.0,"E":null}},{"office":"花蓮","annual":71.12,"rank":9,"group_rank":4,"scores":{"O1":95.02,"O2":99.41,"L1":100.86,"L2":101.0,"L3":null,"L4":null,"M1":92.07,"M2":101.53,"M3":91.69,"M4":89.04,"M5":100.0,"M6":75.0,"M7":100.0,"E":null}},{"office":"宜蘭","annual":72.67,"rank":2,"group_rank":2,"scores":{"O1":100.0,"O2":100.0,"L1":99.16,"L2":101.0,"L3":null,"L4":null,"M1":87.91,"M2":92.62,"M3":85.24,"M4":100.0,"M5":100.0,"M6":100.0,"M7":79.09,"E":null}},{"office":"台中","annual":72.19,"rank":3,"group_rank":1,"scores":{"O1":96.65,"O2":99.28,"L1":93.45,"L2":95.49,"L3":null,"L4":null,"M1":87.54,"M2":93.19,"M3":100.0,"M4":100.0,"M5":100.0,"M6":100.0,"M7":100.0,"E":null}},{"office":"彰化","annual":68.41,"rank":17,"group_rank":6,"scores":{"O1":93.62,"O2":98.9,"L1":96.43,"L2":94.66,"L3":null,"L4":null,"M1":92.81,"M2":95.62,"M3":63.44,"M4":82.83,"M5":100.0,"M6":75.0,"M7":100.0,"E":null}},{"office":"南投","annual":69.02,"rank":15,"group_rank":5,"scores":{"O1":94.4,"O2":99.38,"L1":97.11,"L2":101.0,"L3":null,"L4":null,"M1":96.78,"M2":99.08,"M3":66.38,"M4":84.05,"M5":97.73,"M6":75.0,"M7":77.62,"E":null}},{"office":"雲林","annual":69.79,"rank":13,"group_rank":3,"scores":{"O1":93.73,"O2":100.0,"L1":96.14,"L2":101.0,"L3":null,"L4":null,"M1":94.19,"M2":101.56,"M3":71.13,"M4":84.73,"M5":100.0,"M6":100.0,"M7":76.1,"E":null}},{"office":"嘉義","annual":69.26,"rank":14,"group_rank":4,"scores":{"O1":94.57,"O2":98.89,"L1":95.96,"L2":101.0,"L3":null,"L4":null,"M1":86.15,"M2":93.19,"M3":73.44,"M4":84.04,"M5":100.0,"M6":75.0,"M7":100.0,"E":null}},{"office":"台南","annual":70.95,"rank":11,"group_rank":5,"scores":{"O1":96.7,"O2":99.33,"L1":99.5,"L2":91.96,"L3":null,"L4":null,"M1":90.11,"M2":94.68,"M3":87.88,"M4":93.67,"M5":99.4,"M6":75.0,"M7":100.0,"E":null}},{"office":"高雄","annual":71.29,"rank":7,"group_rank":4,"scores":{"O1":95.47,"O2":100.0,"L1":93.89,"L2":99.89,"L3":null,"L4":null,"M1":93.18,"M2":96.27,"M3":92.29,"M4":93.76,"M5":89.37,"M6":100.0,"M7":100.0,"E":null}},{"office":"屏東","annual":68.69,"rank":16,"group_rank":5,"scores":{"O1":94.48,"O2":99.58,"L1":96.59,"L2":100.2,"L3":null,"L4":null,"M1":93.77,"M2":91.79,"M3":65.6,"M4":88.35,"M5":89.09,"M6":75.0,"M7":80.6,"E":null}},{"office":"台東","annual":71.15,"rank":8,"group_rank":3,"scores":{"O1":95.9,"O2":100.0,"L1":101.0,"L2":101.0,"L3":null,"L4":null,"M1":94.72,"M2":94.98,"M3":79.87,"M4":96.06,"M5":100.0,"M6":75.0,"M7":100.0,"E":null}}],"placeholder":false},{"period":"115年4月累計","year":"115","month":4,"pub_date":"2026-04-16","max_score":79,"records":[{"office":"台北","annual":77.44,"rank":6,"group_rank":3,"scores":{"O1":97.48,"O2":100.0,"L1":90.72,"L2":101.0,"L3":99.97,"L4":null,"M1":85.21,"M2":95.94,"M3":100.0,"M4":100.0,"M5":100.0,"M6":89.12,"M7":100.0,"E":null}},{"office":"新北","annual":77.67,"rank":3,"group_rank":1,"scores":{"O1":98.03,"O2":100.0,"L1":90.8,"L2":101.0,"L3":99.99,"L4":null,"M1":93.23,"M2":99.88,"M3":100.0,"M4":100.0,"M5":100.0,"M6":81.53,"M7":100.0,"E":null}},{"office":"基隆","annual":76.53,"rank":10,"group_rank":3,"scores":{"O1":96.51,"O2":100.0,"L1":91.39,"L2":93.86,"L3":100.0,"L4":null,"M1":89.21,"M2":94.79,"M3":100.0,"M4":100.0,"M5":100.0,"M6":75.0,"M7":80.95,"E":null}},{"office":"桃園","annual":75.46,"rank":14,"group_rank":6,"scores":{"O1":94.29,"O2":99.86,"L1":92.7,"L2":101.0,"L3":100.0,"L4":null,"M1":89.1,"M2":95.69,"M3":81.47,"M4":92.82,"M5":93.81,"M6":100.0,"M7":100.0,"E":null}},{"office":"新竹","annual":78.25,"rank":1,"group_rank":1,"scores":{"O1":100.0,"O2":100.0,"L1":101.0,"L2":101.0,"L3":99.98,"L4":null,"M1":96.93,"M2":97.11,"M3":100.0,"M4":100.0,"M5":100.0,"M6":75.0,"M7":79.2,"E":null}},{"office":"苗栗","annual":78.13,"rank":2,"group_rank":1,"scores":{"O1":100.0,"O2":100.0,"L1":100.26,"L2":101.0,"L3":100.0,"L4":null,"M1":96.84,"M2":99.88,"M3":96.95,"M4":95.7,"M5":94.12,"M6":100.0,"M7":75.0,"E":null}},{"office":"花蓮","annual":76.92,"rank":8,"group_rank":4,"scores":{"O1":95.25,"O2":100.0,"L1":97.75,"L2":101.0,"L3":100.0,"L4":null,"M1":92.84,"M2":102.0,"M3":99.27,"M4":96.02,"M5":100.0,"M6":75.0,"M7":100.0,"E":null}},{"office":"宜蘭","annual":77.46,"rank":5,"group_rank":2,"scores":{"O1":99.18,"O2":100.0,"L1":96.95,"L2":101.0,"L3":99.93,"L4":null,"M1":91.67,"M2":95.19,"M3":84.42,"M4":100.0,"M5":100.0,"M6":100.0,"M7":78.94,"E":null}},{"office":"台中","annual":77.56,"rank":4,"group_rank":2,"scores":{"O1":97.25,"O2":99.72,"L1":91.19,"L2":101.0,"L3":99.98,"L4":null,"M1":89.78,"M2":92.9,"M3":100.0,"M4":100.0,"M5":99.07,"M6":100.0,"M7":100.0,"E":null}},{"office":"彰化","annual":74.39,"rank":16,"group_rank":5,"scores":{"O1":93.85,"O2":99.37,"L1":94.53,"L2":101.0,"L3":99.94,"L4":null,"M1":97.6,"M2":98.07,"M3":73.58,"M4":88.21,"M5":93.29,"M6":75.0,"M7":100.0,"E":null}},{"office":"南投","annual":77.08,"rank":7,"group_rank":3,"scores":{"O1":98.27,"O2":99.71,"L1":94.38,"L2":101.0,"L3":99.99,"L4":null,"M1":97.13,"M2":102.0,"M3":100.0,"M4":83.09,"M5":96.17,"M6":100.0,"M7":77.38,"E":null}},{"office":"雲林","annual":75.22,"rank":15,"group_rank":4,"scores":{"O1":94.34,"O2":100.0,"L1":95.14,"L2":101.0,"L3":99.99,"L4":null,"M1":98.26,"M2":100.22,"M3":75.03,"M4":86.13,"M5":100.0,"M6":100.0,"M7":76.05,"E":null}},{"office":"嘉義","annual":76.8,"rank":9,"group_rank":2,"scores":{"O1":95.19,"O2":99.64,"L1":93.69,"L2":101.0,"L3":100.0,"L4":null,"M1":91.71,"M2":95.26,"M3":99.78,"M4":91.21,"M5":100.0,"M6":100.0,"M7":100.0,"E":null}},{"office":"台南","annual":76.51,"rank":11,"group_rank":4,"scores":{"O1":96.3,"O2":100.0,"L1":99.1,"L2":98.4,"L3":99.99,"L4":null,"M1":94.43,"M2":96.05,"M3":86.87,"M4":94.22,"M5":91.82,"M6":100.0,"M7":100.0,"E":null}},{"office":"高雄","annual":75.87,"rank":13,"group_rank":5,"scores":{"O1":94.91,"O2":100.0,"L1":91.28,"L2":101.0,"L3":99.98,"L4":null,"M1":94.61,"M2":97.88,"M3":89.1,"M4":92.08,"M5":88.64,"M6":100.0,"M7":100.0,"E":null}},{"office":"屏東","annual":73.58,"rank":17,"group_rank":6,"scores":{"O1":94.46,"O2":99.52,"L1":94.67,"L2":101.0,"L3":99.91,"L4":null,"M1":94.08,"M2":94.54,"M3":65.14,"M4":87.13,"M5":88.65,"M6":75.0,"M7":80.4,"E":null}},{"office":"台東","annual":76.27,"rank":12,"group_rank":5,"scores":{"O1":95.61,"O2":100.0,"L1":101.0,"L2":101.0,"L3":99.94,"L4":null,"M1":94.6,"M2":97.81,"M3":78.05,"M4":93.95,"M5":100.0,"M6":91.94,"M7":100.0,"E":null}}],"placeholder":false},{"year":115,"month":5,"period":"115年5月","placeholder":false,"records":[{"office":"台北","rank":5,"annual":77.06,"scores":{"O1":96.66,"O2":100.0,"L1":87.15,"L2":101.0,"L3":99.95,"L4":null,"M1":88.28,"M2":96.85,"M3":97.97,"M4":100.0,"M5":100.0,"M6":89.29,"M7":98.7,"E":null},"group_rank":3},{"office":"新北","rank":2,"annual":77.75,"scores":{"O1":97.56,"O2":99.98,"L1":90.74,"L2":101.0,"L3":99.99,"L4":null,"M1":94.96,"M2":99.9,"M3":100.0,"M4":100.0,"M5":100.0,"M6":89.77,"M7":100.0,"E":null},"group_rank":1},{"office":"基隆","rank":8,"annual":76.78,"scores":{"O1":96.8,"O2":100.0,"L1":89.5,"L2":95.37,"L3":99.92,"L4":null,"M1":90.65,"M2":93.96,"M3":100.0,"M4":100.0,"M5":100.0,"M6":75.0,"M7":100.0,"E":null},"group_rank":2},{"office":"桃園","rank":13,"annual":75.25,"scores":{"O1":93.88,"O2":99.63,"L1":92.93,"L2":101.0,"L3":99.97,"L4":null,"M1":91.22,"M2":95.43,"M3":80.59,"M4":93.46,"M5":91.6,"M6":100.0,"M7":100.0,"E":null},"group_rank":6},{"office":"新竹","rank":1,"annual":78.97,"scores":{"O1":100.0,"O2":100.0,"L1":101.0,"L2":101.0,"L3":99.99,"L4":null,"M1":96.07,"M2":98.48,"M3":100.0,"M4":100.0,"M5":100.0,"M6":100.0,"M7":100.0,"E":null},"group_rank":1},{"office":"苗栗","rank":4,"annual":77.37,"scores":{"O1":99.78,"O2":100.0,"L1":100.11,"L2":101.0,"L3":99.9,"L4":null,"M1":98.24,"M2":100.71,"M3":87.45,"M4":92.77,"M5":91.14,"M6":100.0,"M7":75.0,"E":null},"group_rank":1},{"office":"花蓮","rank":9,"annual":76.78,"scores":{"O1":95.26,"O2":99.96,"L1":96.85,"L2":101.0,"L3":100.0,"L4":null,"M1":94.02,"M2":102.0,"M3":98.36,"M4":94.49,"M5":100.0,"M6":75.0,"M7":100.0,"E":null},"group_rank":3},{"office":"宜蘭","rank":6,"annual":76.96,"scores":{"O1":97.71,"O2":100.0,"L1":96.61,"L2":101.0,"L3":99.92,"L4":null,"M1":92.82,"M2":94.89,"M3":80.93,"M4":100.0,"M5":100.0,"M6":100.0,"M7":82.77,"E":null},"group_rank":2},{"office":"台中","rank":3,"annual":77.44,"scores":{"O1":96.44,"O2":99.5,"L1":91.86,"L2":101.0,"L3":99.96,"L4":null,"M1":91.54,"M2":94.49,"M3":100.0,"M4":100.0,"M5":100.0,"M6":100.0,"M7":100.0,"E":null},"group_rank":2},{"office":"彰化","rank":16,"annual":73.91,"scores":{"O1":93.8,"O2":99.12,"L1":93.1,"L2":101.0,"L3":99.91,"L4":null,"M1":97.08,"M2":97.88,"M3":70.57,"M4":88.25,"M5":93.54,"M6":75.0,"M7":79.4,"E":null},"group_rank":5},{"office":"南投","rank":15,"annual":75.07,"scores":{"O1":97.19,"O2":99.58,"L1":93.21,"L2":101.0,"L3":99.96,"L4":null,"M1":100.44,"M2":101.74,"M3":62.15,"M4":82.03,"M5":100.0,"M6":100.0,"M7":84.13,"E":null},"group_rank":5},{"office":"雲林","rank":14,"annual":75.08,"scores":{"O1":94.17,"O2":100.0,"L1":94.48,"L2":101.0,"L3":99.99,"L4":null,"M1":97.71,"M2":101.6,"M3":72.87,"M4":86.49,"M5":100.0,"M6":100.0,"M7":76.54,"E":null},"group_rank":4},{"office":"嘉義","rank":11,"annual":76.06,"scores":{"O1":95.05,"O2":98.73,"L1":93.76,"L2":101.0,"L3":99.94,"L4":null,"M1":92.01,"M2":95.37,"M3":93.38,"M4":91.91,"M5":100.0,"M6":100.0,"M7":75.68,"E":null},"group_rank":3},{"office":"台南","rank":10,"annual":76.29,"scores":{"O1":96.12,"O2":99.96,"L1":98.04,"L2":101.0,"L3":99.93,"L4":null,"M1":95.09,"M2":97.63,"M3":82.43,"M4":93.63,"M5":100.0,"M6":92.93,"M7":79.4,"E":null},"group_rank":5},{"office":"高雄","rank":7,"annual":76.79,"scores":{"O1":95.11,"O2":100.0,"L1":91.5,"L2":101.0,"L3":99.96,"L4":null,"M1":97.06,"M2":97.37,"M3":91.26,"M4":97.35,"M5":100.0,"M6":100.0,"M7":100.0,"E":null},"group_rank":4},{"office":"屏東","rank":17,"annual":73.87,"scores":{"O1":94.47,"O2":99.44,"L1":92.84,"L2":101.0,"L3":99.87,"L4":null,"M1":96.64,"M2":96.53,"M3":63.2,"M4":85.63,"M5":100.0,"M6":75.0,"M7":81.63,"E":null},"group_rank":6},{"office":"台東","rank":12,"annual":75.94,"scores":{"O1":95.37,"O2":100.0,"L1":99.86,"L2":101.0,"L3":99.79,"L4":null,"M1":97.31,"M2":99.21,"M3":75.57,"M4":91.88,"M5":100.0,"M6":88.55,"M7":100.0,"E":null},"group_rank":4}]}]},"actual":{"period":"115年5月","year":"115","month":5,"pub_date":"2026-06-22","max_score":79,"records":[{"office":"台北","annual":77.06,"rank":5,"group_rank":3,"scores":{"O1":96.66,"O2":100.0,"L1":87.15,"L2":101.0,"L3":99.95,"L4":null,"M1":88.28,"M2":96.85,"M3":97.97,"M4":100.0,"M5":100.0,"M6":89.29,"M7":98.7,"E":null}},{"office":"新北","annual":77.75,"rank":2,"group_rank":1,"scores":{"O1":97.56,"O2":99.98,"L1":90.74,"L2":101.0,"L3":99.99,"L4":null,"M1":94.96,"M2":99.9,"M3":100.0,"M4":100.0,"M5":100.0,"M6":89.77,"M7":100.0,"E":null}},{"office":"基隆","annual":76.78,"rank":8,"group_rank":2,"scores":{"O1":96.8,"O2":100.0,"L1":89.5,"L2":95.37,"L3":99.92,"L4":null,"M1":90.65,"M2":93.96,"M3":100.0,"M4":100.0,"M5":100.0,"M6":75.0,"M7":100.0,"E":null}},{"office":"桃園","annual":75.25,"rank":13,"group_rank":6,"scores":{"O1":93.88,"O2":99.63,"L1":92.93,"L2":101.0,"L3":99.97,"L4":null,"M1":91.22,"M2":95.43,"M3":80.59,"M4":93.46,"M5":91.6,"M6":100.0,"M7":100.0,"E":null}},{"office":"新竹","annual":78.97,"rank":1,"group_rank":1,"scores":{"O1":100.0,"O2":100.0,"L1":101.0,"L2":101.0,"L3":99.99,"L4":null,"M1":96.07,"M2":98.48,"M3":100.0,"M4":100.0,"M5":100.0,"M6":100.0,"M7":100.0,"E":null}},{"office":"苗栗","annual":77.37,"rank":4,"group_rank":1,"scores":{"O1":99.78,"O2":100.0,"L1":100.11,"L2":101.0,"L3":99.9,"L4":null,"M1":98.24,"M2":100.71,"M3":87.45,"M4":92.77,"M5":91.14,"M6":100.0,"M7":75.0,"E":null}},{"office":"花蓮","annual":76.78,"rank":9,"group_rank":3,"scores":{"O1":95.26,"O2":99.96,"L1":96.85,"L2":101.0,"L3":100.0,"L4":null,"M1":94.02,"M2":102.0,"M3":98.36,"M4":94.49,"M5":100.0,"M6":75.0,"M7":100.0,"E":null}},{"office":"宜蘭","annual":76.96,"rank":6,"group_rank":2,"scores":{"O1":97.71,"O2":100.0,"L1":96.61,"L2":101.0,"L3":99.92,"L4":null,"M1":92.82,"M2":94.89,"M3":80.93,"M4":100.0,"M5":100.0,"M6":100.0,"M7":82.77,"E":null}},{"office":"台中","annual":77.44,"rank":3,"group_rank":2,"scores":{"O1":96.44,"O2":99.5,"L1":91.86,"L2":101.0,"L3":99.96,"L4":null,"M1":91.54,"M2":94.49,"M3":100.0,"M4":100.0,"M5":100.0,"M6":100.0,"M7":100.0,"E":null}},{"office":"彰化","annual":73.91,"rank":16,"group_rank":5,"scores":{"O1":93.8,"O2":99.12,"L1":93.1,"L2":101.0,"L3":99.91,"L4":null,"M1":97.08,"M2":97.88,"M3":70.57,"M4":88.25,"M5":93.54,"M6":75.0,"M7":79.4,"E":null}},{"office":"南投","annual":75.07,"rank":15,"group_rank":5,"scores":{"O1":97.19,"O2":99.58,"L1":93.21,"L2":101.0,"L3":99.96,"L4":null,"M1":100.44,"M2":101.74,"M3":62.15,"M4":82.03,"M5":100.0,"M6":100.0,"M7":84.13,"E":null}},{"office":"雲林","annual":75.08,"rank":14,"group_rank":4,"scores":{"O1":94.17,"O2":100.0,"L1":94.48,"L2":101.0,"L3":99.99,"L4":null,"M1":97.71,"M2":101.6,"M3":72.87,"M4":86.49,"M5":100.0,"M6":100.0,"M7":76.54,"E":null}},{"office":"嘉義","annual":76.06,"rank":11,"group_rank":3,"scores":{"O1":95.05,"O2":98.73,"L1":93.76,"L2":101.0,"L3":99.94,"L4":null,"M1":92.01,"M2":95.37,"M3":93.38,"M4":91.91,"M5":100.0,"M6":100.0,"M7":75.68,"E":null}},{"office":"台南","annual":76.29,"rank":10,"group_rank":5,"scores":{"O1":96.12,"O2":99.96,"L1":98.04,"L2":101.0,"L3":99.93,"L4":null,"M1":95.09,"M2":97.63,"M3":82.43,"M4":93.63,"M5":100.0,"M6":92.93,"M7":79.4,"E":null}},{"office":"高雄","annual":76.79,"rank":7,"group_rank":4,"scores":{"O1":95.11,"O2":100.0,"L1":91.5,"L2":101.0,"L3":99.96,"L4":null,"M1":97.06,"M2":97.37,"M3":91.26,"M4":97.35,"M5":100.0,"M6":100.0,"M7":100.0,"E":null}},{"office":"屏東","annual":73.87,"rank":17,"group_rank":6,"scores":{"O1":94.47,"O2":99.44,"L1":92.84,"L2":101.0,"L3":99.87,"L4":null,"M1":96.64,"M2":96.53,"M3":63.2,"M4":85.63,"M5":100.0,"M6":75.0,"M7":81.63,"E":null}},{"office":"台東","annual":75.94,"rank":12,"group_rank":4,"scores":{"O1":95.37,"O2":100.0,"L1":99.86,"L2":101.0,"L3":99.79,"L4":null,"M1":97.31,"M2":99.21,"M3":75.57,"M4":91.88,"M5":100.0,"M6":88.55,"M7":100.0,"E":null}}]}};
+const KPI = DATA.kpi;
+const COMP = DATA.composite;
+
+const CAT_COLORS = {
+  '整體績效': 'var(--cat-O)',
+  '鞏固核心': 'var(--cat-L)',
+  '創價成長': 'var(--cat-M)',
+  '永續發展': 'var(--cat-E)',
+  '機構綜合表現': 'var(--cat-C)',
+};
+const CAT_LIST = ['整體績效','鞏固核心','創價成長','永續發展','機構綜合表現'];
+
+/* ──────────────── Tab 切換 ──────────────── */
+document.querySelectorAll('.tab').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById('page-'+t.dataset.page).classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+
+/* ──────────────── Tab 1: 實績儀表板 (v1.1) ──────────────── */
+const MY_OFFICE = DATA.my_office || '彰化';
+let ACTUAL = DATA.actual;  // ★ 上傳新月份時會動態更新
+
+function getMyRecord(){
+  return ACTUAL.records.find(r=>r.office===MY_OFFICE);
+}
+
+function gradeOf(score, base){
+  // base:該 KPI 的達標基準分數(預設 95,O2/L3 為 98)
+  if(score==null) return {cls:'year',txt:'年指標'};
+  const b = base != null ? base : 95;
+  // 待加強閾值:基準下方 10 分(95→85、98→88)
+  const warnLine = b - 10;
+  if(score>=b) return {cls:'ok',txt:'達標'};
+  if(score>=warnLine) return {cls:'warn',txt:'待加強'};
+  return {cls:'bad',txt:'未達標'};
+}
+
+function renderDashboard(){
+  const me = getMyRecord();
+  if(!me){
+    document.getElementById('actualList').innerHTML = '<div class="empty">實績資料載入失敗</div>';
+    return;
+  }
+
+  // Hero 區塊
+  document.getElementById('heroScore').textContent = me.annual.toFixed(2);
+  document.getElementById('heroRank').textContent = '#'+me.rank;
+  document.getElementById('heroGRank').textContent = '#'+me.group_rank;
+  document.getElementById('heroPeriod').textContent = `📅 ${ACTUAL.period} · 滿分 ${ACTUAL.max_score} 分`;
+  // ★ 動態更新「115/X 累計得分」標籤（舊版硬編碼，上傳新月份後不會自動更新）
+  const _lbl = document.getElementById('heroLabel');
+  if(_lbl){
+    const _pm = (ACTUAL.period||'').match(/(\d+)\s*年\s*(\d+)\s*月/);
+    _lbl.textContent = _pm ? `${_pm[1]}/${_pm[2]} 累計得分` : (ACTUAL.period||'累計得分');
+  }
+
+  // ★ 紅燈警示:按各 KPI 的 scoring_base 動態判斷
+  const badItems = KPI.filter(k=>{
+    const s = me.scores[k.id];
+    const b = k.scoring_base ?? 95;
+    return s!=null && s < (b - 10);  // 低於 (基準-10)
+  });
+  const warnItems = KPI.filter(k=>{
+    const s = me.scores[k.id];
+    const b = k.scoring_base ?? 95;
+    return s!=null && s >= (b - 10) && s < b;
+  });
+  const alertBox = document.getElementById('alertBox');
+  if(badItems.length>0){
+    alertBox.innerHTML = `<div class="alert-bar">
+      <div class="ttl">🔴 ${badItems.length} 項指標未達標</div>
+      ${badItems.map(k=>{
+        const b = k.scoring_base ?? 95;
+        return `<div>• <b>${k.id}</b> ${k.name}:${me.scores[k.id].toFixed(2)} 分 (基準 ${b}、權重 ${k.weight}%)</div>`;
+      }).join('')}
+    </div>`;
+  } else if(warnItems.length>0){
+    alertBox.innerHTML = `<div class="alert-bar" style="background:#fffbeb;border-color:#fde68a;border-left-color:var(--warn);color:#92400e">
+      <div class="ttl">🟡 ${warnItems.length} 項指標待加強</div>
+      ${warnItems.slice(0,3).map(k=>{
+        const b = k.scoring_base ?? 95;
+        return `<div>• <b>${k.id}</b> ${k.name}:${me.scores[k.id].toFixed(2)} 分 (基準 ${b})</div>`;
+      }).join('')}
+      ${warnItems.length>3?`<div style="opacity:.7">…還有 ${warnItems.length-3} 項</div>`:''}
+    </div>`;
+  } else {
+    alertBox.innerHTML = '';
+  }
+
+  // KPI 清單(按權重由大到小排序)
+  const sorted = [...KPI].sort((a,b)=>b.weight-a.weight);
+  let html = '';
+  sorted.forEach(k=>{
+    const s = me.scores[k.id];
+    const base = k.scoring_base ?? 95;
+    const g = gradeOf(s, base);
+    const color = CAT_COLORS[k.cat];
+    const scoreText = s==null ? '—' : s.toFixed(2);
+    const sbText = s==null ? '年度結算' : (s>=base ? `達 ${base} 分` : `差 ${(base-s).toFixed(2)} 分`);
+    const progPct = s==null ? 0 : Math.min(100, s);
+    html += `<div class="kpi-actual ${g.cls}" data-id="${k.id}">
+      <span class="id-tag" style="background:${color}">${k.id}</span>
+      <div class="body">
+        <div class="nm">${k.name}</div>
+        <div class="meta">
+          <span>權重 ${k.weight}%</span>
+          <span>目標 ${k.target_total}</span>
+          <span>${k.owner}</span>
+        </div>
+        <div class="prog-bar"><div class="fill ${g.cls==='year'?'':g.cls}" style="width:${progPct}%"></div></div>
+      </div>
+      <div class="score-block">
+        <div class="sv">${scoreText}</div>
+        <div class="sb">${sbText}</div>
+      </div>
+    </div>`;
+  });
+  document.getElementById('actualList').innerHTML = html;
+  document.querySelectorAll('.kpi-actual').forEach(c=>{
+    c.addEventListener('click',()=>{
+      switchToTab('dict');
+      setTimeout(()=>{
+        const t = document.querySelector(`.detail-card[data-id="${c.dataset.id}"]`);
+        if(t){ t.classList.add('open'); t.scrollIntoView({block:'center',behavior:'smooth'}); }
+      },150);
+    });
+  });
+}
+
+function switchToTab(name){
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+  document.querySelector(`.tab[data-page="${name}"]`).classList.add('active');
+  document.getElementById('page-'+name).classList.add('active');
+}
+
+/* ──────────────── Tab 2: 字典 ──────────────── */
+let currentFilter = 'all';
+let currentSearch = '';
+
+function renderDict(){
+  const container = document.getElementById('dict-list');
+  const search = currentSearch.toLowerCase();
+  let items = [...KPI.map(k=>({...k,_type:'kpi'})), ...COMP.map(c=>({...c,_type:'comp',cat:'機構綜合表現'}))];
+
+  if(currentFilter!=='all'){
+    items = items.filter(k=>k.cat===currentFilter);
+  }
+  if(search){
+    items = items.filter(k=>{
+      const txt = [k.id,k.name,k.formula||'',k.definition||'',k.scoring||''].join(' ').toLowerCase();
+      return txt.includes(search);
+    });
+  }
+
+  if(items.length===0){
+    container.innerHTML = '<div class="empty"><span class="icn">🔍</span>找不到符合條件的指標</div>';
+    return;
+  }
+
+  let html = '';
+  items.forEach(k=>{
+    const color = CAT_COLORS[k.cat] || 'var(--cat-C)';
+    const owner = k.owner;
+    const weight = k._type==='kpi' ? `${k.weight}%` : k.weight_note||'15%';
+    html += `<div class="detail-card" data-id="${k.id}">
+      <div class="detail-head">
+        <span class="kpi-id" style="background:${color}">${k.id}</span>
+        <div style="flex:1">
+          <div style="font-size:14px;font-weight:600">${k.name}</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:2px">${k.cat} · ${owner} · ${weight}</div>
+        </div>
+        <span class="arrow">▶</span>
+      </div>
+      <div class="detail-body">`;
+    
+    if(k.formula){
+      html += `<div class="sec"><div class="sec-title">📐 公式</div><div class="sec-body mono">${escapeHtml(k.formula)}</div></div>`;
+    }
+    if(k.definition){
+      html += `<div class="sec"><div class="sec-title">📋 定義</div><div class="sec-body">${escapeHtml(k.definition)}</div></div>`;
+    }
+    if(k.scoring){
+      html += `<div class="sec"><div class="sec-title">⭐ 評分標準</div><div class="sec-body">${escapeHtml(k.scoring)}</div></div>`;
+    }
+    if(k.ch_target){
+      html += `<div class="sec"><div class="sec-title">🎯 彰化目標</div><div class="target-grid">`;
+      Object.entries(k.ch_target).forEach(([key,val])=>{
+        html += `<div class="k">${key}</div><div class="v">${formatNum(val)}</div>`;
+      });
+      html += `</div></div>`;
+    }
+    if(k.source){
+      html += `<div class="sec"><div class="sec-title">📂 資料來源</div><div class="sec-body" style="font-size:12px">${escapeHtml(k.source)}</div></div>`;
+    }
+    if(k.deadline){
+      html += `<div class="sec"><div class="sec-title">⏰ 資料提供期限</div><div class="sec-body" style="font-size:12px">${escapeHtml(k.deadline)}</div></div>`;
+    }
+
+    html += `</div></div>`;
+  });
+  container.innerHTML = html;
+
+  container.querySelectorAll('.detail-head').forEach(h=>{
+    h.addEventListener('click',()=>{
+      h.closest('.detail-card').classList.toggle('open');
+    });
+  });
+}
+
+function renderFilterChips(){
+  const wrap = document.getElementById('filterChips');
+  let chips = '<button class="chip active" data-cat="all">全部</button>';
+  CAT_LIST.forEach(c=>{
+    chips += `<button class="chip" data-cat="${c}">${c}</button>`;
+  });
+  wrap.innerHTML = chips;
+  wrap.querySelectorAll('.chip').forEach(c=>{
+    c.addEventListener('click',()=>{
+      wrap.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));
+      c.classList.add('active');
+      currentFilter = c.dataset.cat;
+      renderDict();
+    });
+  });
+}
+
+document.getElementById('searchInput').addEventListener('input',e=>{
+  currentSearch = e.target.value.trim();
+  renderDict();
+});
+
+function escapeHtml(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function formatNum(v){
+  if(typeof v === 'number'){
+    if(Number.isInteger(v)) return v.toLocaleString('zh-TW');
+    return v.toLocaleString('zh-TW',{maximumFractionDigits:3});
+  }
+  return String(v);
+}
+
+/* ──────────────── Tab 3: 全處比較 (v1.1) ──────────────── */
+let cmpChartInst = null;
+let cmpCurrentKpi = 'annual';   // 'annual' = 年度合併, 否則為 KPI id
+let cmpCurrentMode = 'rank';    // rank / group / radar
+
+const GROUP_COLORS = {
+  'A 組': '#0066B3',
+  'B 組': '#00ACB6',
+  'C 組': '#16a34a',
+};
+
+function officeGroup(office){
+  for(const [g,arr] of Object.entries(DATA.groups)){
+    if(arr.includes(office)) return g;
+  }
+  return '';
+}
+
+function renderCompareControls(){
+  // KPI 下拉:預設「年度合併得分」
+  const sel = document.getElementById('cmpKpi');
+  let opts = `<option value="annual">年度合併得分（${ACTUAL.period||'累計得分'}）</option>`;
+  KPI.forEach(k=>{
+    opts += `<option value="${k.id}">${k.id} · ${k.name}</option>`;
+  });
+  sel.innerHTML = opts;
+  sel.addEventListener('change',()=>{
+    cmpCurrentKpi = sel.value;
+    renderCompareChart();
+  });
+
+  // 模式 tabs
+  document.querySelectorAll('.cmp-mode-tab').forEach(t=>{
+    t.addEventListener('click',()=>{
+      document.querySelectorAll('.cmp-mode-tab').forEach(x=>x.classList.remove('active'));
+      t.classList.add('active');
+      cmpCurrentMode = t.dataset.mode;
+      // 雷達模式時鎖定為年度合併不適用,改為展示彰化全部 KPI
+      renderCompareChart();
+    });
+  });
+}
+
+function renderCompareChart(){
+  if(cmpChartInst){ cmpChartInst.destroy(); cmpChartInst = null; }
+  const wrap = document.getElementById('cmpChartWrap');
+  wrap.className = 'chart-wrap ' + (cmpCurrentMode==='radar'?'radar':(cmpCurrentMode==='group'?'short':'tall'));
+  
+  const titleEl = document.getElementById('cmpChartTitle');
+  const subEl   = document.getElementById('cmpChartSub');
+
+  const isAnnual = cmpCurrentKpi === 'annual';
+  const kpi = isAnnual ? null : KPI.find(k=>k.id===cmpCurrentKpi);
+  const lbl = isAnnual ? '年度合併得分' : `${kpi.id} ${kpi.name}`;
+
+  if(cmpCurrentMode === 'rank'){
+    renderRankBar(isAnnual, kpi, lbl, titleEl, subEl);
+  } else if(cmpCurrentMode === 'group'){
+    renderGroupBar(isAnnual, kpi, lbl, titleEl, subEl);
+  } else {
+    renderRadar(titleEl, subEl);
+  }
+}
+
+function getScoreValue(record, kpiId){
+  if(kpiId === 'annual') return record.annual;
+  return record.scores[kpiId];
+}
+
+function renderRankBar(isAnnual, kpi, lbl, titleEl, subEl){
+  // 動態判定達標基準:年度合併用 95(即 annual 達成率 100%),單一 KPI 依 scoring_base
+  const base = isAnnual ? 95 : (kpi && kpi.scoring_base != null ? kpi.scoring_base : 95);
+  const warnLine = base - 10;
+  titleEl.textContent = `🏆 ${lbl} — 17 處排名`;
+  subEl.textContent = `黃色高亮為彰化 · 紅色為 < ${warnLine} · 綠色為 ≥ ${base}`;
+
+  // 排序:由高到低
+  const recs = [...ACTUAL.records].filter(r=>{
+    const v = getScoreValue(r, cmpCurrentKpi);
+    return v != null;
+  }).map(r=>({...r, _v: getScoreValue(r, cmpCurrentKpi)}));
+  recs.sort((a,b)=>b._v - a._v);
+
+  if(recs.length===0){
+    titleEl.textContent = '⚠️ 此指標為年度結算項目';
+    subEl.textContent = `${lbl} 為年指標,4 月累計尚未結算。請改選其他 KPI 或「年度合併得分」。`;
+    document.getElementById('cmpTable').innerHTML='';
+    return;
+  }
+
+  const labels = recs.map(r=>r.office);
+  const values = recs.map(r=>+r._v.toFixed(2));
+  const colors = recs.map(r=>{
+    if(r.office === MY_OFFICE) return '#facc15';  // 黃色高亮彰化
+    if(r._v >= base) return '#16a34a';
+    if(r._v < warnLine) return '#dc2626';
+    return '#94a3b8';
+  });
+
+  cmpChartInst = new Chart(document.getElementById('cmpChart').getContext('2d'),{
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{ label: lbl, data: values, backgroundColor: colors, borderWidth: 0 }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: c=>` ${c.parsed.x} 分` } },
+        datalabels: false,
+      },
+      scales: {
+        x: { beginAtZero: false, suggestedMin: isAnnual?70:60, suggestedMax: isAnnual?80:105,
+             ticks: { font: { size: 10 } } },
+        y: { ticks: { font: { size: 11 }, callback: function(v){
+          const o = this.getLabelForValue(v);
+          return o === MY_OFFICE ? '★ '+o : o;
+        }}}
+      }
+    }
+  });
+
+  // 排名表
+  let html = '<div class="chart-card"><div class="title">📋 排名速查表</div><table class="rank-table">'+
+    '<thead><tr><th>名次</th><th style="text-align:left">營運處</th><th>組別</th><th>得分</th><th>差距</th></tr></thead><tbody>';
+  recs.forEach((r,i)=>{
+    const rank = i+1;
+    const isMe = r.office === MY_OFFICE;
+    const top = rank===1?'pos-1':(rank<=3?'pos-2':'');
+    const last = rank===recs.length?'pos-last':'';
+    const diff = r._v - recs[0]._v;
+    html += `<tr class="${isMe?'me':''}">
+      <td class="${top} ${last}">${rank}</td>
+      <td class="office">${r.office}${isMe?' ★':''}</td>
+      <td style="font-size:10px;color:var(--muted)">${officeGroup(r.office)}</td>
+      <td class="score">${r._v.toFixed(2)}</td>
+      <td style="font-size:10px;color:var(--muted)">${i===0?'—':diff.toFixed(2)}</td>
+    </tr>`;
+  });
+  html += '</tbody></table></div>';
+  document.getElementById('cmpTable').innerHTML = html;
+}
+
+function renderGroupBar(isAnnual, kpi, lbl, titleEl, subEl){
+  titleEl.textContent = `🎯 ${lbl} — A/B/C 組平均`;
+  subEl.textContent = `比較三組平均水準與彰化所在組別`;
+
+  const groupAvg = {};
+  Object.entries(DATA.groups).forEach(([g, offices])=>{
+    const vals = offices.map(o=>{
+      const r = ACTUAL.records.find(x=>x.office===o);
+      return r ? getScoreValue(r, cmpCurrentKpi) : null;
+    }).filter(v=>v!=null);
+    groupAvg[g] = vals.length>0 ? vals.reduce((s,v)=>s+v,0)/vals.length : null;
+  });
+
+  const labels = Object.keys(groupAvg);
+  const values = labels.map(g=>groupAvg[g]==null?null:+groupAvg[g].toFixed(2));
+  const colors = labels.map(g=>GROUP_COLORS[g]);
+
+  cmpChartInst = new Chart(document.getElementById('cmpChart').getContext('2d'),{
+    type: 'bar',
+    data: { labels, datasets: [{ label: lbl, data: values, backgroundColor: colors, borderWidth: 0 }] },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: c=>` 平均 ${c.parsed.y} 分` } }
+      },
+      scales: {
+        y: { beginAtZero: false, suggestedMin: isAnnual?70:60, suggestedMax: isAnnual?82:105 }
+      }
+    }
+  });
+
+  // 列出彰化所在 B 組明細
+  const myGroup = officeGroup(MY_OFFICE);
+  const groupOffices = DATA.groups[myGroup] || [];
+  const groupRecs = groupOffices.map(o=>{
+    const r = ACTUAL.records.find(x=>x.office===o);
+    return { office: o, v: r ? getScoreValue(r, cmpCurrentKpi) : null };
+  });
+  groupRecs.sort((a,b)=>(b.v||0)-(a.v||0));
+  let html = `<div class="chart-card"><div class="title">🔍 ${myGroup} 內部比較(彰化所在組)</div><table class="rank-table">`+
+    '<thead><tr><th>組內名次</th><th style="text-align:left">營運處</th><th>得分</th><th>vs 組平均</th></tr></thead><tbody>';
+  const groupMean = groupAvg[myGroup];
+  groupRecs.forEach((r,i)=>{
+    const isMe = r.office === MY_OFFICE;
+    const diff = r.v==null||groupMean==null ? null : r.v - groupMean;
+    html += `<tr class="${isMe?'me':''}">
+      <td>${i+1}</td>
+      <td class="office">${r.office}${isMe?' ★':''}</td>
+      <td class="score">${r.v==null?'—':r.v.toFixed(2)}</td>
+      <td style="font-size:10.5px" class="${diff==null?'':(diff>=0?'pos-1':'pos-last')}">
+        ${diff==null?'—':(diff>=0?'+':'')+diff.toFixed(2)}
+      </td>
+    </tr>`;
+  });
+  html += '</tbody></table></div>';
+  document.getElementById('cmpTable').innerHTML = html;
+}
+
+function renderRadar(titleEl, subEl){
+  titleEl.textContent = `🕸️ 彰化 vs B 組平均 — 全 KPI 雷達`;
+  subEl.textContent = `所有有實績的 KPI 一次比對(年指標不顯示)`;
+
+  const me = getMyRecord();
+  const myGroup = officeGroup(MY_OFFICE);
+  const bGroupOffices = DATA.groups[myGroup] || [];
+
+  // 篩出有實績的 KPI
+  const validKpis = KPI.filter(k=>me.scores[k.id]!=null);
+  const labels = validKpis.map(k=>`${k.id}\n${k.name.slice(0,5)}`);
+  const myScores = validKpis.map(k=>me.scores[k.id]);
+  const grpScores = validKpis.map(k=>{
+    const vals = bGroupOffices.map(o=>{
+      const r = ACTUAL.records.find(x=>x.office===o);
+      return r ? r.scores[k.id] : null;
+    }).filter(v=>v!=null);
+    return vals.length ? +(vals.reduce((s,v)=>s+v,0)/vals.length).toFixed(2) : null;
+  });
+
+  cmpChartInst = new Chart(document.getElementById('cmpChart').getContext('2d'),{
+    type: 'radar',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: '彰化',
+          data: myScores,
+          backgroundColor: 'rgba(0,172,182,.25)',
+          borderColor: '#0066B3',
+          borderWidth: 2,
+          pointBackgroundColor: '#0066B3',
+          pointRadius: 3,
+        },
+        {
+          label: 'B 組平均',
+          data: grpScores,
+          backgroundColor: 'rgba(220,38,38,.1)',
+          borderColor: '#dc2626',
+          borderWidth: 2,
+          borderDash: [5,3],
+          pointBackgroundColor: '#dc2626',
+          pointRadius: 2.5,
+        }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'bottom', labels: { font: { size: 11 } } },
+      },
+      scales: {
+        r: {
+          min: 60, max: 105,
+          ticks: { stepSize: 10, font: { size: 9 }, color: '#94a3b8' },
+          pointLabels: { font: { size: 9 } },
+          grid: { color: '#e2e6ec' },
+          angleLines: { color: '#e2e6ec' }
+        }
+      }
+    }
+  });
+
+  // 表格:逐項差距
+  let html = '<div class="chart-card"><div class="title">📊 逐項差距明細</div><table class="rank-table">'+
+    '<thead><tr><th style="text-align:left">KPI</th><th>彰化</th><th>B 組均</th><th>差距</th></tr></thead><tbody>';
+  validKpis.forEach((k,i)=>{
+    const my = myScores[i], gv = grpScores[i];
+    const diff = gv==null ? null : my - gv;
+    const cls = diff==null?'':(diff>=0?'pos-1':'pos-last');
+    html += `<tr><td class="office" style="font-size:11.5px">${k.id} · ${k.name}</td>
+      <td class="score">${my.toFixed(2)}</td>
+      <td class="score" style="color:var(--muted)">${gv==null?'—':gv.toFixed(2)}</td>
+      <td class="score ${cls}">${diff==null?'—':(diff>=0?'+':'')+diff.toFixed(2)}</td>
+    </tr>`;
+  });
+  html += '</tbody></table></div>';
+  document.getElementById('cmpTable').innerHTML = html;
+}
+
+/* ──────────────── Tab: 月度趨勢 (v1.2) ──────────────── */
+const HISTORY = DATA.history;
+let trendChartInst = null;
+let trendCurrentKpi = 'annual';
+
+function renderTrendControls(){
+  const sel = document.getElementById('trendKpi');
+  let opts = '<option value="annual">年度合併達成率(%)</option>';
+  KPI.forEach(k=>{
+    opts += `<option value="${k.id}">${k.id} · ${k.name}</option>`;
+  });
+  sel.innerHTML = opts;
+  sel.addEventListener('change',()=>{
+    trendCurrentKpi = sel.value;
+    renderTrendChart();
+  });
+
+  // 月份標籤
+  const pillBox = document.getElementById('monthPills');
+  let pills = '';
+  HISTORY.months.forEach(m=>{
+    const ph = m.placeholder ? 'placeholder' : '';
+    pills += `<span class="month-pill ${ph}">${m.month} 月</span>`;
+  });
+  pillBox.innerHTML = pills;
+
+  // 缺漏提示
+  const phCount = HISTORY.months.filter(m=>m.placeholder).length;
+  const tip = document.getElementById('trendPlaceholderTip');
+  if(phCount > 0){
+    tip.innerHTML = `<div class="placeholder-tip">
+      📋 目前歷史資料含 <b>${phCount} 個月待補</b>(黃色標籤),
+      請上傳對應月份的「累計 KPI 成績.pdf」即可填入。
+      已有資料的月份才會繪入趨勢線。
+    </div>`;
+  } else {
+    tip.innerHTML = '';
+  }
+}
+
+function getMyMonthlyScores(kpiId){
+  // 回傳 [{period, month, value, maxScore}] — 只含有實資料且該 KPI 有值的月份
+  // 年度合併得分:改用達成率(%),公允比較不同月份
+  const out = [];
+  HISTORY.months.forEach(m=>{
+    if(m.placeholder || !m.records) return;
+    const me = m.records.find(r=>r.office===MY_OFFICE);
+    if(!me) return;
+    let v;
+    if(kpiId === 'annual'){
+      // 達成率 = 得分 / 當月權重 × 100
+      if(me.annual==null || !m.max_score) return;
+      v = me.annual / m.max_score * 100;
+    } else {
+      v = me.scores[kpiId];
+      // ★ 修正:單一 KPI 若該月為 null(年指標或當月未計分),直接跳過
+      if(v == null) return;
+    }
+    out.push({period: m.period, month: m.month, value: v, maxScore: m.max_score});
+  });
+  return out;
+}
+
+function getGroupAvgMonthly(kpiId, allowedMonths){
+  // allowedMonths:陣列,只計算這些月份的 B 組平均(與彰化資料對齊)
+  const myGroup = officeGroup(MY_OFFICE);
+  const peers = DATA.groups[myGroup] || [];
+  const out = [];
+  HISTORY.months.forEach(m=>{
+    if(m.placeholder || !m.records) return;
+    if(allowedMonths && !allowedMonths.includes(m.month)) return;
+    const vals = peers.map(o=>{
+      const r = m.records.find(x=>x.office===o);
+      if(!r) return null;
+      if(kpiId==='annual'){
+        if(r.annual==null || !m.max_score) return null;
+        return r.annual / m.max_score * 100;
+      } else {
+        return r.scores[kpiId];
+      }
+    }).filter(v=>v!=null);
+    if(vals.length > 0){
+      out.push({period: m.period, month: m.month, value: vals.reduce((s,v)=>s+v,0)/vals.length});
+    }
+  });
+  return out;
+}
+
+function renderTrendChart(){
+  if(trendChartInst){ trendChartInst.destroy(); trendChartInst = null; }
+  const myData = getMyMonthlyScores(trendCurrentKpi);
+  // ★ B 組均只算彰化有資料的月份,確保對齊
+  const allowedMonths = myData.map(d=>d.month);
+  const grpData = getGroupAvgMonthly(trendCurrentKpi, allowedMonths);
+
+  const isAnnual = trendCurrentKpi === 'annual';
+  const kpi = isAnnual ? null : KPI.find(k=>k.id===trendCurrentKpi);
+  const lbl = isAnnual ? '年度合併達成率' : `${kpi.id} ${kpi.name}`;
+  const unit = isAnnual ? '%' : '分';
+  // 達標基準分數:年度合併用 100%(達 95/95=100),單一 KPI 依該指標 scoring_base
+  // O2、L3 = 98,其餘 = 95(從 kpi 字典自動讀取)
+  const targetLine = isAnnual ? 100 : (kpi && kpi.scoring_base != null ? kpi.scoring_base : 95);
+  const targetLineLabel = isAnnual ? '達標線 100%' : `達標線 ${targetLine} 分`;
+
+  document.getElementById('trendChartTitle').textContent = `📈 ${lbl} 月度走勢`;
+
+  // ★ 計算缺漏月份(歷史內有實資料,但此 KPI 無值)
+  const realMonths = HISTORY.months.filter(m=>!m.placeholder && m.records).map(m=>m.month);
+  const missingMonths = realMonths.filter(m=>!allowedMonths.includes(m));
+
+  const sumBox = document.getElementById('trendSummary');
+  if(myData.length === 0){
+    sumBox.innerHTML = `<div class="empty" style="grid-column:1/-1">
+      <span class="icn">📊</span>
+      <div><b>${lbl}</b> 尚無實資料</div>
+      <div style="font-size:11px;margin-top:6px">${
+        kpi && (kpi.id==='L4' || kpi.id==='E') 
+          ? '此為年指標,要等年底結算才有資料。' 
+          : '此 KPI 在 ' + realMonths.join('、') + ' 月皆未計分。'
+      }</div>
+    </div>`;
+    document.getElementById('trendChartSub').textContent = '無實績資料,無法繪製趨勢';
+    document.getElementById('trendTable').innerHTML = '';
+    return;
+  }
+
+  const latest = myData[myData.length-1];
+  const first = myData[0];
+  const diff = myData.length>=2 ? latest.value - first.value : 0;
+  const trend = diff > 0.3 ? 'up' : (diff < -0.3 ? 'down' : 'flat');
+  const trendIcon = trend==='up' ? '📈' : (trend==='down' ? '📉' : '➡️');
+  const latestGrp = grpData[grpData.length-1];
+  const vsGrp = latestGrp ? latest.value - latestGrp.value : null;
+  const vsCls = vsGrp==null ? 'flat' : (vsGrp>=0 ? 'up' : 'down');
+
+  const diffLabel = myData.length>=2 ? `vs ${first.month}月` : '單月';
+  const diffText = myData.length>=2 ? `${diff>=0?'+':''}${diff.toFixed(2)}${trendIcon}` : '—';
+
+  sumBox.innerHTML = `
+    <div class="tsum-card"><div class="v">${latest.value.toFixed(2)}${unit}</div><div class="l">${latest.month}月最新</div></div>
+    <div class="tsum-card ${trend}"><div class="v">${diffText}</div><div class="l">${diffLabel}</div></div>
+    <div class="tsum-card ${vsCls}"><div class="v">${vsGrp==null?'—':((vsGrp>=0?'+':'')+vsGrp.toFixed(2))}</div><div class="l">vs B 組均</div></div>
+  `;
+
+  // ★ 缺漏月份提示
+  let subText = isAnnual
+      ? `${myData.length} 個月實資料 · 達成率 = 累計得分 ÷ 累計權重 × 100%`
+      : `${myData.length} 個月實資料 · 最新 ${latest.month} 月:${latest.value.toFixed(2)} 分`;
+  if(missingMonths.length > 0){
+    subText += ` · ⚠️ ${missingMonths.join('、')} 月未計分`;
+  }
+  document.getElementById('trendChartSub').textContent = subText;
+
+  // 圖表
+  const labels = myData.map(d=>`${d.month}月`);
+  const myValues = myData.map(d=>+d.value.toFixed(2));
+  const grpValues = grpData.map(d=>+d.value.toFixed(2));
+
+  const datasets = [
+    {
+      label: '彰化',
+      data: myValues,
+      borderColor: '#0066B3',
+      backgroundColor: 'rgba(0,102,179,.15)',
+      borderWidth: 2.5,
+      tension: 0.3,
+      pointRadius: 5,
+      pointBackgroundColor: '#0066B3',
+      pointBorderColor: '#fff',
+      pointBorderWidth: 2,
+      fill: true,
+    }
+  ];
+
+  if(grpData.length > 0){
+    datasets.push({
+      label: 'B 組平均',
+      data: grpValues,
+      borderColor: '#dc2626',
+      borderWidth: 2,
+      borderDash: [6,4],
+      tension: 0.3,
+      pointRadius: 3.5,
+      pointBackgroundColor: '#dc2626',
+      pointBorderColor: '#fff',
+      pointBorderWidth: 1.5,
+      fill: false,
+    });
+  }
+
+  // 達標參考線
+  datasets.push({
+    label: targetLineLabel,
+    data: labels.map(_=>targetLine),
+    borderColor: '#16a34a',
+    borderWidth: 1.5,
+    borderDash: [2,3],
+    pointRadius: 0,
+    fill: false,
+  });
+
+  const allVals = [...myValues, ...grpValues];
+  const yMin = isAnnual ? 85 : Math.max(50, Math.min(...allVals, 90) - 3);
+  const yMax = isAnnual ? 105 : Math.min(105, Math.max(...allVals, 100) + 2);
+
+  trendChartInst = new Chart(document.getElementById('trendChart').getContext('2d'),{
+    type: 'line',
+    data: { labels, datasets },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { position:'bottom', labels:{ font:{size:11}, boxWidth:24 } },
+        tooltip: { callbacks: { label: c=>` ${c.dataset.label}: ${c.parsed.y}${unit}` } }
+      },
+      scales: {
+        y: {
+          beginAtZero: false,
+          suggestedMin: yMin,
+          suggestedMax: yMax,
+          ticks:{ font:{size:10}, callback: function(v){ return v+(isAnnual?'%':''); } }
+        },
+        x: { ticks:{ font:{size:11} } }
+      }
+    }
+  });
+
+  // 月度明細表
+  let html = '<div class="chart-card"><div class="title">📋 月度明細</div><table class="rank-table">'+
+    `<thead><tr><th style="text-align:left">月份</th><th>彰化</th><th>B 組均</th><th>差距</th><th>月變化</th></tr></thead><tbody>`;
+  myData.forEach((d,i)=>{
+    const g = grpData[i];
+    const gap = g ? d.value - g.value : null;
+    const prev = i>0 ? myData[i-1].value : null;
+    const chg = prev!=null ? d.value - prev : null;
+    const gapCls = gap==null?'':(gap>=0?'pos-1':'pos-last');
+    const chgCls = chg==null?'':(chg>=0?'pos-1':'pos-last');
+    html += `<tr>
+      <td class="office">${d.month} 月${isAnnual?` <span style="font-size:9.5px;color:var(--muted)">(${d.maxScore}分制)</span>`:''}</td>
+      <td class="score">${d.value.toFixed(2)}${unit}</td>
+      <td class="score" style="color:var(--muted)">${g?g.value.toFixed(2)+unit:'—'}</td>
+      <td class="score ${gapCls}">${gap==null?'—':(gap>=0?'+':'')+gap.toFixed(2)}</td>
+      <td class="score ${chgCls}">${chg==null?'—':(chg>=0?'+':'')+chg.toFixed(2)}</td>
+    </tr>`;
+  });
+  html += '</tbody></table></div>';
+  document.getElementById('trendTable').innerHTML = html;
+}
+
+/* ──────────────── Tab 4: 試算器 ──────────────── */
+function renderCalcOptions(){
+  const sel = document.getElementById('calcKpi');
+  let opts = '<option value="">— 請選擇 —</option>';
+  KPI.forEach(k=>{
+    opts += `<option value="${k.id}">${k.id} · ${k.name}</option>`;
+  });
+  sel.innerHTML = opts;
+  sel.addEventListener('change',calcUpdate);
+  document.getElementById('calcA').addEventListener('input',calcUpdate);
+  document.getElementById('calcB').addEventListener('input',calcUpdate);
+}
+
+function calcUpdate(){
+  const id = document.getElementById('calcKpi').value;
+  const a = parseFloat(document.getElementById('calcA').value);
+  const b = parseFloat(document.getElementById('calcB').value);
+  const scoreEl = document.getElementById('calcScore');
+  const gradeEl = document.getElementById('calcGrade');
+  const formulaEl = document.getElementById('calcFormula');
+  const labelA = document.getElementById('calcLabelA');
+  const labelB = document.getElementById('calcLabelB');
+
+  if(!id){
+    scoreEl.textContent = '—';
+    gradeEl.innerHTML = '';
+    formulaEl.textContent = '請選擇 KPI 並輸入數值';
+    labelA.textContent = '實績值';
+    labelB.textContent = '目標值';
+    return;
+  }
+
+  const k = KPI.find(x=>x.id===id);
+  // 處理「愈小愈好」(O2, L1 月租型離網數等) — 採用 2-比值
+  const reverseIds = ['O2'];  // 成本費用 = 動支率(愈小愈好)
+  
+  // 動態調整標籤
+  if(id==='O2'){
+    labelA.textContent = '實際動支(億元)';
+    labelB.textContent = '預算數(億元)';
+  } else if(k.attr==='愈小愈好'){
+    labelA.textContent = '實績值(愈小愈好)';
+    labelB.textContent = '目標值';
+  } else {
+    labelA.textContent = '實績值';
+    labelB.textContent = '目標值';
+  }
+
+  if(isNaN(a) || isNaN(b) || b===0){
+    scoreEl.textContent = '—';
+    gradeEl.innerHTML = '';
+    formulaEl.textContent = '請輸入有效數值(目標值不能為 0)';
+    return;
+  }
+
+  let rate, score, formula;
+  
+  if(reverseIds.includes(id)){
+    // 成本控制:動支率 = 實績/預算 × 100%
+    rate = (a/b) * 100;
+    // 達 100% 得 98 分,每減 1% +0.5,每加 1% -0.5
+    const diff = 100 - rate;
+    score = 98 + diff * 0.5;
+    score = Math.min(score, k.scoring_max || 100);
+    formula = `動支率 = ${a} / ${b} × 100% = ${rate.toFixed(2)}%\n基準 98 分 + (100% - ${rate.toFixed(2)}%) × 0.5\n= 98 + ${diff.toFixed(2)} × 0.5 = ${score.toFixed(2)}`;
+  } else if(k.attr==='愈小愈好'){
+    // 愈小愈好(離網等):達成率 = 2 - 實績/目標
+    rate = 2 - (a/b);
+    const ratePct = rate * 100;
+    const diff = ratePct - 100;
+    const step = k.scoring_step || 0.5;
+    score = (k.scoring_base || 95) + diff * step;
+    if(k.scoring_max) score = Math.min(score, k.scoring_max);
+    if(k.scoring_min!=null) score = Math.max(score, k.scoring_min);
+    formula = `達成率 = 2 - (${a} / ${b}) = ${rate.toFixed(4)} (${ratePct.toFixed(2)}%)\n基準 ${k.scoring_base} + (${ratePct.toFixed(2)}% - 100%) × ${step}\n= ${k.scoring_base} + ${diff.toFixed(2)} × ${step} = ${score.toFixed(2)}`;
+  } else {
+    // 愈大愈好:達成率 = 實績/目標
+    rate = a/b;
+    const ratePct = rate * 100;
+    const diff = ratePct - 100;
+    const stepUp = k.scoring_step_up || k.scoring_step || 0.5;
+    const stepDn = k.scoring_step_down || k.scoring_step || 0.5;
+    const step = diff >= 0 ? stepUp : stepDn;
+    score = (k.scoring_base || 95) + diff * step;
+    if(k.scoring_max) score = Math.min(score, k.scoring_max);
+    if(k.scoring_min!=null) score = Math.max(score, k.scoring_min);
+    formula = `達成率 = ${a} / ${b} = ${rate.toFixed(4)} (${ratePct.toFixed(2)}%)\n基準 ${k.scoring_base} + (${ratePct.toFixed(2)}% - 100%) × ${step}${diff>=0?'(每加1%)':'(每減1%)'}\n= ${k.scoring_base} + ${diff.toFixed(2)} × ${step} = ${score.toFixed(2)}`;
+  }
+
+  scoreEl.textContent = score.toFixed(1);
+  
+  let gradeClass, gradeText;
+  if(score >= 100){
+    gradeClass = 'grade-ok'; gradeText = '🌟 達上限';
+  } else if(score >= (k.scoring_base||95)){
+    gradeClass = 'grade-ok'; gradeText = '✅ 達標';
+  } else if(score >= 90){
+    gradeClass = 'grade-warn'; gradeText = '⚠️ 接近目標';
+  } else {
+    gradeClass = 'grade-bad'; gradeText = '❌ 未達標';
+  }
+  gradeEl.innerHTML = `<span class="grade ${gradeClass}">${gradeText}</span>`;
+  formulaEl.textContent = formula;
+}
+
+/* ──────────────── Tab 5: 筆記 ──────────────── */
+const NOTES_KEY = 'kpi_notes_v1';
+
+function loadNotes(){
+  try{ return JSON.parse(localStorage.getItem(NOTES_KEY) || '[]'); }
+  catch(e){ return []; }
+}
+function saveNotes(n){
+  localStorage.setItem(NOTES_KEY, JSON.stringify(n));
+}
+
+function renderNoteSelect(){
+  const sel = document.getElementById('noteKpi');
+  let opts = '<option value="">通用</option>';
+  KPI.forEach(k=>{ opts += `<option value="${k.id}">${k.id}</option>`; });
+  sel.innerHTML = opts;
+}
+
+function renderNotes(){
+  const list = loadNotes();
+  const c = document.getElementById('notes-list');
+  if(list.length===0){
+    c.innerHTML = '<div class="empty"><span class="icn">📝</span>還沒有筆記。<br>選擇 KPI、輸入內容後點 ＋ 新增。<br><br><small>(筆記僅儲存在本機,不會上傳)</small></div>';
+    return;
+  }
+  let html = '';
+  list.forEach((n,i)=>{
+    const k = KPI.find(x=>x.id===n.kpi);
+    const tag = k ? `${k.id} · ${k.name}` : '通用筆記';
+    const ts = new Date(n.t).toLocaleString('zh-TW',{hour12:false});
+    html += `<div class="note-item">
+      <button class="note-del" data-i="${i}">×</button>
+      <div class="kpi-tag">${tag}</div>
+      <div class="txt">${escapeHtml(n.txt)}</div>
+      <div class="meta">🕐 ${ts}</div>
+    </div>`;
+  });
+  c.innerHTML = html;
+  c.querySelectorAll('.note-del').forEach(b=>{
+    b.addEventListener('click',()=>{
+      if(!confirm('刪除這則筆記?')) return;
+      const arr = loadNotes();
+      arr.splice(parseInt(b.dataset.i),1);
+      saveNotes(arr);
+      renderNotes();
+    });
+  });
+}
+
+document.getElementById('noteAddBtn').addEventListener('click',()=>{
+  const input = document.getElementById('noteInput');
+  const kpi = document.getElementById('noteKpi').value;
+  const txt = input.value.trim();
+  if(!txt) return;
+  const arr = loadNotes();
+  arr.unshift({kpi, txt, t:Date.now()});
+  saveNotes(arr);
+  input.value = '';
+  renderNotes();
+});
+
+document.getElementById('noteInput').addEventListener('keydown',e=>{
+  if(e.key==='Enter') document.getElementById('noteAddBtn').click();
+});
+
+/* ──────────────── 初始化 ──────────────── */
+mergeUploadedOnLoad();  // ★ HISTORY 已定義，合併 localStorage 歷史資料
+renderDashboard();
+renderFilterChips();
+renderDict();
+renderCompareControls();
+renderTrendControls();
+renderCalcOptions();
+renderNoteSelect();
+renderNotes();
+
+// 切換到比較分頁時,首次/重新繪製圖表(Chart.js 在隱藏容器內無法畫)
+document.querySelector('.tab[data-page="compare"]').addEventListener('click',()=>{
+  setTimeout(renderCompareChart, 50);
+});
+// 切換到趨勢分頁時,首次/重新繪製趨勢線
+document.querySelector('.tab[data-page="trend"]').addEventListener('click',()=>{
+  setTimeout(renderTrendChart, 50);
+});
+</script>
+
+<!-- FlexibleBudget 回主頁按鈕 -->
+<button id="fb-home-btn" onclick="window.location.replace('https://argus911.github.io/FlexibleBudget/')">
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+       stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+    <polyline points="9 22 9 12 15 12 15 22"/>
+  </svg>
+  彈性預算主頁
+</button>
+</body>
+</html>
