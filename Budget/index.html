@@ -347,8 +347,10 @@ document.getElementById('kwInput').addEventListener('input', function(){
 // ── 篩選 ──────────────────────────────────────────────────
 function filtered(){
   return RAW.filter(function(r){
-    var kw = !filterKw || r['明細帳'].toLowerCase().indexOf(filterKw) >= 0 || r['會計項目'].toLowerCase().indexOf(filterKw) >= 0;
-    var cat = filterCat === 'all' || r['費用分類'] === filterCat;
+    var acc  = (r['明細帳']  || '').toString().toLowerCase();
+    var name = (r['會計項目'] || '').toString().toLowerCase();
+    var kw   = !filterKw || acc.indexOf(filterKw) >= 0 || name.indexOf(filterKw) >= 0;
+    var cat  = filterCat  === 'all' || r['費用分類']    === filterCat;
     var unit = filterUnit === 'all' || r['預算主管單位'] === filterUnit;
     return kw && cat && unit;
   });
@@ -838,24 +840,43 @@ budgetLoadSaved();
 /* 共用：整理欄位對應 + 存檔 + 重繪 */
 function finalizeBudgetRows(rows, fname){
   var msg = document.getElementById('upload-msg');
+  // TAIS CSV 真實欄位對應（含 trim 後對應）
   var FIELD_MAP = {
+    // 原始標準欄位
     '明細帳':'明細帳','account_code':'明細帳',
-    '會計項目':'會計項目','account_name':'會計項目',
-    '本月動支數':'本月動支數','month_used':'本月動支數',
-    '本月餘額':'本月餘額','month_balance':'本月餘額',
+    '會計項目':'會計項目','科目名稱':'會計項目','account_name':'會計項目',
+    '本月動支數':'本月動支數','本月動支增減':'本月動支數','month_used':'本月動支數',
+    '本月餘額':'本月餘額','累計動支數':'本月餘額','month_balance':'本月餘額',
     '本月預算數':'本月預算數','month_budget':'本月預算數',
-    '至本月預算數累計':'至本月預算數累計',
-    '累計動支率':'累計動支率',
-    '本年度預算':'本年度預算','year_budget':'本年度預算',
-    '年度動支率':'年度動支率',
-    '剩餘可動支數':'剩餘可動支數',
+    '至本月預算數累計':'至本月預算數累計','至本月預算數':'至本月預算數累計',
+    '累計動支率':'累計動支率','累計動支率%':'累計動支率',
+    '本年度預算':'本年度預算','年度預算數':'本年度預算','year_budget':'本年度預算',
+    '年度動支率':'年度動支率','年度動支率%':'年度動支率',
+    '剩餘可動支數':'剩餘可動支數','剩餘可動支':'剩餘可動支數',
     '預算主管單位':'預算主管單位','unit':'預算主管單位',
-    '費用分類':'費用分類','category':'費用分類',
-    '分類代碼':'分類代碼'
+    '費用分類':'費用分類','類別':'費用分類','category':'費用分類',
+    '分類代碼':'分類代碼','項目代號':'分類代碼'
   };
   var mapped = rows.map(function(r){
     var obj={};
-    Object.keys(r).forEach(function(k){ obj[FIELD_MAP[k]||k]=r[k]; });
+    Object.keys(r).forEach(function(k){
+      var trimKey = k.trim();
+      var target  = FIELD_MAP[trimKey] || trimKey;
+      // 字串值一律 trim，去除前後空白
+      var val = r[k];
+      if(typeof val === 'string') val = val.trim();
+      obj[target] = val;
+    });
+    // 費用分類：若仍為空，從分類代碼推導
+    if(!obj['費用分類'] && obj['分類代碼']){
+      var code = (obj['分類代碼']||'').trim();
+      if(code.startsWith('A'))      obj['費用分類'] = '人事費';
+      else if(code.startsWith('B')) obj['費用分類'] = '業務外包';
+      else if(code.startsWith('C')) obj['費用分類'] = '業務成本';
+      else if(code.startsWith('D')) obj['費用分類'] = '專案建置成本';
+      else if(code.startsWith('E')) obj['費用分類'] = '設備及折舊';
+      else                          obj['費用分類'] = '管銷費用';
+    }
     return obj;
   }).filter(function(r){ return r['明細帳']||r['會計項目']; });
   if(!mapped.length){ msg.innerHTML='<span class="upload-err">❌ 無法辨識欄位，請確認格式</span>'; return; }
