@@ -1,0 +1,1906 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>中華電信 | 內部碳費基金施行細則 2026</title>
+<style>
+  /* ── Design Tokens ── */
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface2: #1c2330;
+    --border: #30363d;
+    --green-primary: #3fb950;
+    --green-dim: #238636;
+    --green-glow: rgba(63,185,80,0.15);
+    --green-subtle: rgba(63,185,80,0.08);
+    --teal: #39d353;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --text-dim: #6e7681;
+    --accent: #58a6ff;
+    --amber: #d29922;
+    --red: #f85149;
+    --radius: 8px;
+    --font-sans: 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+    --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-sans);
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  /* ── Header ── */
+  .site-header {
+    background: linear-gradient(135deg, #0d1117 0%, #0f2027 50%, #091e0f 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .logo-icon {
+    width: 32px; height: 32px;
+    background: var(--green-primary);
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+  }
+
+  .logo-text {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+  }
+
+  .logo-text strong {
+    display: block;
+    color: var(--text);
+    font-size: 1rem;
+  }
+
+  .badge {
+    background: var(--green-subtle);
+    border: 1px solid var(--green-primary);
+    color: var(--green-primary);
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+
+  /* ── Hero ── */
+  .hero {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 2rem 2rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .hero-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-title .highlight {
+    color: var(--green-primary);
+    position: relative;
+  }
+
+  .hero-sub {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+  }
+
+  .meta-pills {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .pill {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+  }
+
+  .pill.green { border-color: var(--green-dim); color: var(--green-primary); }
+  .pill.blue  { border-color: #1f6feb; color: var(--accent); }
+
+  .hero-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem 1.2rem;
+    text-align: center;
+    min-width: 100px;
+  }
+
+  .stat-num {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--green-primary);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  /* ── Nav Tabs ── */
+  .tab-bar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 60px;
+    z-index: 90;
+  }
+
+  .tab-bar-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding: 0 2rem;
+  }
+
+  .tab-bar-inner::-webkit-scrollbar { display: none; }
+
+  .tab-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    padding: 0.9rem 1.2rem;
+    cursor: pointer;
+    font-family: var(--font-sans);
+    font-size: 0.88rem;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .tab-btn:hover { color: var(--text); }
+
+  .tab-btn.active {
+    color: var(--green-primary);
+    border-bottom-color: var(--green-primary);
+  }
+
+  .tab-icon { font-size: 1rem; }
+
+  /* ── Main Content ── */
+  .main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ── Section Cards ── */
+  .section-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 1.2rem;
+    margin-bottom: 2rem;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .card:hover {
+    border-color: var(--green-dim);
+    transform: translateY(-2px);
+  }
+
+  .card-header {
+    padding: 1rem 1.2rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface2);
+  }
+
+  .card-icon {
+    font-size: 1.4rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .card-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+
+  .card-sub {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  .card-body {
+    padding: 1rem 1.2rem;
+  }
+
+  .card-body ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .card-body li {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    padding-left: 16px;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .card-body li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--green-primary);
+    font-size: 0.7rem;
+  }
+
+  /* ── Full-width content blocks ── */
+  .content-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .block-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .block-title .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--green-primary);
+    flex-shrink: 0;
+  }
+
+  /* ── Flow Steps ── */
+  .flow {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .flow-step {
+    display: flex;
+    gap: 16px;
+    position: relative;
+  }
+
+  .flow-step:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    left: 18px;
+    top: 40px;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--green-dim), transparent);
+  }
+
+  .step-dot {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--surface2);
+    border: 2px solid var(--green-dim);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--green-primary);
+    flex-shrink: 0;
+    z-index: 1;
+  }
+
+  .step-content {
+    padding-bottom: 1.5rem;
+    flex: 1;
+  }
+
+  .step-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: var(--text);
+  }
+
+  .step-desc {
+    font-size: 0.83rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .step-tag {
+    display: inline-block;
+    margin-top: 6px;
+    background: var(--green-subtle);
+    border: 1px solid var(--green-dim);
+    color: var(--green-primary);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.72rem;
+  }
+
+  /* ── Table ── */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.84rem;
+  }
+
+  .data-table th {
+    background: var(--surface2);
+    color: var(--text-muted);
+    padding: 0.6rem 1rem;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.78rem;
+    letter-spacing: 0.3px;
+  }
+
+  .data-table td {
+    padding: 0.7rem 1rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    vertical-align: top;
+  }
+
+  .data-table tr:hover td { background: var(--surface2); }
+
+  .data-table tr:last-child td { border-bottom: none; }
+
+  .val-num {
+    color: var(--green-primary);
+    font-weight: 600;
+    font-family: var(--font-mono);
+  }
+
+  /* ── Criteria Bars ── */
+  .criteria-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .criteria-item {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .criteria-label {
+    font-size: 0.88rem;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .criteria-sub {
+    font-size: 0.76rem;
+    color: var(--text-muted);
+  }
+
+  .criteria-pct {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--green-primary);
+    font-family: var(--font-mono);
+    white-space: nowrap;
+  }
+
+  .progress-bar {
+    height: 6px;
+    background: var(--surface2);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-top: 4px;
+    grid-column: 1 / -1;
+  }
+
+  .progress-fill {
+    height: 100%;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--green-dim), var(--green-primary));
+    transition: width 0.8s ease;
+  }
+
+  /* ── Alert/Info box ── */
+  .alert {
+    border-radius: var(--radius);
+    padding: 1rem 1.2rem;
+    margin-bottom: 1rem;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    font-size: 0.85rem;
+    line-height: 1.6;
+  }
+
+  .alert-icon { font-size: 1.1rem; flex-shrink: 0; }
+  .alert-text { flex: 1; }
+  .alert-title { font-weight: 600; margin-bottom: 4px; }
+
+  .alert.green {
+    background: var(--green-subtle);
+    border: 1px solid var(--green-dim);
+    color: #7ee787;
+  }
+
+  .alert.amber {
+    background: rgba(210,153,34,0.1);
+    border: 1px solid rgba(210,153,34,0.4);
+    color: #e3b341;
+  }
+
+  .alert.blue {
+    background: rgba(88,166,255,0.08);
+    border: 1px solid rgba(88,166,255,0.3);
+    color: var(--accent);
+  }
+
+  .alert.red {
+    background: rgba(248,81,73,0.08);
+    border: 1px solid rgba(248,81,73,0.3);
+    color: var(--red);
+  }
+
+  /* ── Timeline for revision history ── */
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding-left: 8px;
+  }
+
+  .timeline-item {
+    display: flex;
+    gap: 16px;
+    position: relative;
+  }
+
+  .timeline-item:not(:last-child) {
+    padding-bottom: 1.5rem;
+  }
+
+  .timeline-item:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 14px;
+    bottom: 0;
+    width: 1px;
+    background: var(--border);
+  }
+
+  .tl-dot {
+    width: 13px; height: 13px;
+    border-radius: 50%;
+    background: var(--surface2);
+    border: 2px solid var(--border);
+    flex-shrink: 0;
+    margin-top: 2px;
+    z-index: 1;
+  }
+
+  .tl-dot.active {
+    background: var(--green-primary);
+    border-color: var(--green-primary);
+    box-shadow: 0 0 8px var(--green-glow);
+  }
+
+  .tl-date {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    font-family: var(--font-mono);
+    margin-bottom: 2px;
+  }
+
+  .tl-content {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  .tl-content strong { color: var(--text); }
+
+  /* ── Accordion ── */
+  .accordion { margin-bottom: 8px; }
+
+  .accordion-header {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0.85rem 1.2rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: border-color 0.2s;
+    user-select: none;
+  }
+
+  .accordion-header:hover { border-color: var(--green-dim); }
+  .accordion-header.open { border-color: var(--green-primary); color: var(--green-primary); border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+
+  .accordion-chevron { transition: transform 0.3s; font-size: 0.8rem; }
+  .accordion-header.open .accordion-chevron { transform: rotate(180deg); }
+
+  .accordion-body {
+    display: none;
+    background: var(--surface);
+    border: 1px solid var(--green-primary);
+    border-top: none;
+    border-bottom-left-radius: var(--radius);
+    border-bottom-right-radius: var(--radius);
+    padding: 1rem 1.2rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  .accordion-body.open { display: block; }
+
+  /* ── FAQ chips ── */
+  .faq-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 1.5rem;
+  }
+
+  .faq-chip {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .faq-chip:hover, .faq-chip.active {
+    border-color: var(--green-primary);
+    color: var(--green-primary);
+    background: var(--green-subtle);
+  }
+
+  /* ── Search ── */
+  .search-box {
+    position: relative;
+    margin-bottom: 1.5rem;
+  }
+
+  .search-input {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0.75rem 1rem 0.75rem 2.5rem;
+    color: var(--text);
+    font-size: 0.9rem;
+    font-family: var(--font-sans);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .search-input:focus { border-color: var(--green-primary); }
+  .search-input::placeholder { color: var(--text-dim); }
+
+  .search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-dim);
+    font-size: 0.9rem;
+  }
+
+  /* ── Checklist ── */
+  .checklist { display: flex; flex-direction: column; gap: 8px; }
+
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 14px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+
+  .check-item:hover { border-color: var(--green-dim); }
+  .check-item.checked { border-color: var(--green-dim); background: var(--green-subtle); }
+
+  .check-box {
+    width: 18px; height: 18px;
+    border: 2px solid var(--border);
+    border-radius: 4px;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.7rem;
+    color: var(--green-primary);
+    transition: all 0.2s;
+    margin-top: 1px;
+  }
+
+  .check-item.checked .check-box {
+    background: var(--green-primary);
+    border-color: var(--green-primary);
+    color: #000;
+  }
+
+  .check-text { font-size: 0.85rem; line-height: 1.5; }
+  .check-item.checked .check-text { color: var(--text-muted); text-decoration: line-through; }
+
+  .check-cat {
+    font-size: 0.72rem;
+    color: var(--text-dim);
+    margin-top: 2px;
+  }
+
+  /* ── Subsection headers ── */
+  .sub-heading {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+    margin: 1.5rem 0 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .sub-heading::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ── Grid 2col ── */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  @media (max-width: 700px) {
+    .grid-2 { grid-template-columns: 1fr; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-stats { display: none; }
+    .hero-title { font-size: 1.5rem; }
+    .section-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── Footer ── */
+  .footer {
+    max-width: 1200px;
+    margin: 3rem auto 0;
+    padding: 1.5rem 2rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--text-dim);
+    font-size: 0.78rem;
+  }
+
+  /* ── Number highlight ── */
+  .hl-green { color: var(--green-primary); font-weight: 600; }
+  .hl-amber { color: var(--amber); font-weight: 600; }
+  .hl-blue  { color: var(--accent); }
+
+  /* ── Scroll reveal ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.4s, transform 0.4s;
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* ── Back to top ── */
+  #back-top {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--green-dim);
+    color: #fff;
+    border: none;
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1rem;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+    transition: background 0.2s;
+    z-index: 200;
+  }
+
+  #back-top:hover { background: var(--green-primary); }
+  #back-top.show { display: flex; }
+</style>
+</head>
+<body>
+
+<!-- ── Header ── -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-icon">🌿</div>
+      <div class="logo-text">
+        <strong>中華電信</strong>
+        內部碳費基金施行細則
+      </div>
+    </div>
+    <span class="badge">115 年版 V3</span>
+  </div>
+</header>
+
+<!-- ── Hero ── -->
+<section class="hero">
+  <div>
+    <h1 class="hero-title">
+      <span class="highlight">內部碳費基金</span><br>
+      規章辦法說明
+    </h1>
+    <p class="hero-sub">115年6月17日 規ESG字第1150000212號 核定實施</p>
+    <div class="meta-pills">
+      <span class="pill green">🏢 適用單位：總公司、分公司、研究院、營運處</span>
+      <span class="pill blue">📋 第四版修訂</span>
+      <span class="pill">自 112 年 5 月起施行</span>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-card">
+      <div class="stat-num">50萬</div>
+      <div class="stat-label">提案最低門檻</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">500萬</div>
+      <div class="stat-label">書面/會議審查分界</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">2年</div>
+      <div class="stat-label">結案報告期限</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">2階段</div>
+      <div class="stat-label">核可案撥補方式</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Tab Bar ── -->
+<nav class="tab-bar">
+  <div class="tab-bar-inner">
+    <button class="tab-btn active" onclick="switchTab('overview', this)">
+      <span class="tab-icon">📖</span>總覽
+    </button>
+    <button class="tab-btn" onclick="switchTab('process', this)">
+      <span class="tab-icon">🔄</span>申請流程
+    </button>
+    <button class="tab-btn" onclick="switchTab('criteria', this)">
+      <span class="tab-icon">⚖️</span>審查標準
+    </button>
+    <button class="tab-btn" onclick="switchTab('subsidy', this)">
+      <span class="tab-icon">💰</span>撥補規則
+    </button>
+    <button class="tab-btn" onclick="switchTab('electric', this)">
+      <span class="tab-icon">⚡</span>減碳績效
+    </button>
+    <button class="tab-btn" onclick="switchTab('forms', this)">
+      <span class="tab-icon">📄</span>表單說明
+    </button>
+    <button class="tab-btn" onclick="switchTab('checklist', this)">
+      <span class="tab-icon">✅</span>申請準備</button>
+    <button class="tab-btn" onclick="switchTab('faq', this)">
+      <span class="tab-icon">❓</span>常見問題
+    </button>
+  </div>
+</nav>
+
+<!-- ── Main Content ── -->
+<main class="main">
+
+  <!-- ── TAB: 總覽 ── -->
+  <div id="tab-overview" class="tab-panel active">
+
+    <div class="alert green reveal">
+      <span class="alert-icon">🌱</span>
+      <div class="alert-text">
+        <div class="alert-title">本細則目的</div>
+        本細則依「中華電信內部碳費基金管理要點」制定，規範內部碳費基金之運用與管理，以推動節能減碳及環境創新相關作業，提升整體執行成效。
+      </div>
+    </div>
+
+    <p class="sub-heading">細則架構</p>
+
+    <div class="section-grid">
+      <div class="card reveal">
+        <div class="card-header">
+          <div class="card-icon">🏛️</div>
+          <div>
+            <div class="card-title">第一章　通則</div>
+            <div class="card-sub">第一條</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <ul>
+            <li>依據中華電信內部碳費基金管理要點制定</li>
+            <li>規範基金運用與管理方式</li>
+            <li>推動節能減碳及環境創新相關作業</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card reveal">
+        <div class="card-header">
+          <div class="card-icon">💡</div>
+          <div>
+            <div class="card-title">第二章　環境創新專案</div>
+            <div class="card-sub">第二條～第八條</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <ul>
+            <li>提案申請資格與時程（第三季徵件）</li>
+            <li>三階段審查作業（形式→專家→實質）</li>
+            <li>審議規範（2/3 出席同意）</li>
+            <li>核可案兩階段撥補機制</li>
+            <li>成效追蹤與激勵措施</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card reveal">
+        <div class="card-header">
+          <div class="card-icon">⚡</div>
+          <div>
+            <div class="card-title">第三章　機構年度減碳</div>
+            <div class="card-sub">第九條～第十條</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <ul>
+            <li>年度用電實績計算方式</li>
+            <li>計算區間：前一年 11 月至本年 10 月</li>
+            <li>灰電、綠電用量加總扣除排除項目</li>
+            <li>依減碳績效核定每噸碳補助標準</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card reveal">
+        <div class="card-header">
+          <div class="card-icon">📜</div>
+          <div>
+            <div class="card-title">第四章　其他</div>
+            <div class="card-sub">第十一條</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <ul>
+            <li>核定施行：由召集人及共同召集人核定後公告</li>
+            <li>修正程序相同</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <p class="sub-heading">修訂歷程</p>
+
+    <div class="content-block reveal">
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="tl-dot"></div>
+          <div>
+            <div class="tl-date">112.05.04　規營字第 1120000209 號</div>
+            <div class="tl-content"><strong>初版制定</strong>：依內部碳費基金管理要點，完成首版施行細則</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-dot"></div>
+          <div>
+            <div class="tl-date">113.02.27　規ESG字第 1130000072 號</div>
+            <div class="tl-content"><strong>第一次修訂</strong>：調整相關規範</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-dot"></div>
+          <div>
+            <div class="tl-date">114.03.28　規ESG字第 1140000041 號</div>
+            <div class="tl-content"><strong>第二次修訂</strong>：強化審查機制</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-dot active"></div>
+          <div>
+            <div class="tl-date">115.06.17　規ESG字第 1150000212 號 ← 現行版本</div>
+            <div class="tl-content"><strong>第三次修訂（V3）</strong>：新增機構減碳補助條款、優化撥補流程、補充排除條款規定</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert amber reveal">
+      <span class="alert-icon">⚠️</span>
+      <div class="alert-text">
+        <div class="alert-title">提案注意</div>
+        提案限動支規模 <strong>50 萬元（含）以上</strong>之案件。申請金額超過 <strong>500 萬元</strong>者，須經會議審查（500萬元含以下可採書面審查）。
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TAB: 申請流程 ── -->
+  <div id="tab-process" class="tab-panel">
+
+    <div class="alert blue reveal">
+      <span class="alert-icon">📅</span>
+      <div class="alert-text">
+        <div class="alert-title">徵件時程</div>
+        原則於每年<strong>第三季</strong>徵求提案。提案可於案件執行前一年度、執行當年度、或結案當年度申請。特殊情況經管理小組召集人同意，可另收件進行審查。
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="content-block reveal">
+        <div class="block-title"><div class="dot"></div>提案申請資格</div>
+        <div class="card-body">
+          <ul>
+            <li>✅ 總公司各單位</li>
+            <li>✅ 分公司</li>
+            <li>✅ 研究院</li>
+            <li>✅ 營運處（含彰化營運處）</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="content-block reveal">
+        <div class="block-title"><div class="dot"></div>申請時程選項</div>
+        <div class="card-body">
+          <ul>
+            <li>案件執行<strong>前一年度</strong>申請</li>
+            <li>案件執行<strong>當年度</strong>申請</li>
+            <li>案件<strong>結案當年度</strong>申請</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <p class="sub-heading">三階段審查流程</p>
+
+    <div class="content-block reveal">
+      <div class="flow">
+        <div class="flow-step">
+          <div class="step-dot">1</div>
+          <div class="step-content">
+            <div class="step-title">📋 形式審查</div>
+            <div class="step-desc">
+              由<strong>執行秘書處（總公司經營規劃處）</strong>審查提案完備性，確認所有必要文件是否齊全。如有缺件，可通知申請單位補件。
+            </div>
+            <span class="step-tag">執行秘書處辦理</span>
+          </div>
+        </div>
+
+        <div class="flow-step">
+          <div class="step-dot">2</div>
+          <div class="step-content">
+            <div class="step-title">🔬 領域專家審查</div>
+            <div class="step-desc">
+              依案件性質<strong>指派領域專家</strong>審查，提出初審意見供管理小組參考。專家由執行秘書處經管理小組核可後邀請（可含內/外部專家）。
+            </div>
+            <span class="step-tag">依案件性質指派</span>
+          </div>
+        </div>
+
+        <div class="flow-step">
+          <div class="step-dot">3</div>
+          <div class="step-content">
+            <div class="step-title">⚖️ 實質審查</div>
+            <div class="step-desc">
+              由<strong>管理小組</strong>依提案規模採：<br>
+              • <span class="hl-green">500 萬元（含）以下</span> → 書面審查<br>
+              • <span class="hl-amber">500 萬元以上</span> → 會議審查<br><br>
+              會議規定：<br>
+              • 應有 <span class="hl-green">½ 以上</span>小組成員（含召集人與協同召集人）出席<br>
+              • 不克出席者，得指派<strong>科長級以上</strong>代理人<br>
+              • 得邀請申請單位列席說明
+            </div>
+            <span class="step-tag">管理小組審議 | 2/3 同意方可決議</span>
+          </div>
+        </div>
+
+        <div class="flow-step">
+          <div class="step-dot">✓</div>
+          <div class="step-content">
+            <div class="step-title">✅ 審查結果通知 & 入帳資訊</div>
+            <div class="step-desc">
+              審查通過後，提案單位填覆<strong>核可案入帳資訊表（附件三）</strong>，取得第一階段撥補。執行秘書處登錄管理並陳報召集人及共同召集人。
+            </div>
+          </div>
+        </div>
+
+        <div class="flow-step">
+          <div class="step-dot">📊</div>
+          <div class="step-content">
+            <div class="step-title">📊 期末成果報告</div>
+            <div class="step-desc">
+              案件完成後，提案單位提報<strong>執行成果報告（附件四）</strong>。<br>
+              • 期末報告通過 → 取得<span class="hl-green">第二階段撥補</span><br>
+              • 期末報告未通過 → 不發給第二階段撥補<br>
+              • 未提報者 → 視為案件未執行<br>
+              • <span class="hl-amber">提案後二年內</span>完成結案報告（特案另議）
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert red reveal">
+      <span class="alert-icon">🚫</span>
+      <div class="alert-text">
+        <div class="alert-title">取消撥補情形</div>
+        提案若未能執行（未通過既有審核流程），將<strong>取消撥補</strong>。案件進度若有需調整，應通知執行秘書處並<strong>取得同意後</strong>始得調整變更。
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TAB: 審查標準 ── -->
+  <div id="tab-criteria" class="tab-panel">
+
+    <div class="content-block reveal">
+      <div class="block-title"><div class="dot"></div>審查配分標準</div>
+      <div class="criteria-list">
+
+        <div>
+          <div class="criteria-item">
+            <div>
+              <div class="criteria-label">④ 效益與可複製性</div>
+              <div class="criteria-sub">單一年度預估量化/非量化效益、整體效益、可複製性與擴大運用程度</div>
+            </div>
+            <div class="criteria-pct">35%</div>
+          </div>
+          <div class="progress-bar"><div class="progress-fill" style="width:35%"></div></div>
+        </div>
+
+        <div>
+          <div class="criteria-item">
+            <div>
+              <div class="criteria-label">② 創新性</div>
+              <div class="criteria-sub">重要創新說明，含技術創新、工法創新、系統優化等</div>
+            </div>
+            <div class="criteria-pct">30%</div>
+          </div>
+          <div class="progress-bar"><div class="progress-fill" style="width:30%"></div></div>
+        </div>
+
+        <div>
+          <div class="criteria-item">
+            <div>
+              <div class="criteria-label">③ 可執行性</div>
+              <div class="criteria-sub">資金動支合理性、執行管理、可追蹤度</div>
+            </div>
+            <div class="criteria-pct">20%</div>
+          </div>
+          <div class="progress-bar"><div class="progress-fill" style="width:20%"></div></div>
+        </div>
+
+        <div>
+          <div class="criteria-item">
+            <div>
+              <div class="criteria-label">① 目的性與完整性</div>
+              <div class="criteria-sub">現況說明、提案動機及執行內容的完備程度</div>
+            </div>
+            <div class="criteria-pct">15%</div>
+          </div>
+          <div class="progress-bar"><div class="progress-fill" style="width:15%"></div></div>
+        </div>
+
+      </div>
+    </div>
+
+    <p class="sub-heading">提案類別</p>
+
+    <div class="section-grid">
+      <div class="card reveal">
+        <div class="card-header">
+          <div class="card-icon">🔬</div>
+          <div>
+            <div class="card-title">創新類</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <ul>
+            <li>技術研發</li>
+            <li>系統研發、優化</li>
+            <li>工法創新</li>
+            <li>綠色產品（含認證）</li>
+            <li>節能規劃</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card reveal">
+        <div class="card-icon" style="display:none"></div>
+        <div class="card-header">
+          <div class="card-icon">♻️</div>
+          <div>
+            <div class="card-title">環境類</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <ul>
+            <li>再生能源</li>
+            <li>設備汰換/採購</li>
+            <li>節水</li>
+            <li>減廢與循環經濟</li>
+            <li>生物多樣性</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card reveal">
+        <div class="card-header">
+          <div class="card-icon">📢</div>
+          <div>
+            <div class="card-title">其他類</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <ul>
+            <li>外部專標案</li>
+            <li>行銷推廣</li>
+            <li>其他</li>
+            <li>複製案（已有實際複製案例）</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <p class="sub-heading">減碳範疇說明</p>
+
+    <div class="grid-2">
+      <div class="content-block reveal">
+        <div class="block-title"><div class="dot"></div>範疇一</div>
+        <div style="font-size:0.85rem; color: var(--text-muted); line-height:1.6">
+          本公司直接排放，包含自有設備燃燒、公務車輛等所產生的溫室氣體排放。
+        </div>
+      </div>
+      <div class="content-block reveal">
+        <div class="block-title"><div class="dot"></div>範疇二</div>
+        <div style="font-size:0.85rem; color: var(--text-muted); line-height:1.6">
+          本公司間接排放，主要為購入電力之排放。節電措施可有效降低範疇二排放。
+        </div>
+      </div>
+    </div>
+
+    <div class="content-block reveal">
+      <div class="block-title"><div class="dot"></div>複製推廣價值（加分考量）</div>
+      <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(200px,1fr)); gap:12px; font-size:0.84rem; color: var(--text-muted);">
+        <div style="background:var(--surface2); border:1px solid var(--border); border-radius:6px; padding:10px 14px;">
+          ✅ 可直接複製推廣（標準化）
+        </div>
+        <div style="background:var(--surface2); border:1px solid var(--border); border-radius:6px; padding:10px 14px;">
+          🔧 經調整後可複製推廣
+        </div>
+        <div style="background:var(--surface2); border:1px solid var(--border); border-radius:6px; padding:10px 14px;">
+          🌐 可內服外用
+        </div>
+        <div style="background:var(--surface2); border:1px solid var(--border); border-radius:6px; padding:10px 14px;">
+          🏢 可全區推廣（內部）
+        </div>
+        <div style="background:var(--surface2); border:1px solid var(--border); border-radius:6px; padding:10px 14px;">
+          📋 已有實際複製案例
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TAB: 撥補規則 ── -->
+  <div id="tab-subsidy" class="tab-panel">
+
+    <div class="alert green reveal">
+      <span class="alert-icon">💡</span>
+      <div class="alert-text">
+        <div class="alert-title">兩階段撥補機制</div>
+        核可案採<strong>提案審查通過</strong>與<strong>提案完成</strong>兩階段撥補，確保案件確實執行並產生效益後方完整撥付。
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="content-block reveal">
+        <div class="block-title"><div class="dot"></div>第一階段撥補</div>
+        <div style="font-size:0.85rem; color:var(--text-muted); line-height:1.7">
+          條件：<span class="hl-green">提案審查通過</span><br><br>
+          作業：提案單位填覆<strong>核可案入帳資訊表（附件三）</strong><br><br>
+          • 填寫資本/費用支出性質<br>
+          • 填寫列帳機構、交易機構<br>
+          • 填寫費用會計項目
+        </div>
+      </div>
+      <div class="content-block reveal">
+        <div class="block-title"><div class="dot"></div>第二階段撥補</div>
+        <div style="font-size:0.85rem; color:var(--text-muted); line-height:1.7">
+          條件：<span class="hl-green">期末報告通過</span><br><br>
+          作業：提案單位提報<strong>執行成果報告（附件四）</strong><br><br>
+          • 期末報告未通過 → 不發給<br>
+          • 未提供報告且再次通知仍未提供 → 視為案件未執行
+        </div>
+      </div>
+    </div>
+
+    <p class="sub-heading">環境友善核可案補助規則</p>
+
+    <div class="content-block reveal">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>案件類型</th>
+            <th>核定金額</th>
+            <th>補助金額</th>
+            <th>備註</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td rowspan="3">📡 電信工法類</td>
+            <td>500 萬元（含）以下</td>
+            <td><span class="val-num">50 萬元</span></td>
+            <td>書面審查</td>
+          </tr>
+          <tr>
+            <td>500 萬元以上 ～ 1,500 萬元（含）</td>
+            <td><span class="val-num">100 萬元</span></td>
+            <td>會議審查</td>
+          </tr>
+          <tr>
+            <td>1,500 萬元以上</td>
+            <td><span class="val-num">200 萬元</span></td>
+            <td>會議審查</td>
+          </tr>
+          <tr>
+            <td>📋 其他案件</td>
+            <td>依審查結果核定</td>
+            <td><span class="val-num">最多 200 萬元</span></td>
+            <td>酌予定額 50–200 萬；特案可調整</td>
+          </tr>
+          <tr>
+            <td>☀️ 自有局舍太陽能</td>
+            <td colspan="2">—</td>
+            <td>不適用環境友善補助規則</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="alert amber reveal">
+      <span class="alert-icon">🏆</span>
+      <div class="alert-text">
+        <div class="alert-title">亮點案件激勵措施</div>
+        針對執行成果優異之核可案，得予<strong>公開獎勵</strong>，並提供<strong>團隊獎專案獎金</strong>，以達實際獎勵效益（第八條）。
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TAB: 減碳績效 ── -->
+  <div id="tab-electric" class="tab-panel">
+
+    <div class="content-block reveal">
+      <div class="block-title"><div class="dot"></div>年度用電實績計算方式（第九條）</div>
+
+      <div class="flow">
+        <div class="flow-step">
+          <div class="step-dot">📅</div>
+          <div class="step-content">
+            <div class="step-title">計算區間</div>
+            <div class="step-desc">
+              <span class="hl-green">前一年度 11 月</span> 至 <span class="hl-green">本年度 10 月</span>（12個月）
+            </div>
+          </div>
+        </div>
+
+        <div class="flow-step">
+          <div class="step-dot">⚡</div>
+          <div class="step-content">
+            <div class="step-title">用電量彙整</div>
+            <div class="step-desc">
+              由<strong>主管單位</strong>依相關資料來源彙整：<br>
+              • <strong>灰電</strong>：有電號有度數之用電量<br>
+              • <strong>綠電</strong>：再生能源用電量
+            </div>
+          </div>
+        </div>
+
+        <div class="flow-step">
+          <div class="step-dot">➖</div>
+          <div class="step-content">
+            <div class="step-title">扣除排除項目</div>
+            <div class="step-desc">
+              各機構得提報因業務變動致用電量重大或異常變動之說明及佐證資料。<br>
+              各提報項目影響量應達一定規模並具代表性。<br>
+              <span class="hl-amber">需經管理小組召集人或共同召集人核准</span>後方得排除。
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-block reveal">
+      <div class="block-title"><div class="dot"></div>年度減碳補助計算（第十條）</div>
+      <div style="font-size:0.88rem; color:var(--text-muted); line-height:1.8; margin-bottom:1rem;">
+        計算機構<strong>二年用電實績差值</strong>（含排除條款），參考<strong>前一年度電力碳排係數</strong>，轉換為年度減碳績效，依核定之每噸碳補助標準辦理補助。
+      </div>
+      <div style="background:var(--surface2); border:1px solid var(--green-dim); border-radius:8px; padding:1rem 1.4rem; font-size:0.88rem; color: var(--green-primary); font-family: var(--font-mono); line-height:2;">
+        年度用電實績 = 灰電用量 + 綠電用量 − 排除項目<br>
+        減碳績效(噸CO₂e) = (前年用電 − 本年用電) × 電力碳排係數<br>
+        機構減碳補助 = 減碳績效 × 每噸碳補助標準
+      </div>
+    </div>
+
+    <p class="sub-heading">補充說明事項</p>
+
+    <div class="grid-2">
+      <div class="content-block reveal">
+        <div class="block-title"><div class="dot"></div>優異節電措施</div>
+        <div style="font-size:0.84rem; color:var(--text-muted); line-height:1.7">
+          各機構於用電計算區間內，提報<strong>具顯著效益之節電措施</strong>，填寫於「年度用電實績補充說明表（附件五）」。<br><br>
+          需說明：措施內容簡述、節電效益（度數）。
+        </div>
+      </div>
+      <div class="content-block reveal">
+        <div class="block-title"><div class="dot"></div>跨單位用電移轉</div>
+        <div style="font-size:0.84rem; color:var(--text-muted); line-height:1.7">
+          如涉及跨單位用電移轉，應<strong>同步調整雙邊基準量</strong>，以維持計算合理性，確實反映節電成果。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TAB: 表單說明 ── -->
+  <div id="tab-forms" class="tab-panel">
+
+    <div class="section-grid">
+
+      <div class="card reveal">
+        <div class="card-header">
+          <div class="card-icon">📝</div>
+          <div>
+            <div class="card-title">附件一：內部碳費基金應用計畫</div>
+            <div class="card-sub">申請時提交</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <ul>
+            <li><strong>一、內容說明</strong>：背景與目的、執行內容</li>
+            <li><strong>二、重要創新</strong>：創新作為、改善重點</li>
+            <li><strong>三、應用計畫</strong>：資金動支規劃、執行時間表（每季至少一項產出）</li>
+            <li><strong>四、效益預估</strong>：減碳範疇、量化/非量化效益、推廣價值</li>
+            <li><strong>五、結論</strong>：申請補助額度</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card reveal">
+        <div class="card-header">
+          <div class="card-icon">📊</div>
+          <div>
+            <div class="card-title">附件三：核可案入帳資訊表</div>
+            <div class="card-sub">審查通過後填覆（取得第一階段撥補）</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <ul>
+            <li>提案機構、提案編號、提案案名</li>
+            <li>支出性質（資本支出 / 費用支出）</li>
+            <li>內部碳費補助對象</li>
+            <li>案件通過核准金額（元）</li>
+            <li>預計帳務處理：列帳機構、交易機構、費用會計項目</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card reveal">
+        <div class="card-header">
+          <div class="card-icon">📈</div>
+          <div>
+            <div class="card-title">附件四：期末成果報告</div>
+            <div class="card-sub">案件完成後提報（取得第二階段撥補）</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <ul>
+            <li><strong>一、內容概述</strong>：提案說明、計畫摘要、預估效益</li>
+            <li><strong>二、執行效益</strong>：重要工作執行摘要</li>
+            <li>核准補助金額及資金動支現況（預估 vs 實際）</li>
+            <li>實際效益：節電度數、減碳噸數</li>
+            <li>複製推廣可行性、整體推動情況建議與檢討</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card reveal">
+        <div class="card-header">
+          <div class="card-icon">⚡</div>
+          <div>
+            <div class="card-title">附件五：年度用電實績補充說明表</div>
+            <div class="card-sub">年度減碳績效申報</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <ul>
+            <li>用電期間說明</li>
+            <li>優異節電措施（可多筆）：內容簡述、節電效益</li>
+            <li>申請排除項目（可多筆）：原因說明及佐證、影響用電量</li>
+            <li>填表人、單位主管、機構首長簽章</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="content-block reveal">
+      <div class="block-title"><div class="dot"></div>表單提交對象</div>
+      <table class="data-table">
+        <thead>
+          <tr><th>表單</th><th>提交至</th><th>時機</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>附件一（應用計畫）</td>
+            <td>執行秘書處（總公司經營規劃處）</td>
+            <td>每年第三季徵件期間</td>
+          </tr>
+          <tr>
+            <td>附件三（入帳資訊表）</td>
+            <td>執行秘書處</td>
+            <td>審查通過後，取得第一階段撥補</td>
+          </tr>
+          <tr>
+            <td>附件四（期末成果報告）</td>
+            <td>執行秘書處</td>
+            <td>案件完成後，取得第二階段撥補</td>
+          </tr>
+          <tr>
+            <td>附件五（用電實績補充說明表）</td>
+            <td>主管單位</td>
+            <td>年度減碳績效申報</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── TAB: 申請準備 Checklist ── -->
+  <div id="tab-checklist" class="tab-panel">
+
+    <div class="alert blue reveal">
+      <span class="alert-icon">📋</span>
+      <div class="alert-text">勾選以下清單，確認提案前所有準備事項均已完成。進度會自動儲存。</div>
+    </div>
+
+    <div id="progress-info" style="margin-bottom:1rem; font-size:0.85rem; color:var(--text-muted);">
+      完成進度：<span id="progress-num" class="hl-green">0</span> / <span id="progress-total"></span>
+    </div>
+
+    <p class="sub-heading">一、資格確認</p>
+    <div class="checklist">
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div>
+          <div class="check-text">申請單位屬於：總公司、分公司、研究院或營運處</div>
+          <div class="check-cat">資格確認</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div>
+          <div class="check-text">預計動支規模達 50 萬元（含）以上</div>
+          <div class="check-cat">最低門檻</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div>
+          <div class="check-text">確認申請時間點符合規定（執行前一年/當年/結案當年）</div>
+          <div class="check-cat">時程確認</div>
+        </div>
+      </div>
+    </div>
+
+    <p class="sub-heading">二、附件一（應用計畫）撰寫</p>
+    <div class="checklist">
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div>
+          <div class="check-text">【內容說明】完成背景與目的說明（現況剖析、提案動機）</div>
+          <div class="check-cat">附件一</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div>
+          <div class="check-text">【內容說明】說明本案主要作業內容</div>
+          <div class="check-cat">附件一</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div>
+          <div class="check-text">【重要創新】說明本案重要創新作為與改善重點</div>
+          <div class="check-cat">附件一 — 佔審查分數 30%</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div>
+          <div class="check-text">【應用計畫】填寫動支項目、預算資訊、預估金額及動支時程</div>
+          <div class="check-cat">附件一</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div>
+          <div class="check-text">【應用計畫】每季至少有一項重要工作產出</div>
+          <div class="check-cat">附件一 — 可執行性 20%</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div>
+          <div class="check-text">【效益預估】填寫減碳範疇（範疇一/範疇二/其他環境友善）</div>
+          <div class="check-cat">附件一</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div>
+          <div class="check-text">【效益預估】填寫單一年度量化效益（可減碳 X 噸、可節電 X 度）</div>
+          <div class="check-cat">附件一 — 佔審查分數 35%</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div>
+          <div class="check-text">【效益預估】填寫複製推廣價值，勾選適用項目並說明</div>
+          <div class="check-cat">附件一</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div>
+          <div class="check-text">【結論】填寫申請補助額度</div>
+          <div class="check-cat">附件一</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div>
+          <div class="check-text">聯絡人、單位主管簽章（機構首長：總公司免填）</div>
+          <div class="check-cat">附件一</div>
+        </div>
+      </div>
+    </div>
+
+    <p class="sub-heading">三、提案類別核對</p>
+    <div class="checklist">
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div>
+          <div class="check-text">確認已勾選提案類別（創新/環境/其他）</div>
+          <div class="check-cat">形式審查重點</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div>
+          <div class="check-text">如屬「複製案」，說明參考案例編號/案名</div>
+          <div class="check-cat">加分項目</div>
+        </div>
+      </div>
+    </div>
+
+    <p class="sub-heading">四、提交確認</p>
+    <div class="checklist">
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div>
+          <div class="check-text">在第三季徵件期間內提交至執行秘書處</div>
+          <div class="check-cat">提交時程</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div>
+          <div class="check-text">確認電子檔案格式完備</div>
+          <div class="check-cat">提交方式</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── TAB: 常見問題 ── -->
+  <div id="tab-faq" class="tab-panel">
+
+    <div class="search-box reveal">
+      <span class="search-icon">🔍</span>
+      <input type="text" class="search-input" id="faq-search" placeholder="搜尋問題…" oninput="filterFaq(this.value)">
+    </div>
+
+    <div id="faq-list">
+
+      <div class="accordion reveal" data-keywords="門檻 金額 最低">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          Q：提案申請有金額門檻嗎？
+          <span class="accordion-chevron">▾</span>
+        </div>
+        <div class="accordion-body">
+          有。提案限動支規模 <strong>50 萬元（含）以上</strong>之案件方可申請。未達 50 萬元的案件不在本細則適用範圍內。
+        </div>
+      </div>
+
+      <div class="accordion reveal" data-keywords="審查 書面 會議 500">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          Q：何時採書面審查？何時須開會議審查？
+          <span class="accordion-chevron">▾</span>
+        </div>
+        <div class="accordion-body">
+          依申請金額決定：<br>
+          • <strong>500 萬元（含）以下</strong> → 書面審查<br>
+          • <strong>500 萬元以上</strong> → 會議審查<br>
+          會議審查需有半數以上管理小組成員出席。
+        </div>
+      </div>
+
+      <div class="accordion reveal" data-keywords="撥補 兩階段 分批">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          Q：補助款何時可以拿到？
+          <span class="accordion-chevron">▾</span>
+        </div>
+        <div class="accordion-body">
+          採兩階段撥補：<br>
+          <strong>第一階段</strong>：審查通過後，填覆入帳資訊表（附件三）即可取得。<br>
+          <strong>第二階段</strong>：期末成果報告通過後方可取得。若未通過或未提交報告，則不發給第二階段補助。
+        </div>
+      </div>
+
+      <div class="accordion reveal" data-keywords="期末 結案 報告 二年">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          Q：期末成果報告要多久內繳交？
+          <span class="accordion-chevron">▾</span>
+        </div>
+        <div class="accordion-body">
+          案件應於<strong>提案後二年內</strong>完成結案報告。若需調整，應通知執行秘書處並取得同意後始得調整。特案可由管理小組召集人同意另案處理。
+        </div>
+      </div>
+
+      <div class="accordion reveal" data-keywords="時間 徵件 何時 申請">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          Q：每年何時可以提案？
+          <span class="accordion-chevron">▾</span>
+        </div>
+        <div class="accordion-body">
+          原則於每年<strong>第三季</strong>徵求提案。特殊情況可於其他時間提案，但需經管理小組召集人同意。提案可選擇於執行前一年、執行當年或結案當年申請。
+        </div>
+      </div>
+
+      <div class="accordion reveal" data-keywords="用電 排除 計算 實績">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          Q：年度用電實績的排除條款怎麼申請？
+          <span class="accordion-chevron">▾</span>
+        </div>
+        <div class="accordion-body">
+          各機構得提報因<strong>業務變動</strong>致用電量產生重大或異常變動之說明及佐證資料。填寫附件五（年度用電實績補充說明表），各提報項目之用電影響量應達一定規模並具代表性。<br><br>
+          經管理小組召集人或共同召集人<strong>核准後</strong>方得排除。
+        </div>
+      </div>
+
+      <div class="accordion reveal" data-keywords="太陽能 局舍 補助 例外">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          Q：自有局舍太陽能建置案有特殊規定嗎？
+          <span class="accordion-chevron">▾</span>
+        </div>
+        <div class="accordion-body">
+          有。自有局舍太陽能建置案<strong>不適用</strong>環境友善核可案的定額補助規則（附件二），需依其他規定辦理。
+        </div>
+      </div>
+
+      <div class="accordion reveal" data-keywords="代理 召集人 主持 會議">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          Q：召集人無法出席時怎麼辦？
+          <span class="accordion-chevron">▾</span>
+        </div>
+        <div class="accordion-body">
+          代理順序如下：<br>
+          1. 由<strong>協同召集人</strong>代理<br>
+          2. 若召集人與協同召集人皆不克出席，由<strong>召集人指定</strong>管理小組成員代理<br>
+          3. 若未指定代理人，由管理小組成員<strong>推舉</strong>一人代理
+        </div>
+      </div>
+
+      <div class="accordion reveal" data-keywords="亮點 獎勵 獎金 表揚">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          Q：什麼是亮點案件？有額外獎勵嗎？
+          <span class="accordion-chevron">▾</span>
+        </div>
+        <div class="accordion-body">
+          執行成果優異的核可案可被認定為<strong>亮點案件</strong>，得享有：<br>
+          • 公開獎勵<br>
+          • 團隊獎專案獎金<br>
+          此為第八條規定的激勵措施。
+        </div>
+      </div>
+
+      <div class="accordion reveal" data-keywords="取消 未執行 退款">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          Q：已通過審查但未能執行，補助款會取消嗎？
+          <span class="accordion-chevron">▾</span>
+        </div>
+        <div class="accordion-body">
+          是的。提案若未能執行（例如未通過既有預算審核流程），將<strong>取消撥補</strong>。第一階段已撥補的款項可能需要退還，應盡早通知執行秘書處處理。
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</main>
+
+<!-- ── Footer ── -->
+<footer class="footer">
+  <div>中華電信 | 內部碳費基金施行細則 115年版 V3</div>
+  <div>核定文號：規ESG字第1150000212號</div>
+</footer>
+
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+  // ── Tab switch ──
+  function switchTab(id, btn) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    btn.classList.add('active');
+    // trigger reveal
+    setTimeout(initReveal, 50);
+    // update checklist count
+    if (id === 'checklist') updateProgress();
+  }
+
+  // ── Accordion ──
+  function toggleAccordion(header) {
+    const body = header.nextElementSibling;
+    const isOpen = header.classList.contains('open');
+    // close all
+    document.querySelectorAll('.accordion-header').forEach(h => h.classList.remove('open'));
+    document.querySelectorAll('.accordion-body').forEach(b => b.classList.remove('open'));
+    if (!isOpen) {
+      header.classList.add('open');
+      body.classList.add('open');
+    }
+  }
+
+  // ── FAQ search ──
+  function filterFaq(val) {
+    const q = val.trim().toLowerCase();
+    document.querySelectorAll('.accordion').forEach(item => {
+      const kw = (item.dataset.keywords || '').toLowerCase();
+      const txt = item.textContent.toLowerCase();
+      item.style.display = (!q || txt.includes(q) || kw.includes(q)) ? '' : 'none';
+    });
+  }
+
+  // ── Checklist ──
+  function toggleCheck(item) {
+    item.classList.toggle('checked');
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const all = document.querySelectorAll('.check-item');
+    const done = document.querySelectorAll('.check-item.checked');
+    document.getElementById('progress-total').textContent = all.length;
+    document.getElementById('progress-num').textContent = done.length;
+  }
+
+  // ── Scroll reveal ──
+  function initReveal() {
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    }, { threshold: 0.05 });
+    document.querySelectorAll('.reveal:not(.visible)').forEach(el => obs.observe(el));
+  }
+
+  // ── Back to top ──
+  window.addEventListener('scroll', () => {
+    document.getElementById('back-top').classList.toggle('show', scrollY > 300);
+  });
+
+  // ── Animate progress bars after load ──
+  window.addEventListener('load', () => {
+    initReveal();
+    updateProgress();
+    setTimeout(() => {
+      document.querySelectorAll('.progress-fill').forEach(bar => {
+        bar.style.width = bar.style.width; // trigger repaint
+      });
+    }, 200);
+  });
+</script>
+</body>
+</html>

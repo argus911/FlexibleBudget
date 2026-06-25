@@ -155,6 +155,26 @@
   .card-kpi    { --c1:#3fb950; --c2:#2ea043; }
   .card-ict    { --c1:#e3b341; --c2:#d29922; }
   .card-bonus  { --c1:#f85149; --c2:#da3633; }
+  .card-bonus-light {
+    --c1:#f85149; --c2:#da3633;
+    background: #ffffff !important;
+    color: #1a1a2e !important;
+  }
+  .card-bonus-light .card-name { color: #1a1a2e; }
+  .card-bonus-light .card-desc { color: #555; }
+  .card-bonus-light .card-arrow { color: #999; }
+  .card-bonus-light:hover { border-color: #f85149; box-shadow: 0 8px 24px rgba(248,81,73,.2); }
+  .card-bonus-light:hover .card-arrow { color: #f85149; }
+  .card-carbon { --c1:#3fb950; --c2:#2ea043; }
+  .card-carbon {
+    background: #ffffff !important;
+    color: #1a1a2e !important;
+  }
+  .card-carbon .card-name { color: #1a1a2e; }
+  .card-carbon .card-desc { color: #555; }
+  .card-carbon .card-arrow { color: #999; }
+  .card-carbon:hover { border-color: #3fb950; box-shadow: 0 8px 24px rgba(63,185,80,.2); }
+  .card-carbon:hover .card-arrow { color: #3fb950; }
 
   .card-budget .card-tag { color: var(--cht-cyan); border-color: rgba(0,168,224,.4); background: rgba(0,168,224,.08); }
   .card-kpi    .card-tag { color: var(--green);    border-color: rgba(63,185,80,.4);  background: rgba(63,185,80,.08); }
@@ -222,11 +242,11 @@
 <div class="hero">
   <div class="hero-label">Flexible Budget Portal</div>
   <h2>預算管理<br>整合入口</h2>
-  <p class="hero-sub">即時追蹤預算執行、KPI 績效、成本分析與紅利積點</p>
+  <p class="hero-sub">即時追蹤預算執行、KPI 績效、成本分析、紅利積點與碳費管理</p>
   <div class="hero-badges">
     <span class="badge badge-blue">📱 PWA 離線可用</span>
     <span class="badge badge-green">🔄 即時同步</span>
-    <span class="badge badge-gold">📊 5 大模組整合</span>
+    <span class="badge badge-gold">📊 6 大模組整合</span>
   </div>
 </div>
 
@@ -271,11 +291,20 @@
   </a>
 
   <!-- BonusPoints -->
-  <a class="card card-bonus" href="./BonusPoints/">
-    <div class="card-icon">🎁</div>
+  <a class="card card-bonus-light" href="./BonusPoints/">
+    <div class="card-icon" style="background:linear-gradient(135deg,rgba(248,81,73,.12),rgba(218,54,51,.12))">🎁</div>
     <div class="card-name">紅利積點認列</div>
     <div class="card-desc">企業客戶紅利積點成本認列試算，整合 Claude AI 輔助分析與每月分攤計算。</div>
-    <span class="card-tag">Bonus Points</span>
+    <span class="card-tag" style="color:#f85149;border-color:rgba(248,81,73,.4);background:rgba(248,81,73,.08)">Bonus Points</span>
+    <span class="card-arrow">→</span>
+  </a>
+
+  <!-- CarbonFee -->
+  <a class="card card-carbon" href="./CarbonFee/">
+    <div class="card-icon" style="background:linear-gradient(135deg,rgba(63,185,80,.12),rgba(46,160,67,.12))">🌿</div>
+    <div class="card-name">內部碳費規章</div>
+    <div class="card-desc">中華電信內部碳費基金施行細則互動說明，含申請流程、審查標準、撥補規則與申請準備清單。</div>
+    <span class="card-tag" style="color:#3fb950;border-color:rgba(63,185,80,.4);background:rgba(63,185,80,.08)">Carbon Fee</span>
     <span class="card-arrow">→</span>
   </a>
 
@@ -360,7 +389,7 @@ document.getElementById('dismiss-btn').addEventListener('click', () => {
 });
 </script>
 
-<!-- PWA Manifest inline via JS --><!-- cache-bust:20260623-2 -->
+<!-- PWA Manifest inline via JS --><!-- cache-bust:20260625-1 -->
 <script>
 const manifest = {
   name: '彈性預算管理',
