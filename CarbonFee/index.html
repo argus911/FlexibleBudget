@@ -783,35 +783,21 @@
   }
   .reveal.visible { opacity: 1; transform: none; }
 
-  /* ── Floating Home Button ── */
-  .fab-home {
-    position: fixed;
-    bottom: 72px;
-    right: 24px;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: linear-gradient(135deg, #1a73e8, #0d47a1);
-    color: #fff;
-    text-decoration: none;
-    padding: 9px 18px;
-    border-radius: 24px;
-    font-size: 0.84rem;
-    font-weight: 600;
-    box-shadow: 0 4px 16px rgba(26,115,232,.4);
-    transition: all 0.2s;
-    white-space: nowrap;
-    z-index: 199;
+  /* ── FlexibleBudget 回主頁按鈕 ── */
+  #fb-home-btn {
+    position: fixed; bottom: 20px; right: 20px; z-index: 99999;
+    background: linear-gradient(135deg, #005bac, #00a8e0);
+    color: #fff; border: none; border-radius: 50px;
+    padding: 11px 20px 11px 15px; font-size: 13px; font-weight: 600;
+    cursor: pointer; display: flex; align-items: center; gap: 8px;
+    box-shadow: 0 4px 18px rgba(0,91,172,.5);
+    font-family: -apple-system,"Microsoft JhengHei",sans-serif;
+    white-space: nowrap; -webkit-tap-highlight-color: transparent;
+    transition: transform .15s, box-shadow .15s;
+    letter-spacing: .3px;
   }
-  .fab-home:hover {
-    background: linear-gradient(135deg, #1557b0, #0a2f6b);
-    box-shadow: 0 6px 20px rgba(26,115,232,.55);
-    transform: translateY(-2px);
-  }
-  @media (max-width: 500px) {
-    .fab-home .fab-label { display: none; }
-    .fab-home { padding: 10px 14px; }
-  }
+  #fb-home-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,91,172,.6); }
+  #fb-home-btn:active { transform: scale(.95); }
 
   /* ── Back to top ── */
   #back-top {
@@ -1869,9 +1855,15 @@
   <div>核定文號：規ESG字第1150000212號</div>
 </footer>
 
-<a class="fab-home" href="../">
-  🏠<span class="fab-label">彈性預算主頁</span>
-</a>
+<!-- FlexibleBudget 回主頁按鈕 -->
+<button id="fb-home-btn" onclick="window.location.replace('https://argus911.github.io/FlexibleBudget/')">
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+       stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+    <polyline points="9 22 9 12 15 12 15 22"/>
+  </svg>
+  彈性預算主頁
+</button>
 <button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
 <script>
