@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="考核版預算">
+<title>⚖️ 考核版預算調整｜彰化營運處</title>
+<!-- BudgetAdjust v1.0 · 資料來源：115年Q2營運處考核版預算入第二階段.xlsx（115/04/24） -->
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,'Microsoft JhengHei',sans-serif;background:#f0f4f8;min-height:100vh;color:#1a1a2e}
+
+/* ════════════════════════════════════════
+   統一模組表頭 — FlexibleBudget v2
+   ════════════════════════════════════════ */
+.fb-header {
+  position: sticky !important; top: 0 !important; z-index: 200 !important;
+  display: flex !important; align-items: center !important;
+  justify-content: space-between !important;
+  padding: 0 16px !important; height: 56px !important; min-height: 56px !important;
+  color: #fff !important;
+  box-shadow: 0 2px 10px rgba(0,0,0,.25) !important;
+  -webkit-tap-highlight-color: transparent;
+}
+.fb-header .fh-icon {
+  width: 36px !important; height: 36px !important; border-radius: 9px !important;
+  background: rgba(255,255,255,.18) !important;
+  display: flex !important; align-items: center !important; justify-content: center !important;
+  font-size: 18px !important; flex-shrink: 0 !important; margin-right: 10px !important;
+}
+.fb-header .fh-text { flex: 1 !important; min-width: 0 !important; }
+.fb-header .fh-title {
+  font-size: 15px !important; font-weight: 700 !important; letter-spacing: .3px !important;
+  white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important;
+  color: #fff !important; margin: 0 !important; padding: 0 !important; line-height: 1.3 !important;
+}
+.fb-header .fh-sub {
+  font-size: 11px !important; opacity: .8 !important; margin-top: 1px !important;
+  white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important;
+  color: #fff !important; display: block !important;
+}
+.fb-header .fh-meta { text-align: right !important; flex-shrink: 0 !important; margin-left: 10px !important; }
+.fb-header .fh-badge {
+  display: inline-block !important;
+  background: rgba(255,255,255,.22) !important; border: 1px solid rgba(255,255,255,.3) !important;
+  border-radius: 20px !important; padding: 3px 11px !important;
+  font-size: 12px !important; font-weight: 600 !important; white-space: nowrap !important;
+  color: #fff !important;
+}
+.fb-header[data-module="adjust"] { background: linear-gradient(135deg,#b45309 0%,#d97706 60%,#f59e0b 100%) !important; }
+
+/* ── Tab bar ── */
+.tab-bar{display:flex;gap:0;padding:0 14px;margin-top:10px;overflow-x:auto;
+  scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.tab-bar::-webkit-scrollbar{display:none}
+.tab-btn{flex-shrink:0;padding:9px 16px;font-size:13px;font-weight:600;cursor:pointer;
+  border:none;background:transparent;color:#888;border-bottom:3px solid transparent;
+  transition:all .2s;-webkit-tap-highlight-color:transparent}
+.tab-btn.active{color:#b45309;border-bottom-color:#b45309}
+
+.tab-content{display:none;padding:12px 14px 90px}
+.tab-content.active{display:block}
+
+/* ── 提示 ── */
+.info-notice{background:#fef9e7;border:1px solid #f9ca24;border-radius:8px;
+  padding:10px 14px;font-size:12px;color:#7d6608;margin-bottom:10px;line-height:1.7}
+
+/* ── KPI 卡片 ── */
+.kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.kpi-card{background:#fff;border-radius:10px;padding:12px;
+  box-shadow:0 1px 4px rgba(0,0,0,.07);text-align:center}
+.kpi-card.full{grid-column:1/-1}
+.kpi-label{font-size:11px;color:#888;margin-bottom:4px}
+.kpi-value{font-size:18px;font-weight:700;color:#1a1a2e}
+.kpi-sub{font-size:11px;color:#999;margin-top:3px}
+.kpi-value.red{color:#c0392b}.kpi-value.blue{color:#1a5276}
+.kpi-value.green{color:#27ae60}.kpi-value.amber{color:#b45309}
+
+/* ── 資料表 ── */
+.data-section{background:#fff;border-radius:10px;margin-bottom:12px;
+  box-shadow:0 1px 4px rgba(0,0,0,.07);overflow:hidden}
+.section-hdr{background:#b45309;color:#fff;padding:8px 14px;font-size:12px;
+  font-weight:700;letter-spacing:.5px}
+.section-hdr.blue{background:#1a5276}
+.section-hdr.green{background:#1e8449}
+.data-table{width:100%;border-collapse:collapse;font-size:12px}
+.data-table th{background:#f8f9fa;padding:8px 10px;text-align:center;
+  font-weight:600;color:#555;border-bottom:2px solid #e0e0e0;white-space:nowrap}
+.data-table td{padding:8px 10px;border-bottom:1px solid #f0f0f0;white-space:nowrap}
+.data-table tr:last-child td{border-bottom:none}
+.data-table tr.total-row{background:#fef3e2;font-weight:700}
+.data-table tr.total-row td{border-top:2px solid #b45309}
+.data-table tr.grand-row{background:#d5f5e3;font-weight:700}
+.data-table tr.grand-row td{border-top:2px solid #1e8449}
+.data-table tr.chg{background:#fffbeb}
+.data-table tr.lv1 td:nth-child(2){padding-left:24px;color:#444}
+.data-table tr.lv2 td:nth-child(2){padding-left:40px;color:#777;font-size:11px}
+.text-left{text-align:left}.text-center{text-align:center}.text-right{text-align:right}
+.red{color:#c0392b}.blue{color:#1a5276}.green{color:#27ae60}.gray{color:#aaa}
+.pos{color:#c0392b;font-weight:600}.neg{color:#1a5276;font-weight:600}
+
+.owner-tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:10px;
+  background:#eaf2ff;border:1px solid #aed6f1;color:#1a5276;font-weight:600;white-space:nowrap}
+.reason-tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:10px;
+  background:#fef3e2;border:1px solid #f5cba7;color:#b45309;font-weight:600;white-space:nowrap}
+.detail-note{font-size:10px;color:#999;margin-top:3px;white-space:normal;line-height:1.5;max-width:230px}
+
+/* ── CSS 長條圖 ── */
+.bar-chart{padding:14px 16px 16px}
+.bar-row{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.bar-label{width:96px;font-size:11px;font-weight:600;color:#555;text-align:right;flex-shrink:0}
+.bar-track{flex:1;display:flex;height:20px;position:relative}
+.bar-half{width:50%;position:relative}
+.bar-fill{position:absolute;top:0;height:100%;border-radius:4px;min-width:2px}
+.bar-fill.neg-bar{right:0;background:linear-gradient(90deg,#5dade2,#1a5276)}
+.bar-fill.pos-bar{left:0;background:linear-gradient(90deg,#f39c12,#c0392b)}
+.bar-val{width:78px;font-size:11px;font-weight:700;flex-shrink:0}
+.bar-axis{display:flex;margin-left:104px;margin-right:86px;border-top:1px dashed #ddd;
+  font-size:10px;color:#bbb;justify-content:center;padding-top:4px}
+
+/* ── 說明卡 ── */
+.explain-card{background:#eaf2ff;border:1px solid #aed6f1;border-radius:10px;
+  padding:14px 16px;margin-bottom:10px;font-size:13px;line-height:1.8;color:#1a5276}
+.explain-card.amber{background:#fef3e2;border-color:#f5cba7;color:#7d5108}
+.formula-box{background:#fff;border:1.5px solid #f5cba7;border-radius:8px;
+  padding:10px 14px;margin:8px 0;font-size:13px;font-weight:600;text-align:center;color:#b45309}
+
+/* ── 時間軸 ── */
+.phase-bar{display:flex;border-radius:10px;overflow:hidden;height:28px;margin:10px 0 14px}
+.phase-seg{display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:700;color:#fff}
+.timeline{list-style:none;padding-left:0}
+.timeline li{display:flex;gap:10px;margin-bottom:12px}
+.tl-dot{width:34px;height:34px;border-radius:50%;flex-shrink:0;color:#fff;
+  display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700}
+.tl-title{font-size:13px;font-weight:700;margin-bottom:3px}
+.tl-desc{font-size:12px;color:#555;line-height:1.7}
+
+/* ── 回主頁按鈕 ── */
+#fb-home-btn{position:fixed;bottom:20px;right:20px;z-index:9999;
+  background:linear-gradient(135deg,#005bac,#00a8e0);color:#fff;border:none;
+  border-radius:50px;padding:10px 18px 10px 14px;font-size:13px;font-weight:600;
+  cursor:pointer;display:flex;align-items:center;gap:7px;
+  box-shadow:0 4px 16px rgba(0,91,172,.45);white-space:nowrap;
+  -webkit-tap-highlight-color:transparent;transition:transform .15s}
+#fb-home-btn:active{transform:scale(.95)}
+</style>
+</head>
+<body>
+
+<div class="fb-header" data-module="adjust">
+  <div class="fh-icon">⚖️</div>
+  <div class="fh-text">
+    <div class="fh-title">考核版預算調整</div>
+    <div class="fh-sub">中華電信彰化營運處【3047】</div>
+  </div>
+  <div class="fh-meta"><span class="fh-badge">115年Q2</span></div>
+</div>
+
+<!-- Tab Bar -->
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('summary')">📋 調整摘要</button>
+  <button class="tab-btn" onclick="switchTab('category')">📊 主類別彙總</button>
+  <button class="tab-btn" onclick="switchTab('table')">📑 成費表全表</button>
+  <button class="tab-btn" onclick="switchTab('explain')">📖 說明</button>
+</div>
+
+<!-- ── Tab: 調整摘要 ── -->
+<div class="tab-content active" id="tab-summary"></div>
+
+<!-- ── Tab: 主類別彙總 ── -->
+<div class="tab-content" id="tab-category"></div>
+
+<!-- ── Tab: 成費表全表 ── -->
+<div class="tab-content" id="tab-table"></div>
+
+<!-- ── Tab: 說明 ── -->
+<div class="tab-content" id="tab-explain">
+  <div class="explain-card amber">
+    <strong>【115年Q2 考核版預算調整】</strong><br>
+    彈性預算機制之季度作業：依 Q2 當季實際營運變動，將「基本版預算」調整為「考核版預算」，
+    含當季變動成本調整、標準成本率調整與 K2 成本率追溯調整。<br>
+    本頁資料為<strong>第二階段（疑義確認期）</strong>資料，報告日期 115年4月24日。
+  </div>
+  <div class="formula-box">
+    Q2 調整差異 ＝ 115年4月考核版 － 115年3月基本版
+  </div>
+
+  <div class="data-section">
+    <div class="section-hdr blue">Q2 考核版作業時程</div>
+    <div style="padding:12px 16px 6px">
+      <div class="phase-bar">
+        <div class="phase-seg" style="flex:14;background:#e53935">第一階段 4/9～4/23</div>
+        <div class="phase-seg" style="flex:7;background:#f5a623">第二階段 4/23～4/30</div>
+        <div class="phase-seg" style="flex:5;background:#00b74a">定版 5/5</div>
+      </div>
+      <ul class="timeline">
+        <li>
+          <div class="tl-dot" style="background:#e53935">P1</div>
+          <div>
+            <div class="tl-title">第一階段：4/9 ～ 4/23（分公司調整期）</div>
+            <div class="tl-desc">分公司完成所有彈性預算調整（含追溯調整項目），查詢報表 M171（考核版編列中）/ D5203（考核版），完成後發信通知總公司並回填調整彙總。</div>
+          </div>
+        </li>
+        <li>
+          <div class="tl-dot" style="background:#f5a623">P2</div>
+          <div>
+            <div class="tl-title">第二階段：4/23 ～ 4/30（疑義確認期）← 本頁資料</div>
+            <div class="tl-desc">營運處與分公司雙向溝通確認調整合理性，必要時系統開放處理疑慮項目；逾期系統鎖定。本階段新增報表 D5202（考核版）。</div>
+          </div>
+        </li>
+        <li>
+          <div class="tl-dot" style="background:#00b74a">定版</div>
+          <div>
+            <div class="tl-title">5/5　Q2 彈性預算定版</div>
+            <div class="tl-desc">總公司彙整上傳後，各報表正式更新為考核版數字，全面開放查詢。</div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="data-section">
+    <div class="section-hdr">調整類型說明</div>
+    <table class="data-table">
+      <tr><th class="text-left" style="width:130px">調整類型</th><th class="text-left">說明</th></tr>
+      <tr><td><span class="reason-tag">Q2當季變動成本調整</span></td><td class="text-left" style="white-space:normal">依 Q2 當季業務量預估調整之變動成本（門市承攬、佣金、行銷推廣激勵獎金）。</td></tr>
+      <tr><td><span class="reason-tag">標準成本率調整</span></td><td class="text-left" style="white-space:normal">市售商品與紅利積點依最新標準成本率重新估算全年成本。</td></tr>
+      <tr><td><span class="reason-tag">K2成本率追溯調整</span></td><td class="text-left" style="white-space:normal">客戶專案（929X）成本依 K2 成本率追溯調整，本次調減 52,723 千元，為 Q2 最大調整項。</td></tr>
+    </table>
+  </div>
+
+  <div class="info-notice">
+    📄 資料來源：115年Q2營運處考核版預算入第二階段.xlsx（成費表-預算數(全年)基本版(已上傳) 0000-3047，查詢時間 2026/04/23 18:04）<br>
+    💡 金額單位：千元（原始資料為元，本頁以千元顯示）。「Q2調整差異」紅字＝調增、藍字＝調減。
+  </div>
+</div>
+
+<!-- 回主頁按鈕 -->
+<button id="fb-home-btn" onclick="window.location.replace('https://argus911.github.io/FlexibleBudget/')">
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+       stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+    <polyline points="9 22 9 12 15 12 15 22"/>
+  </svg>
+  彈性預算主頁
+</button>
+
+<script>
+// ══════════════════════════════════════════
+// 資料（單位：元）— 115年Q2考核版第二階段 · 115/04/24
+// ══════════════════════════════════════════
+const META = {year:'115', quarter:'Q2', stage:'第二階段', reportDate:'115年4月24日', org:'中華電信彰化營運處【3047】'};
+
+// 用途別調整明細（預算調整摘要報告）
+const ADJUSTMENTS = [
+  {code:'B.3',   item:'門市（承攬及外包）',       base:8964000,   assess:15746000,  diff:6782000,   reason:'Q2當季變動成本調整',  owner:'CA6 行銷科',   detail:'2041P行銷業務推廣代理佣金─承攬門市業務'},
+  {code:'C.02',  item:'佣金',                     base:4038000,   assess:7523000,   diff:3485000,   reason:'Q2當季變動成本調整',  owner:'CA6 行銷科',   detail:'行銷業務推廣代理佣金、取得合約增額成本攤銷-客戶合約佣金'},
+  {code:'C.03',  item:'行銷推廣費',               base:3418000,   assess:3653000,   diff:235000,    reason:'Q2當季變動成本調整',  owner:'CA6 行銷科',   detail:'203行銷業務推廣激勵獎金'},
+  {code:'C.04',  item:'商品成本',                 base:69328000,  assess:74745000,  diff:5417000,   reason:'市售商品標準成本率調整', owner:'C06 服務中心', detail:'331X商品成本'},
+  {code:'D.1',   item:'客戶專案成本-專案建置',    base:305812000, assess:253089000, diff:-52723000, reason:'專案成本K2成本率追溯調整', owner:'CE4 企業客戶科', detail:'929X成本'},
+  {code:'F.3.1', item:'其他-紅利積點成本',        base:35313000,  assess:39318000,  diff:4005000,   reason:'紅利積點標準成本率調整', owner:'CA6 行銷科',   detail:'3321紅利積點成本'}
+];
+const ADJ_SUBTOTAL = {base:426873000, assess:394074000, diff:-32799000};
+
+// 主類別調整彙總
+const CATEGORIES = [
+  {code:'B', item:'承攬及外包項目', base:158914000, assess:165696000, diff:6782000},
+  {code:'C', item:'行銷業務項目',   base:106299000, assess:115436000, diff:9137000},
+  {code:'D', item:'客戶專案成本',   base:395134000, assess:342411000, diff:-52723000},
+  {code:'F', item:'支援相關項目',   base:100163000, assess:104168000, diff:4005000}
+];
+const CAT_TOTAL = {base:760510000, assess:727711000, diff:-32799000};
+
+// 全年預算總數
+const ANNUAL = {base:2507059000, assess:2474260000, diff:-32799000};
+
+// 成費表全表（lv: 0主類別 1子項 2細項）
+const COST_TABLE = [
+  {c:'A',      n:'用人費用',                  b:906708000, a:906708000, lv:0},
+  {c:'A.1',    n:'本機構',                    b:869778000, a:869778000, lv:1},
+  {c:'A.2',    n:'客服',                      b:36930000,  a:36930000,  lv:1},
+  {c:'B',      n:'承攬及外包項目',            b:158914000, a:165696000, lv:0},
+  {c:'B.1',    n:'網路',                      b:90915000,  a:90915000,  lv:1},
+  {c:'B.2',    n:'客服',                      b:59035000,  a:59035000,  lv:1},
+  {c:'B.3',    n:'門市',                      b:8964000,   a:15746000,  lv:1},
+  {c:'B.4',    n:'外包費用及承攬其他',        b:0,         a:0,         lv:1},
+  {c:'C',      n:'行銷業務項目',              b:106299000, a:115436000, lv:0},
+  {c:'C.01',   n:'終端設備補貼款',            b:0,         a:0,         lv:1},
+  {c:'C.02',   n:'佣金',                      b:4038000,   a:7523000,   lv:1},
+  {c:'C.03',   n:'行銷推廣費',                b:3418000,   a:3653000,   lv:1},
+  {c:'C.04',   n:'商品成本',                  b:69328000,  a:74745000,  lv:1},
+  {c:'C.05',   n:'接續費',                    b:5690000,   a:5690000,   lv:1},
+  {c:'C.06',   n:'互連及資訊服務費',          b:0,         a:0,         lv:1},
+  {c:'C.07',   n:'郵寄帳單用郵費',            b:0,         a:0,         lv:1},
+  {c:'C.08',   n:'代收電信資費手續費',        b:22781000,  a:22781000,  lv:1},
+  {c:'C.09',   n:'匯費及手續費',              b:1044000,   a:1044000,   lv:1},
+  {c:'C.10',   n:'呆帳',                      b:0,         a:0,         lv:1},
+  {c:'C.10.1', n:'呆帳-專標案',               b:0,         a:0,         lv:2},
+  {c:'C.10.2', n:'呆帳-非專標案',             b:0,         a:0,         lv:2},
+  {c:'C.10.3', n:'呆帳-代收業務',             b:0,         a:0,         lv:2},
+  {c:'D',      n:'客戶專案成本',              b:395134000, a:342411000, lv:0},
+  {c:'D.1',    n:'客戶專案成本-專案建置',     b:305812000, a:253089000, lv:1},
+  {c:'D.2',    n:'客戶專案成本-非專案建置',   b:89322000,  a:89322000,  lv:1},
+  {c:'E',      n:'維運項目',                  b:839841000, a:839841000, lv:0},
+  {c:'E.1',    n:'折舊',                      b:537368000, a:537368000, lv:1},
+  {c:'E.2',    n:'攤銷',                      b:9000,      a:9000,      lv:1},
+  {c:'E.3',    n:'修理保養及材料費',          b:231616000, a:231616000, lv:1},
+  {c:'E.3.1',  n:'電信線路維護費',            b:98198000,  a:98198000,  lv:2},
+  {c:'E.3.2',  n:'電信機械維護費',            b:29951000,  a:29951000,  lv:2},
+  {c:'E.3.3',  n:'其他維護費',                b:23441000,  a:23441000,  lv:2},
+  {c:'E.3.4',  n:'重分類減項',                b:0,         a:0,         lv:2},
+  {c:'E.3.5',  n:'設備維運備品費及燃料費',    b:80026000,  a:80026000,  lv:2},
+  {c:'E.4',    n:'水電費',                    b:68044000,  a:68044000,  lv:1},
+  {c:'E.5',    n:'使用費',                    b:2804000,   a:2804000,   lv:1},
+  {c:'F',      n:'支援相關項目',              b:100163000, a:104168000, lv:0},
+  {c:'F.1',    n:'專業服務費',                b:9777000,   a:9777000,   lv:1},
+  {c:'F.1.1',  n:'權利金',                    b:0,         a:0,         lv:2},
+  {c:'F.1.2',  n:'影片及版權費',              b:0,         a:0,         lv:2},
+  {c:'F.1.3',  n:'電腦軟體服務費',            b:171000,    a:171000,    lv:2},
+  {c:'F.1.4',  n:'委託調查研究費',            b:60000,     a:60000,     lv:2},
+  {c:'F.1.5',  n:'會計師、精算師、律師',      b:1641000,   a:1641000,   lv:2},
+  {c:'F.1.6',  n:'保全費用',                  b:7429000,   a:7429000,   lv:2},
+  {c:'F.1.7',  n:'其他',                      b:476000,    a:476000,    lv:2},
+  {c:'F.2',    n:'稅捐與規費',                b:36499000,  a:36499000,  lv:1},
+  {c:'F.3',    n:'其他',                      b:53887000,  a:57892000,  lv:1},
+  {c:'F.3.1',  n:'其他-紅利積點成本',         b:35313000,  a:39318000,  lv:2},
+  {c:'F.3.2',  n:'其他-印刷及裝訂費',         b:505000,    a:505000,    lv:2},
+  {c:'F.3.3',  n:'其他-其他支出',             b:18069000,  a:18069000,  lv:2}
+];
+
+// ══════════════════════════════════════════
+// 工具函數
+// ══════════════════════════════════════════
+// 千元格式化：正負號、千分位
+function k(v){ return Math.round(v/1000).toLocaleString('zh-TW'); }
+function kSigned(v){
+  if(v === 0) return '<span class="gray">—</span>';
+  var s = Math.round(Math.abs(v)/1000).toLocaleString('zh-TW');
+  return v > 0 ? '<span class="pos">+'+s+'</span>' : '<span class="neg">-'+s+'</span>';
+}
+function pctOf(diff, base){ return base ? ((diff/base)*100).toFixed(1)+'%' : '—'; }
+
+// ══════════════════════════════════════════
+// Tab 切換
+// ══════════════════════════════════════════
+function switchTab(name){
+  var tabs = ['summary','category','table','explain'];
+  document.querySelectorAll('.tab-btn').forEach(function(b,i){
+    b.classList.toggle('active', tabs[i] === name);
+  });
+  document.querySelectorAll('.tab-content').forEach(function(c){ c.classList.remove('active'); });
+  document.getElementById('tab-'+name).classList.add('active');
+}
+
+// ══════════════════════════════════════════
+// Tab 1：調整摘要
+// ══════════════════════════════════════════
+function renderSummary(){
+  var html = '<div class="info-notice">📌 '+META.year+'年'+META.quarter+' 營運處考核版預算調整（'+META.stage+'）｜報告日期：'+META.reportDate+'｜單位：千元</div>';
+
+  html += '<div class="kpi-grid">'
+    + '<div class="kpi-card"><div class="kpi-label">115年3月 基本版全年預算</div><div class="kpi-value blue">'+k(ANNUAL.base)+'</div><div class="kpi-sub">千元</div></div>'
+    + '<div class="kpi-card"><div class="kpi-label">115年4月 考核版全年預算</div><div class="kpi-value amber">'+k(ANNUAL.assess)+'</div><div class="kpi-sub">千元</div></div>'
+    + '<div class="kpi-card full"><div class="kpi-label">Q2 調整差異（考核版 − 基本版）</div>'
+    + '<div class="kpi-value '+(ANNUAL.diff<0?'blue':'red')+'">'+(ANNUAL.diff<0?'▼ ':'▲ +')+k(Math.abs(ANNUAL.diff))+' 千元</div>'
+    + '<div class="kpi-sub">全年預算淨調'+(ANNUAL.diff<0?'減':'增')+' '+pctOf(Math.abs(ANNUAL.diff), ANNUAL.base)+'</div></div>'
+    + '</div>';
+
+  html += '<div class="data-section"><div class="section-hdr">【用途別調整明細】共 '+ADJUSTMENTS.length+' 項</div>'
+    + '<div style="overflow-x:auto"><table class="data-table"><thead><tr>'
+    + '<th>代碼</th><th class="text-left">用途別項目</th><th>3月基本版</th><th>4月考核版</th><th>Q2調整差異</th><th>調整說明</th><th>預算主管</th>'
+    + '</tr></thead><tbody>';
+  ADJUSTMENTS.forEach(function(r){
+    html += '<tr class="chg">'
+      + '<td class="text-center" style="font-weight:600">'+r.code+'</td>'
+      + '<td class="text-left"><div style="font-weight:600">'+r.item+'</div><div class="detail-note">'+r.detail+'</div></td>'
+      + '<td class="text-right">'+k(r.base)+'</td>'
+      + '<td class="text-right">'+k(r.assess)+'</td>'
+      + '<td class="text-right">'+kSigned(r.diff)+'</td>'
+      + '<td class="text-center"><span class="reason-tag">'+r.reason+'</span></td>'
+      + '<td class="text-center"><span class="owner-tag">'+r.owner+'</span></td>'
+      + '</tr>';
+  });
+  html += '<tr class="total-row">'
+    + '<td></td><td class="text-left">【小計】</td>'
+    + '<td class="text-right">'+k(ADJ_SUBTOTAL.base)+'</td>'
+    + '<td class="text-right">'+k(ADJ_SUBTOTAL.assess)+'</td>'
+    + '<td class="text-right">'+kSigned(ADJ_SUBTOTAL.diff)+'</td>'
+    + '<td colspan="2"></td></tr>';
+  html += '</tbody></table></div></div>';
+
+  html += '<div class="explain-card amber" style="font-size:12px">💡 <strong>重點</strong>：本次調整以「客戶專案成本-專案建置（D.1）」K2 成本率追溯調減 52,723 千元為最大項；'
+    + '其餘 5 項合計調增 19,924 千元，全年預算淨調減 32,799 千元。</div>';
+
+  document.getElementById('tab-summary').innerHTML = html;
+}
+
+// ══════════════════════════════════════════
+// Tab 2：主類別彙總（含 CSS 長條圖）
+// ══════════════════════════════════════════
+function renderCategory(){
+  var html = '<div class="info-notice">📌 涉及調整之主類別彙總｜單位：千元（A 用人費用、E 維運項目本次無調整）</div>';
+
+  // CSS 長條圖：調整差異
+  var maxAbs = Math.max.apply(null, CATEGORIES.map(function(r){ return Math.abs(r.diff); }));
+  html += '<div class="data-section"><div class="section-hdr blue">【Q2 調整差異視覺化】← 調減｜調增 →</div><div class="bar-chart">';
+  CATEGORIES.forEach(function(r){
+    var w = Math.abs(r.diff)/maxAbs*100;
+    var isNeg = r.diff < 0;
+    html += '<div class="bar-row">'
+      + '<div class="bar-label">'+r.code+' '+r.item+'</div>'
+      + '<div class="bar-track">'
+      +   '<div class="bar-half">'+(isNeg?'<div class="bar-fill neg-bar" style="width:'+w+'%"></div>':'')+'</div>'
+      +   '<div class="bar-half" style="border-left:2px solid #999">'+(!isNeg?'<div class="bar-fill pos-bar" style="width:'+w+'%"></div>':'')+'</div>'
+      + '</div>'
+      + '<div class="bar-val '+(isNeg?'neg':'pos')+'">'+(isNeg?'-':'+')+k(Math.abs(r.diff))+'</div>'
+      + '</div>';
+  });
+  html += '<div class="bar-axis">0</div></div></div>';
+
+  html += '<div class="data-section"><div class="section-hdr">【主類別調整彙總】</div>'
+    + '<div style="overflow-x:auto"><table class="data-table"><thead><tr>'
+    + '<th>代碼</th><th class="text-left">主類別項目</th><th>調整前金額</th><th>調整後金額</th><th>調整差異</th><th>增減幅</th>'
+    + '</tr></thead><tbody>';
+  CATEGORIES.forEach(function(r){
+    html += '<tr class="chg">'
+      + '<td class="text-center" style="font-weight:700">'+r.code+'</td>'
+      + '<td class="text-left" style="font-weight:600">'+r.item+'</td>'
+      + '<td class="text-right">'+k(r.base)+'</td>'
+      + '<td class="text-right">'+k(r.assess)+'</td>'
+      + '<td class="text-right">'+kSigned(r.diff)+'</td>'
+      + '<td class="text-right '+(r.diff<0?'neg':'pos')+'">'+(r.diff<0?'-':'+')+pctOf(Math.abs(r.diff), r.base)+'</td>'
+      + '</tr>';
+  });
+  html += '<tr class="total-row">'
+    + '<td></td><td class="text-left">【總計調整數】</td>'
+    + '<td class="text-right">'+k(CAT_TOTAL.base)+'</td>'
+    + '<td class="text-right">'+k(CAT_TOTAL.assess)+'</td>'
+    + '<td class="text-right">'+kSigned(CAT_TOTAL.diff)+'</td>'
+    + '<td class="text-right neg">-'+pctOf(Math.abs(CAT_TOTAL.diff), CAT_TOTAL.base)+'</td></tr>';
+  html += '</tbody></table></div></div>';
+
+  html += '<div class="kpi-grid">'
+    + '<div class="kpi-card"><div class="kpi-label">調增類別（B+C+F）</div><div class="kpi-value red">+'+k(6782000+9137000+4005000)+'</div><div class="kpi-sub">千元</div></div>'
+    + '<div class="kpi-card"><div class="kpi-label">調減類別（D）</div><div class="kpi-value blue">-'+k(52723000)+'</div><div class="kpi-sub">千元</div></div>'
+    + '</div>';
+
+  document.getElementById('tab-category').innerHTML = html;
+}
+
+// ══════════════════════════════════════════
+// Tab 3：成費表全表
+// ══════════════════════════════════════════
+function renderTable(){
+  var html = '<div class="info-notice">📌 中華民國115年營業成本及費用表-預算數(全年)(不含重分類)｜交易機構：彰化營運處【3047】｜單位：千元<br>'
+    + '🟡 黃底列＝本次 Q2 有調整之項目</div>';
+
+  html += '<div class="data-section"><div class="section-hdr green">【成費表 全年預算：3月基本版 vs 4月考核版】</div>'
+    + '<div style="overflow-x:auto"><table class="data-table"><thead><tr>'
+    + '<th>代碼</th><th class="text-left">項目</th><th>115年3月基本版</th><th>115年4月考核版</th><th>Q2調整差異</th>'
+    + '</tr></thead><tbody>';
+  COST_TABLE.forEach(function(r){
+    var d = r.a - r.b;
+    var cls = 'lv'+r.lv + (d !== 0 ? ' chg' : '');
+    var nameStyle = r.lv === 0 ? 'font-weight:700' : '';
+    html += '<tr class="'+cls+'">'
+      + '<td class="text-center" style="'+(r.lv===0?'font-weight:700':'')+'">'+r.c+'</td>'
+      + '<td class="text-left" style="'+nameStyle+'">'+r.n+'</td>'
+      + '<td class="text-right">'+(r.b===0?'<span class="gray">—</span>':k(r.b))+'</td>'
+      + '<td class="text-right">'+(r.a===0?'<span class="gray">—</span>':k(r.a))+'</td>'
+      + '<td class="text-right">'+kSigned(d)+'</td>'
+      + '</tr>';
+  });
+  html += '<tr class="grand-row">'
+    + '<td class="text-center">CHTSUM</td><td class="text-left">總計</td>'
+    + '<td class="text-right">'+k(ANNUAL.base)+'</td>'
+    + '<td class="text-right">'+k(ANNUAL.assess)+'</td>'
+    + '<td class="text-right">'+kSigned(ANNUAL.diff)+'</td></tr>';
+  html += '</tbody></table></div></div>';
+
+  document.getElementById('tab-table').innerHTML = html;
+}
+
+// ══════════════════════════════════════════
+// 初始渲染
+// ══════════════════════════════════════════
+renderSummary();
+renderCategory();
+renderTable();
+</script>
+</body>
+</html>
