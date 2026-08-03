@@ -332,7 +332,7 @@ input[type=text]:focus{border-color:#128048}
     <div class="info-row"><span class="label">總筆數</span><span class="val">312 筆</span></div>
     <div class="info-row"><span class="label">資料來源</span><span class="val">TAIS/AS400 匯出</span></div>
     <div class="info-row"><span class="label">GitHub Pages</span><span class="val" style="font-size:11px">argus911.github.io/BudgetApp</span></div>
-    <div class="info-row"><span class="label">版本</span><span class="val">v10 (115/8)</span></div>
+    <div class="info-row"><span class="label">版本</span><span class="val">v11 (115/8)</span></div>
   </div>
   <div class="info-card">
     <div style="font-size:16px;font-weight:700;margin-bottom:14px">📱 加入 iPhone 主畫面</div>
@@ -1009,8 +1009,18 @@ function finalizeBudgetRows(rows, fname){
   }).filter(function(r){ return r['明細帳']||r['會計項目']; });
   if(!mapped.length){ msg.innerHTML='<span class="upload-err">❌ 無法辨識欄位，請確認格式</span>'; return; }
   var year=YEAR, month=MONTH;
-  var ym=fname.match(/(\d{3})[\-_年]?(\d{1,2})[\-_月]?/);
-  if(ym){ year=ym[1]; month=String(parseInt(ym[2])); }
+  // ★優先讀取 CSV/Excel 內容本身的「年度」「月份」欄位（最準確，不受檔名格式影響）
+  var firstRow = mapped[0] || {};
+  var csvYear  = String(firstRow['年度']  || '').trim();
+  var csvMonth = String(firstRow['月份']  || '').trim();
+  if(csvYear && csvMonth){
+    year = csvYear;
+    month = String(parseInt(csvMonth, 10));
+  } else {
+    // 備援：內容找不到年度/月份欄位時，才退回用檔名猜測（例如 TAIS_budget_115_08.csv）
+    var ym=fname.match(/(\d{3})[\-_年]?(\d{1,2})[\-_月]?/);
+    if(ym){ year=ym[1]; month=String(parseInt(ym[2])); }
+  }
   RAW=mapped; YEAR=year; MONTH=month;
   localStorage.setItem(BUDGET_LS_KEY, JSON.stringify(mapped));
   var meta={filename:fname,year:year,month:month,rows:mapped.length,
