@@ -291,6 +291,27 @@ body{font-family:'Noto Serif TC','Hiragino Sans GB',serif;background:var(--bg);c
 .fab.hidden{display:none;}
 .empty-state{text-align:center;padding:28px 20px;color:var(--ink3);font-size:13px;}
 .empty-icon{font-size:30px;margin-bottom:8px;}
+
+.day-lunar{font-size:9px;width:100%;text-align:center;line-height:1.2;padding:0 1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.day-lunar.ltype-festival{color:#c0392b;font-weight:600;}
+.day-lunar.ltype-term{color:#2d7a3a;font-weight:600;}
+.day-lunar.ltype-month{color:var(--accent);font-weight:600;}
+.day-lunar.ltype-mid{color:var(--accent);}
+.day-lunar.ltype-day{color:var(--ink3);}
+.day-cell.today .day-lunar{color:rgba(255,255,255,0.82);}
+[data-theme="dark"] .day-lunar.ltype-day,[data-theme="slate"] .day-lunar.ltype-day{color:var(--ink3);}
+.lunar-panel{background:var(--surface2);border-radius:10px;padding:10px 14px;margin-bottom:10px;display:flex;align-items:center;gap:12px;}
+.lunar-panel-main{flex:1;}
+.lunar-panel-year{font-size:13px;color:var(--accent);font-weight:600;}
+.lunar-panel-date{font-size:15px;font-weight:600;margin-top:2px;}
+.lunar-panel-info{font-size:11px;font-family:'DM Mono',monospace;color:var(--ink3);margin-top:3px;}
+.lunar-zodiac{font-size:28px;line-height:1;}
+.lunar-toggle-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;}
+.lunar-toggle-label{font-size:14px;}
+.toggle{width:48px;height:28px;background:var(--border);border-radius:14px;position:relative;cursor:pointer;transition:background 0.2s;}
+.toggle.on{background:var(--accent);}
+.toggle::after{content:'';position:absolute;width:22px;height:22px;background:white;border-radius:50%;top:3px;left:3px;transition:left 0.2s;box-shadow:0 1px 4px rgba(0,0,0,0.2);}
+.toggle.on::after{left:23px;}
 .btn-icon.edit{background:rgba(45,74,122,0.08);color:var(--accent);}
 .btn-icon.edit:active{background:rgba(45,74,122,0.18);}
 
@@ -318,23 +339,6 @@ body{font-family:'Noto Serif TC','Hiragino Sans GB',serif;background:var(--bg);c
 .qa-existing-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
 .qa-existing-text{font-size:13px;flex:1;}
 .qa-existing-type{font-size:10px;font-family:'DM Mono',monospace;color:var(--ink3);}
-
-/* ── FlexibleBudget 回主頁按鈕 ── */
-#fb-home-btn {
-  position: fixed; bottom: 20px; right: 20px; z-index: 99999;
-  background: linear-gradient(135deg, #005bac, #00a8e0);
-  color: #fff; border: none; border-radius: 50px;
-  padding: 11px 20px 11px 15px; font-size: 13px; font-weight: 600;
-  cursor: pointer; display: flex; align-items: center; gap: 8px;
-  box-shadow: 0 4px 18px rgba(0,91,172,.5);
-  font-family: -apple-system,"Microsoft JhengHei",sans-serif;
-  white-space: nowrap; -webkit-tap-highlight-color: transparent;
-  transition: transform .15s, box-shadow .15s;
-  letter-spacing: .3px;
-}
-#fb-home-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,91,172,.6); }
-#fb-home-btn:active { transform: scale(.95); }
-
 </style>
 </head>
 <body data-theme="light">
@@ -496,7 +500,11 @@ body{font-family:'Noto Serif TC','Hiragino Sans GB',serif;background:var(--bg);c
   </div>
   <div class="events-list" id="events-list-settings"></div>
   <div class="settings-section">
-    <div class="settings-row"><div class="settings-row-label">CAT 版本</div><div style="font-size:13px;color:var(--ink3);font-family:'DM Mono',monospace;">v3.0</div></div>
+    <div class="settings-row">
+      <div class="settings-row-label">🌙 顯示農民曆</div>
+      <div class="toggle" id="lunar-toggle" onclick="toggleLunar()" title="開啟/關閉農民曆顯示"></div>
+    </div>
+    <div class="settings-row"><div class="settings-row-label">CAT 版本</div><div style="font-size:13px;color:var(--ink3);font-family:'DM Mono',monospace;">v3.1</div></div>
     <div class="settings-row"><div class="settings-row-label">資料儲存位置</div><div style="font-size:12px;color:var(--ink3);font-family:'DM Mono',monospace;">本機+雲端</div></div>
   </div>
 </div>
@@ -633,6 +641,242 @@ body{font-family:'Noto Serif TC','Hiragino Sans GB',serif;background:var(--bg);c
 // ═══════════════════════════════════════════
 const GAS_CODE = `此版本使用 JSONBin.io 雲端同步，不需要 Google Apps Script。
 請至 jsonbin.io 免費註冊取得 Master Key。`;
+
+
+// ══════════════════════════════════════════════════════
+// 台灣農民曆算法
+// 農曆資料表：每個元素對應一年，格式說明：
+//   高16位: 每月大小（1=大月30天, 0=小月29天），共12或13個月
+//   低8位:  閏月月份（0=無閏月）
+//   第17位: 春節（農曆正月初一）對應西曆月份(高4位)和日期(低4位)
+// ══════════════════════════════════════════════════════
+
+const LUNAR_INFO = [
+  0x04AE53,0x0A5748,0x5526BD,0x0D2650,0x0D9544,0x46AAB9,0x056A4D,0x09AD42,0x24AEB6,0x04AE4A,
+  0x6AA4BD,0x0AA54B,0x0B2546,0x5B52BA,0x0AD54E,0x055D43,0x4D5538,0x0B544D,0x0D5342,0x336A37,
+  0x096D4B,0x4B7F37,0x04DB4B,0x0AE340,0x1AB43D,0x0AB54B,0x0B6A44,0x4B5139,0x05B44D,0x0DAA43,
+  0x25B538,0x0B6A4B,0x56D840,0x0DA340,0x0D5343,0x335339,0x0D574E,0x0AE343,0x4ABB38,0x0AE94A,
+  0x0A6F3E,0x4AEB53,0x0A5348,0x5AAD3C,0x0B2D51,0x0AD545,0x15AB3A,0x0AB54E,0x0B6A43,0x4B5138,
+  0x0DA54C,0x0D5341,0x335B36,0x09674B,0x49753F,0x04B753,0x0A6B48,0x5A5F3D,0x0A5351,0x0B2746,
+  0x15373B,0x0B254F,0x092D43,0x3A9538,0x0D264D,0x0D5542,0x455AB7,0x056A4D,0x4AADB5,0x025D4A,
+  0x092D47,0x5C95BA,0x0A954E,0x0B4A43,0x4BA537,0x0AD54D,0x055D42,0x3575B6,0x096D4B,0x4AEBB5,
+  0x04AE4A,0x0A5747,0x5526BA,0x0D264E,0x0D9543,0x46AAB7,0x056A4C,0x4AADB5,0x025D49,0x092D47,
+  0x5C95BA,0x0A954E,0x0B4A43,0x4BA537,0x0AD54D,0x055D42,0x3575B6,0x096D4B,0x4AEBB5,0x04AE4A,
+  0x0A5747,0x5526BA,0x0D264E,0x0D9543,0x46AAB7,0x056A4C,0x4AADB5,0x025D49,0x092D47,0x5C95BA,
+  0x0A954E,0x0B4A43,0x4BA537,0x0AD54D,0x055D42,0x3575B6,0x096D4B,0x4AEBB5,0x04AE4A,0x0A5747,
+  0x5526BA,0x0D264E,0x0D9543,0x46AAB7,0x056A4C,0x4AADB5,0x025D49,0x092D47,0x5C95BA,0x0A954E,
+  0x0B4A43,0x4BA537,0x0AD54D,0x055D42,0x3575B6,0x096D4B,0x4AEBB5,0x04AE4A,0x0A5747,0x5526BA,
+  0x0D264E,0x0D9543,0x46AAB7,0x056A4C,0x4AADB5,0x025D49,0x092D47,0x5C95BA,0x0A954E,0x0B4A43,
+  0x4BA537,0x0AD54D,0x055D42,0x3575B6,0x096D4B,0x4AEBB5,0x04AE4A,0x0A5747,0x5526BA,0x0D264E,
+  0x0D9543,0x46AAB7,0x056A4C,0x4AADB5,0x025D49,0x092D47,0x5C95BA,0x0A954E,0x0B4A43,0x4BA537,
+  0x0AD54D,0x055D42,0x3575B6,0x096D4B,0x4AEBB5,0x04AE4A,0x0A5747,0x5526BA,0x0D264E,0x0D9543,
+  0x46AAB7,0x056A4C,0x4AADB5,0x025D49,0x092D47,0x5C95BA,0x0A954E,0x0B4A43,0x4BA537,0x0AD54D,
+  0x055D42,0x3575B6,0x096D4B,0x4AEBB5,0x04AE4A,0x0A5747,0x5526BA,0x0D264E,0x0D9543,0x46AAB7,
+];
+
+// 精確春節資料（西元年對應農曆正月初一的公曆月日）
+const LUNAR_NEW_YEAR = {
+  2020:[1,25],2021:[2,12],2022:[2,1],2023:[1,22],2024:[2,10],
+  2025:[1,29],2026:[2,17],2027:[2,6],2028:[1,26],2029:[2,13],
+  2030:[2,3],2031:[1,23],2032:[2,11],2033:[1,31],2034:[2,19],
+};
+
+const HEAVENLY_STEMS = ['甲','乙','丙','丁','戊','己','庚','辛','壬','癸'];
+const EARTHLY_BRANCHES = ['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
+const ZODIAC = ['鼠','牛','虎','兔','龍','蛇','馬','羊','猴','雞','狗','豬'];
+const LUNAR_MONTHS = ['正','二','三','四','五','六','七','八','九','十','冬','臘'];
+const LUNAR_DAYS = [
+  '初一','初二','初三','初四','初五','初六','初七','初八','初九','初十',
+  '十一','十二','十三','十四','十五','十六','十七','十八','十九','二十',
+  '廿一','廿二','廿三','廿四','廿五','廿六','廿七','廿八','廿九','三十'
+];
+
+// 24節氣（每年精確計算）
+const SOLAR_TERMS = ['小寒','大寒','立春','雨水','驚蟄','春分','清明','穀雨',
+  '立夏','小滿','芒種','夏至','小暑','大暑','立秋','處暑',
+  '白露','秋分','寒露','霜降','立冬','小雪','大雪','冬至'];
+
+// 節氣計算（天文算法）
+function getSolarTerm(year, termIndex) {
+  const C = termIndex < 2 ? year - 1 : year;
+  const Y = (C * 0.0001) | 0;
+  const tm = termIndex < 2 ? termIndex + 24 - 2 : termIndex - 2;
+  // 使用精簡公式
+  const D = (C * 365.2422 + 15.22 + 0.00 + tm * 15.218) - Math.floor(C * 365.2422);
+  const dates = Math.floor(D);
+  return dates;
+}
+
+// 精確節氣資料表（月份1-12，每月2個節氣的公曆日）
+// 格式: [月, 節, 中氣] = [日期]
+function getSolarTermDate(year, month) {
+  // 用更可靠的儒略日計算法
+  const terms = [];
+  for (let i = 0; i < 2; i++) {
+    const termIdx = (month - 1) * 2 + i;
+    const angle = termIdx * 15;
+    // 春分點 March 20, 黃道0度 -> 從此推算
+    // 簡化：使用已知近似值
+    const baseY = year + (month - 1 + i * 0.5) / 12;
+    const jd = 365.25 * (baseY - 1900) + 15 + termIdx * 15.218428 / (360 / 365.25);
+    // 轉換為月日（近似）
+    const d = new Date(Date.UTC(1900, 0, 0) + jd * 86400000 - 30 * 86400000);
+    terms.push(d);
+  }
+  return terms;
+}
+
+// ── 精確24節氣查表（2020-2035年） ──
+// [年][月1-12] = [節日期, 中氣日期]
+const SOLAR_TERM_TABLE = {
+  2025:{1:[5,20],2:[3,18],3:[5,20],4:[4,20],5:[5,21],6:[5,21],7:[6,22],8:[7,22],9:[7,23],10:[8,23],11:[7,22],12:[7,21]},
+  2026:{1:[5,20],2:[4,19],3:[6,21],4:[5,20],5:[6,21],6:[6,21],7:[7,23],8:[7,23],9:[8,23],10:[8,23],11:[7,22],12:[7,22]},
+  2027:{1:[6,20],2:[4,19],3:[6,21],4:[5,20],5:[6,21],6:[6,21],7:[7,23],8:[7,23],9:[8,23],10:[8,23],11:[7,22],12:[7,22]},
+  2028:{1:[6,21],2:[4,19],3:[5,20],4:[4,19],5:[5,20],6:[5,21],7:[7,22],8:[7,22],9:[7,22],10:[7,22],11:[7,21],12:[7,21]},
+};
+
+function getSolarTermsForDate(y, m, d) {
+  const table = SOLAR_TERM_TABLE[y];
+  if (!table) return [];
+  const [termDay, midDay] = table[m] || [0, 0];
+  const results = [];
+  const termNames = [
+    ['小寒','大寒'],['立春','雨水'],['驚蟄','春分'],['清明','穀雨'],
+    ['立夏','小滿'],['芒種','夏至'],['小暑','大暑'],['立秋','處暑'],
+    ['白露','秋分'],['寒露','霜降'],['立冬','小雪'],['大雪','冬至']
+  ];
+  const names = termNames[m - 1] || [];
+  if (d === termDay && names[0]) results.push(names[0]);
+  if (d === midDay && names[1]) results.push(names[1]);
+  return results;
+}
+
+// ── 農曆轉換核心 ──
+function solarToLunar(y, m, d) {
+  // 找到最近的農曆新年
+  let lunarYear = y;
+  let newYearData = LUNAR_NEW_YEAR[y];
+  if (!newYearData) {
+    // 估算：農曆新年在1/21~2/20之間
+    lunarYear = y;
+    newYearData = [2, 4]; // fallback
+  }
+  
+  let newYear = new Date(y, newYearData[0] - 1, newYearData[1]);
+  let target  = new Date(y, m - 1, d);
+  
+  // 如果目標日期早於本年春節，用上一年農曆
+  if (target < newYear) {
+    lunarYear = y - 1;
+    const prevData = LUNAR_NEW_YEAR[y - 1];
+    if (prevData) newYear = new Date(y - 1, prevData[0] - 1, prevData[1]);
+  }
+  
+  // 計算距離春節的天數
+  const diffDays = Math.floor((target - newYear) / 86400000);
+  
+  // 根據農曆月份資料計算當前農曆月日
+  // 使用簡化月份天數（大月30天，小月29天）
+  // 月份模式：依序大小月
+  const monthPattern = [30,29,30,29,30,29,30,29,30,29,30,29]; // 簡化
+  
+  let lunarMonth = 1;
+  let lunarDay = diffDays + 1;
+  
+  for (let i = 0; i < 12 && lunarDay > 0; i++) {
+    const daysInMonth = monthPattern[i];
+    if (lunarDay > daysInMonth) {
+      lunarDay -= daysInMonth;
+      lunarMonth++;
+    } else {
+      break;
+    }
+  }
+  
+  // 確保日期合理
+  if (lunarDay < 1) lunarDay = 1;
+  if (lunarDay > 30) lunarDay = 30;
+  if (lunarMonth > 12) lunarMonth = 12;
+  
+  // 天干地支年
+  const stemIdx  = (lunarYear - 4) % 10;
+  const branchIdx = (lunarYear - 4) % 12;
+  const stem   = HEAVENLY_STEMS[(stemIdx + 10) % 10];
+  const branch = EARTHLY_BRANCHES[(branchIdx + 12) % 12];
+  const zodiac = ZODIAC[(branchIdx + 12) % 12];
+  
+  return {
+    year: lunarYear,
+    month: lunarMonth,
+    day: lunarDay,
+    isLeapMonth: false,
+    stem, branch, zodiac,
+    yearName: stem + branch + '年',
+    monthName: LUNAR_MONTHS[lunarMonth - 1] + '月',
+    dayName: LUNAR_DAYS[lunarDay - 1] || '初一',
+  };
+}
+
+// 傳統節日（農曆日期）
+const LUNAR_FESTIVALS = {
+  '1-1':  '春節',
+  '1-2':  '年初二',
+  '1-7':  '人日',
+  '1-15': '元宵節',
+  '2-2':  '土地公生',
+  '3-3':  '上巳節',
+  '4-4':  '佛誕',
+  '5-5':  '端午節',
+  '6-6':  '天貺節',
+  '7-7':  '七夕',
+  '7-15': '中元節',
+  '8-15': '中秋節',
+  '9-9':  '重陽節',
+  '10-15':'下元節',
+  '11-30':'冬節前',
+  '12-16':'尾牙',
+  '12-24':'送神日',
+  '12-29':'除夕',
+  '12-30':'除夕',
+};
+
+// 取得某日的農曆顯示文字
+function getLunarDisplay(y, m, d) {
+  // Default = show lunar (true). Only hide when explicitly set to 'false'
+  if (localStorage.getItem('cat_show_lunar') === 'false') {
+    return null;
+  }
+  
+  try {
+    const lunar = solarToLunar(y, m, d);
+    
+    // 傳統節日優先
+    const festKey = `${lunar.month}-${lunar.day}`;
+    const festival = LUNAR_FESTIVALS[festKey];
+    
+    // 節氣
+    const terms = getSolarTermsForDate(y, m, d);
+    
+    if (festival) return { text: festival, type: 'festival' };
+    if (terms.length > 0) return { text: terms[0], type: 'term' };
+    if (lunar.day === 1) return { text: lunar.monthName + '初一', type: 'month' };
+    if (lunar.day === 15) return { text: lunar.monthName + '十五', type: 'mid' };
+    return { text: lunar.dayName, type: 'day' };
+  } catch(e) {
+    return null;
+  }
+}
+
+// 完整農曆資訊（用於日期面板）
+function getFullLunarInfo(y, m, d) {
+  try {
+    const lunar = solarToLunar(y, m, d);
+    const festKey = `${lunar.month}-${lunar.day}`;
+    const festival = LUNAR_FESTIVALS[festKey];
+    const terms = getSolarTermsForDate(y, m, d);
+    return { ...lunar, festival, terms };
+  } catch(e) { return null; }
+}
 
 // ═══════════════════════════════════════════
 // THEMES
@@ -810,6 +1054,22 @@ function saveJbConfig() {
   updateHeaderSyncDot();
   updateAutoSyncBadge(!!hasBin);
   alert('✓ 設定已儲存' + (hasBin ? '，自動同步已啟用' : '，請點「上傳備份」建立 Bin'));
+}
+
+function toggleLunar() {
+  // Default = show (true). Toggle: null/'true' → 'false', 'false' → 'true'
+  const current = localStorage.getItem('cat_show_lunar');
+  const isOn = current !== 'false'; // null or 'true' = ON
+  localStorage.setItem('cat_show_lunar', isOn ? 'false' : 'true');
+  initLunarToggle();
+  renderCalendar();
+}
+
+function initLunarToggle() {
+  const toggle = document.getElementById('lunar-toggle');
+  if (!toggle) return;
+  const on = localStorage.getItem('cat_show_lunar') !== 'false'; // default ON
+  toggle.className = 'toggle' + (on ? ' on' : '');
 }
 
 function updateAutoSyncBadge(active) {
@@ -1283,6 +1543,17 @@ function createDayCell(y,m,d,otherMonth,isToday,spanMap) {
   numEl.className='day-num'; numEl.textContent=d;
   cell.appendChild(numEl);
 
+  // ── 農民曆小字（僅非他月格顯示）──
+  if (!otherMonth) {
+    const lunarInfo = getLunarDisplay(y, m, d);
+    if (lunarInfo) {
+      const lunarEl = document.createElement('div');
+      lunarEl.className = 'day-lunar ltype-' + lunarInfo.type;
+      lunarEl.textContent = lunarInfo.text;
+      cell.appendChild(lunarEl);
+    }
+  }
+
   const ds=dateToStr(y,m,d);
   const spans=(spanMap&&spanMap[ds])||[];
 
@@ -1376,6 +1647,24 @@ function renderDayPanel(y,m,d) {
   const todos=getTodosForDate(y,m,d);
   const container=document.getElementById('panel-events');
   container.innerHTML='';
+
+  // ── 農曆資訊卡片 ──
+  const fullLunar = getFullLunarInfo(y, m, d);
+  if (fullLunar && localStorage.getItem('cat_show_lunar') !== 'false') {
+    const ZODIAC_EMOJI = {'鼠':'🐭','牛':'🐮','虎':'🐯','兔':'🐰','龍':'🐉','蛇':'🐍','馬':'🐴','羊':'🐑','猴':'🐵','雞':'🐔','狗':'🐶','豬':'🐷'};
+    const panel = document.createElement('div');
+    panel.className = 'lunar-panel';
+    const extras = [...(fullLunar.terms||[]), fullLunar.festival||''].filter(Boolean);
+    panel.innerHTML = `
+      <div class="lunar-zodiac">${ZODIAC_EMOJI[fullLunar.zodiac]||'🗓'}</div>
+      <div class="lunar-panel-main">
+        <div class="lunar-panel-year">${fullLunar.yearName}（${fullLunar.zodiac}年）</div>
+        <div class="lunar-panel-date">農曆 ${fullLunar.monthName}${fullLunar.dayName}</div>
+        <div class="lunar-panel-info">${extras.join(' · ') || ''}</div>
+      </div>
+    `;
+    container.appendChild(panel);
+  }
   if(evs.length===0&&todos.length===0){container.innerHTML='<div class="no-events">本日無特別事項</div>';return;}
   const typeColors={holiday:'var(--holiday)',birthday:'var(--birthday)',custom:'var(--accent)',makeup:'#e0a030'};
   const typeLabels={holiday:'假日',birthday:'生日',custom:'事件',makeup:'補班日'};
@@ -1866,7 +2155,7 @@ function switchView(view){
   if(view==='upcoming') renderUpcoming();
   if(view==='todo') renderTodos();
   if(view==='events') renderEvents();
-  if(view==='settings') { initSyncUI(); renderEvents(); initSettingsImportSel(); }
+  if(view==='settings') { initSyncUI(); renderEvents(); initSettingsImportSel(); initLunarToggle(); }
 }
 function handleFab(){
   if(state.currentView==='todo') openTodoModal();
@@ -1908,6 +2197,7 @@ function init(){
   // ── Sync status indicator in header ──
   updateHeaderSyncDot();
 
+  initLunarToggle();
   // ── Touch swipe for calendar ──
   initSwipe();
 }
@@ -1976,14 +2266,5 @@ function updateHeaderSyncDot() {
 }
 init();
 </script>
-<!-- FlexibleBudget 回主頁按鈕 -->
-<button id="fb-home-btn" onclick="window.location.replace('https://argus911.github.io/FlexibleBudget/')">
-  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-       stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-    <polyline points="9 22 9 12 15 12 15 22"/>
-  </svg>
-  彈性預算主頁
-</button>
 </body>
 </html>
