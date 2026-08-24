@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- CAT 更新紀錄: 2026-08-24 新增「雙語班多益課程」8場次自動匯入 seed (cat_seed_bilingual_toeic_20261020_v1) -->
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
@@ -2170,9 +2171,46 @@ document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click
 // ═══════════════════════════════════════════
 // INIT
 // ═══════════════════════════════════════════
+// ═══════════════════════════════════════════
+// SEED — 雙語班多益課程 8 場次 (一次性自動匯入，115學年上學期)
+// ═══════════════════════════════════════════
+function seedBilingualToeicCourses(){
+  const SEED_FLAG = 'cat_seed_bilingual_toeic_20261020_v1';
+  if (localStorage.getItem(SEED_FLAG)) return; // 已匯入過，不重複執行
+
+  const courseDates = [
+    '2026-10-20','2026-10-21','2026-10-27','2026-10-28',
+    '2026-11-03','2026-11-04','2026-11-10','2026-11-11'
+  ];
+
+  const {events} = loadData();
+
+  courseDates.forEach(dateStr=>{
+    // 避免重複匯入同一天同名事件
+    const dup = events.some(e => e.name === '雙語班多益課程' && e.startDate === dateStr);
+    if (dup) return;
+    const d = strToDate(dateStr);
+    events.push({
+      id: 'seed_toeic_' + dateStr.replace(/-/g,''),
+      type: 'custom',
+      name: '雙語班多益課程',
+      startDate: dateStr,
+      endDate: dateStr,
+      month: d.getMonth()+1,
+      day: d.getDate(),
+      year: d.getFullYear(),
+      note: '晚上8:00–9:00｜地點：學校（教室另行公告）｜僅收教材費｜自由報名'
+    });
+  });
+
+  saveData('cat_events', events);
+  localStorage.setItem(SEED_FLAG, '1');
+}
+
 function init(){
   applyTheme(localStorage.getItem('cat_theme')||'light');
   initImportYearSel();
+  seedBilingualToeicCourses();
   const n=new Date();
   state.selectedDate={y:n.getFullYear(),m:n.getMonth()+1,d:n.getDate()};
   renderCalendar();
