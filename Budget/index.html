@@ -333,7 +333,7 @@ input[type=text]:focus{border-color:#128048}
     <div class="info-row"><span class="label">總筆數</span><span class="val">348 筆</span></div>
     <div class="info-row"><span class="label">資料來源</span><span class="val">TAIS/AS400 匯出</span></div>
     <div class="info-row"><span class="label">GitHub Pages</span><span class="val" style="font-size:11px">argus911.github.io/BudgetApp</span></div>
-    <div class="info-row"><span class="label">版本</span><span class="val">v29 (115/8)</span></div>
+    <div class="info-row"><span class="label">版本</span><span class="val">v30 (115/8)</span></div>
   </div>
   <div class="info-card">
     <div style="font-size:16px;font-weight:700;margin-bottom:14px">📱 加入 iPhone 主畫面</div>
@@ -415,7 +415,7 @@ var PAGE_SIZE = 20, curPage = 1;
 
 // 費用分類 & 科室 Chips（包裝成可重複呼叫的函數）
 function buildChips(){
-  var CATS = ['all','人事費','業務外包','業務成本','專案建置成本','設備及折舊','管銷費用'];
+  var CATS = ['all','用人費用','承攬及外包項目','行銷業務項目','客戶專案成本','維運項目','支援相關項目','內部碳費'];
   var catChips = document.getElementById('catChips');
   catChips.innerHTML = '';
   CATS.forEach(function(c){
@@ -637,7 +637,7 @@ function renderSummary(){
     '</div>';
 
   html += '<div class="summary-card"><h3>各費用分類動支率</h3>';
-  var CATS2 = ['人事費','業務外包','業務成本','專案建置成本','設備及折舊','管銷費用'];
+  var CATS2 = ['用人費用','承攬及外包項目','行銷業務項目','客戶專案成本','維運項目','支援相關項目','內部碳費'];
   CATS2.forEach(function(c){
     var v = catMap[c]; if(!v) return;
     var rate = v.budget > 0 ? (v.used/v.budget*100) : 0;
@@ -726,7 +726,7 @@ function renderCharts(){
 
 function drawCharts(){
   var catMap = {};
-  var CATS3 = ['人事費','業務外包','業務成本','專案建置成本','設備及折舊','管銷費用'];
+  var CATS3 = ['用人費用','承攬及外包項目','行銷業務項目','客戶專案成本','維運項目','支援相關項目','內部碳費'];
   CATS3.forEach(function(c){ catMap[c] = {budget:0, used:0, remain:0}; });
   var unitMap3 = {};
   RAW.forEach(function(r){
@@ -994,12 +994,9 @@ function finalizeBudgetRows(rows, fname){
     // 費用分類：若仍為空，從分類代碼推導
     if(!obj['費用分類'] && obj['分類代碼']){
       var code = (obj['分類代碼']||'').trim();
-      if(code.startsWith('A'))      obj['費用分類'] = '人事費';
-      else if(code.startsWith('B')) obj['費用分類'] = '業務外包';
-      else if(code.startsWith('C')) obj['費用分類'] = '業務成本';
-      else if(code.startsWith('D')) obj['費用分類'] = '專案建置成本';
-      else if(code.startsWith('E')) obj['費用分類'] = '設備及折舊';
-      else                          obj['費用分類'] = '管銷費用';
+      var catKey = code.split('.')[0];
+      var CAT_LABELS = {'A':'用人費用','B':'承攬及外包項目','C':'行銷業務項目','D':'客戶專案成本','E':'維運項目','F':'支援相關項目','CO2':'內部碳費'};
+      obj['費用分類'] = CAT_LABELS[catKey] || '其他';
     }
     // 數字欄位去逗號、轉浮點數
     var NUM_FIELDS = ['本月動支數','本月餘額','本月預算數','至本月預算數累計',
