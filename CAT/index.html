@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- CAT 更新紀錄: 2026-09-15 v1.3 依人事總處公告更新115年(2026)放假日，含國定假日補假 (cat_holidays_2026_dgpa_v2) -->
 <!-- CAT 更新紀錄: 2026-08-24 新增「雙語班多益課程」8場次自動匯入 seed (cat_seed_bilingual_toeic_20261020_v1) -->
 <html lang="zh-TW">
 <head>
@@ -1260,7 +1261,40 @@ const LUNAR_HOLIDAYS = {
 const OFFICIAL_HOLIDAYS = {
   2024:[{month:1,day:1,name:'元旦'},{month:2,day:8,name:'除夕'},{month:2,day:9,name:'春節初一'},{month:2,day:10,name:'春節初二'},{month:2,day:11,name:'春節初三'},{month:2,day:12,name:'春節初四'},{month:2,day:13,name:'春節初五'},{month:2,day:28,name:'和平紀念日'},{month:4,day:4,name:'兒童節清明節'},{month:4,day:5,name:'清明節補假'},{month:5,day:1,name:'勞動節'},{month:6,day:10,name:'端午節'},{month:9,day:17,name:'中秋節'},{month:10,day:10,name:'國慶日'}],
   2025:[{month:1,day:1,name:'元旦'},{month:1,day:27,name:'春節休假'},{month:1,day:28,name:'除夕'},{month:1,day:29,name:'春節初一'},{month:1,day:30,name:'春節初二'},{month:1,day:31,name:'春節初三'},{month:2,day:28,name:'和平紀念日'},{month:4,day:3,name:'兒童節補假'},{month:4,day:4,name:'兒童節'},{month:4,day:5,name:'清明節'},{month:5,day:1,name:'勞動節'},{month:5,day:30,name:'端午節補假'},{month:5,day:31,name:'端午節'},{month:10,day:6,name:'中秋節'},{month:10,day:10,name:'國慶日'}],
-  2026:[{month:1,day:1,name:'元旦'},{month:2,day:16,name:'除夕'},{month:2,day:17,name:'春節初一'},{month:2,day:18,name:'春節初二'},{month:2,day:19,name:'春節初三'},{month:2,day:20,name:'春節初四'},{month:2,day:28,name:'和平紀念日'},{month:4,day:3,name:'兒童節補假'},{month:4,day:4,name:'兒童節'},{month:4,day:5,name:'清明節'},{month:5,day:1,name:'勞動節'},{month:6,day:19,name:'端午節'},{month:6,day:20,name:'端午節補假'},{month:9,day:25,name:'中秋節'},{month:10,day:10,name:'國慶日'}],
+  2026:[
+    // ── 115年 人事總處公告版（總放假120日，無補班日）──
+    {month:1, day:1,  name:'元旦',                         type:'holiday'},
+    // ── 春節 2/14(六)～2/22(日) 9天 ──
+    {month:2, day:15, name:'除夕前一日',                    type:'holiday'},
+    {month:2, day:16, name:'除夕',                         type:'holiday'},
+    {month:2, day:17, name:'春節初一',                      type:'holiday'},
+    {month:2, day:18, name:'春節初二',                      type:'holiday'},
+    {month:2, day:19, name:'春節初三',                      type:'holiday'},
+    {month:2, day:20, name:'除夕前一日補假',                 type:'holiday'},
+    // ── 和平紀念日 2/27(五)～3/1(日) 3天 ──
+    {month:2, day:27, name:'和平紀念日補假',                 type:'holiday'},
+    {month:2, day:28, name:'和平紀念日',                    type:'holiday'},
+    // ── 兒童節、清明節 4/3(五)～4/6(一) 4天 ──
+    {month:4, day:3,  name:'兒童節補假',                    type:'holiday'},
+    {month:4, day:4,  name:'兒童節',                       type:'holiday'},
+    {month:4, day:5,  name:'清明節',                       type:'holiday'},
+    {month:4, day:6,  name:'清明節補假',                    type:'holiday'},
+    // ── 勞動節 5/1(五)～5/3(日) 3天 ──
+    {month:5, day:1,  name:'勞動節',                       type:'holiday'},
+    // ── 端午節 6/19(五)～6/21(日) 3天 ──
+    {month:6, day:19, name:'端午節',                       type:'holiday'},
+    // ── 中秋節、教師節 9/25(五)～9/28(一) 4天 ──
+    {month:9, day:25, name:'中秋節',                       type:'holiday'},
+    {month:9, day:28, name:'孔子誕辰紀念日/教師節',          type:'holiday'},
+    // ── 國慶日 10/9(五)～10/11(日) 3天 ──
+    {month:10,day:9,  name:'國慶日補假',                    type:'holiday'},
+    {month:10,day:10, name:'國慶日',                       type:'holiday'},
+    // ── 臺灣光復暨金門古寧頭大捷紀念日 10/24(六)～10/26(一) 3天 ──
+    {month:10,day:25, name:'臺灣光復暨古寧頭大捷紀念日',      type:'holiday'},
+    {month:10,day:26, name:'臺灣光復紀念日補假',             type:'holiday'},
+    // ── 行憲紀念日 12/25(五)～12/27(日) 3天 ──
+    {month:12,day:25, name:'行憲紀念日',                    type:'holiday'},
+  ],
   2027:[
     // ── 元旦 1/1(五)～1/3(日) 3天 ──
     {month:1, day:1,  name:'元旦',                  type:'holiday'},
@@ -1301,6 +1335,23 @@ const OFFICIAL_HOLIDAYS = {
   ],
   2028:[{month:1,day:1,name:'元旦'},{month:1,day:25,name:'除夕'},{month:1,day:26,name:'春節初一'},{month:1,day:27,name:'春節初二'},{month:1,day:28,name:'春節初三'},{month:2,day:28,name:'和平紀念日'},{month:4,day:4,name:'兒童節清明節'},{month:5,day:1,name:'勞動節'},{month:5,day:28,name:'端午節'},{month:10,day:3,name:'中秋節'},{month:10,day:10,name:'國慶日'}],
 };
+
+// ── v1.3：官方假日以程式內 OFFICIAL_HOLIDAYS 為準（避免舊匯入/雲端舊資料蓋掉新公告）──
+const AUTO_HOLIDAY_YEARS = [2026];
+function getHolidayList(y, importedHolidays){
+  const key = String(y);
+  const hasImported = importedHolidays && Array.isArray(importedHolidays[key]);
+  if (OFFICIAL_HOLIDAYS[y] && (hasImported || AUTO_HOLIDAY_YEARS.includes(Number(y)))) return OFFICIAL_HOLIDAYS[y];
+  return hasImported ? importedHolidays[key] : [];
+}
+function refreshOfficialHolidays2026(){
+  const FLAG = 'cat_holidays_2026_dgpa_v2';
+  if (localStorage.getItem(FLAG)) return;
+  const {importedHolidays} = loadData();
+  importedHolidays['2026'] = OFFICIAL_HOLIDAYS[2026];
+  saveData('cat_imported_holidays', importedHolidays);
+  localStorage.setItem(FLAG, '1');
+}
 
 function initSettingsImportSel() {
   const sel2 = document.getElementById('import-year-sel2');
@@ -1401,8 +1452,9 @@ function getEventsForDate(y,m,d) {
   // Lunar
   (LUNAR_HOLIDAYS[y]||[]).filter(h=>h.m===m&&h.d===d).forEach(h=>results.push({name:h.n,type:'holiday',builtin:true,startDate:ds,endDate:ds}));
   // Imported holidays
-  (importedHolidays[String(y)]||[]).filter(h=>h.month===m&&h.day===d).forEach(h=>{
+  getHolidayList(y, importedHolidays).filter(h=>h.month===m&&h.day===d).forEach(h=>{
     const entryType = h.type==='makeup' ? 'makeup' : 'holiday';
+    if (results.some(r=>r.name===h.name)) return; // 與內建假日同名則不重複顯示
     results.push({...h,type:entryType,builtin:true,startDate:ds,endDate:ds});
   });
 
@@ -1806,7 +1858,8 @@ function renderUpcoming(){
 
   TW_HOLIDAYS_BUILTIN.forEach(e=>{tryAdd(e.name,e.type,new Date(year,e.month-1,e.day));tryAdd(e.name,e.type,new Date(year+1,e.month-1,e.day));});
   (LUNAR_HOLIDAYS[year]||[]).forEach(h=>tryAdd(h.n,'holiday',new Date(year,h.m-1,h.d)));
-  (importedHolidays[String(year)]||[]).forEach(h=>tryAdd(h.name,'holiday',new Date(year,h.month-1,h.day)));
+  getHolidayList(year, importedHolidays).forEach(h=>tryAdd(h.name,'holiday',new Date(year,h.month-1,h.day)));
+  getHolidayList(year+1, importedHolidays).forEach(h=>tryAdd(h.name,'holiday',new Date(year+1,h.month-1,h.day)));
   events.forEach(e=>{
     const start=strToDate(e.startDate);
     if(!start) return;
@@ -2242,6 +2295,7 @@ function init(){
   applyTheme(localStorage.getItem('cat_theme')||'light');
   initImportYearSel();
   seedBilingualToeicCourses();
+  refreshOfficialHolidays2026();
   const n=new Date();
   state.selectedDate={y:n.getFullYear(),m:n.getMonth()+1,d:n.getDate()};
   renderCalendar();
