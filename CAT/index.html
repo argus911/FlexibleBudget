@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- CAT 更新紀錄: 2026-09-23 v1.4 同步 argus911/CAT 最新內容；保留回主頁按鈕/多益課程 seed 客製化 -->
 <!-- CAT 更新紀錄: 2026-09-15 v1.3 依人事總處公告更新115年(2026)放假日，含國定假日補假 (cat_holidays_2026_dgpa_v2) -->
 <!-- CAT 更新紀錄: 2026-08-24 新增「雙語班多益課程」8場次自動匯入 seed (cat_seed_bilingual_toeic_20261020_v1) -->
 <html lang="zh-TW">
@@ -957,6 +958,35 @@ function openThemeModal() { renderThemeGrid(); document.getElementById('theme-mo
 // ═══════════════════════════════════════════
 // DATA — localStorage + Cloud sync
 // ═══════════════════════════════════════════
+// ── 預設種子事件（首次使用或清除後自動填入）──
+// 格式：startDate=YYYY-MM-DD；無 year 欄位 = 每年重複；有 year = 特定年份
+const SEED_EVENTS = [
+  { id:'seed-1', type:'holiday', name:'體檢', startDate:'2026-05-13', endDate:'2026-05-13', note:'' },
+  { id:'seed-2', type:'birthday', name:'云云生日', startDate:'2026-07-18', endDate:'2026-07-18', note:'' },
+  { id:'seed-3', type:'custom', name:'奧捷12日', year:2026, startDate:'2026-07-14', endDate:'2026-07-25', note:'' },
+  { id:'seed-4', type:'custom', name:'外師口說課', year:2026, startDate:'2026-11-14', endDate:'2026-11-14', note:'上午9:00–12:00 東山401雙語班' },
+  { id:'seed-5', type:'custom', name:'外師口說課', year:2026, startDate:'2026-11-21', endDate:'2026-11-21', note:'上午9:00–12:00 東山401雙語班' },
+  { id:'seed-6', type:'custom', name:'外師口說課', year:2026, startDate:'2026-12-05', endDate:'2026-12-05', note:'上午9:00–12:00 東山401雙語班' },
+  { id:'seed-7', type:'custom', name:'外師口說課', year:2026, startDate:'2026-12-12', endDate:'2026-12-12', note:'上午9:00–12:00 東山401雙語班' },
+];
+const SEED_TODOS = [
+  { id:'seed-t1', text:'代理常設', startDate:'2026-05-12', endDate:'2026-05-12', done:false, note:'' },
+];
+function initSeedData() {
+  const hasInit = localStorage.getItem('cat_seed_v2');
+  if (hasInit) return;
+  const existingEvents = JSON.parse(localStorage.getItem('cat_events')||'[]');
+  const existingTodos  = JSON.parse(localStorage.getItem('cat_todos')||'[]');
+  // 合併種子資料（避免重複）
+  const seenIds = new Set(existingEvents.map(e=>e.id));
+  const newEvents = [...existingEvents, ...SEED_EVENTS.filter(s=>!seenIds.has(s.id))];
+  const seenTIds = new Set(existingTodos.map(t=>t.id));
+  const newTodos  = [...existingTodos,  ...SEED_TODOS.filter(s=>!seenTIds.has(s.id))];
+  localStorage.setItem('cat_events', JSON.stringify(newEvents));
+  localStorage.setItem('cat_todos',  JSON.stringify(newTodos));
+  localStorage.setItem('cat_seed_v2', '1');
+}
+
 function loadData() {
   try {
     return {
@@ -2294,8 +2324,6 @@ function seedBilingualToeicCourses(){
 function init(){
   applyTheme(localStorage.getItem('cat_theme')||'light');
   initImportYearSel();
-  seedBilingualToeicCourses();
-  refreshOfficialHolidays2026();
   const n=new Date();
   state.selectedDate={y:n.getFullYear(),m:n.getMonth()+1,d:n.getDate()};
   renderCalendar();
@@ -2320,7 +2348,11 @@ function init(){
   // ── Sync status indicator in header ──
   updateHeaderSyncDot();
 
+  refreshOfficialHolidays2026();
+  seedBilingualToeicCourses();
   initLunarToggle();
+  // ── 初始化種子資料（首次使用） ──
+  initSeedData();
   // ── Touch swipe for calendar ──
   initSwipe();
 }
