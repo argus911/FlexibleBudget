@@ -1,0 +1,104 @@
+{
+  "_說明": "GitHub Pages 上線前檢查規則（tools/check_pages.py 讀取）。筆數範圍、必要欄位可在這裡調整。",
+  "global_must_not_contain": [],
+  "pages": {
+    "index.html": {
+      "min_bytes": 8000
+    },
+    "BonusPoints/index.html": {
+      "min_bytes": 50000,
+      "must_contain": [
+        "回主頁"
+      ]
+    },
+    "Budget/index.html": {
+      "min_bytes": 100000,
+      "must_contain": [
+        "回主頁"
+      ]
+    },
+    "BudgetAdjust/index.html": {
+      "min_bytes": 15000,
+      "must_contain": [
+        "回主頁"
+      ]
+    },
+    "CAT/index.html": {
+      "min_bytes": 80000,
+      "must_contain": [
+        "回主頁"
+      ]
+    },
+    "CarbonFee/index.html": {
+      "min_bytes": 30000,
+      "must_contain": [
+        "回主頁"
+      ]
+    },
+    "ICTCost/index.html": {
+      "min_bytes": 30000,
+      "must_contain": [
+        "回主頁"
+      ]
+    },
+    "KPI/index.html": {
+      "min_bytes": 150000,
+      "must_contain": [
+        "回主頁"
+      ]
+    },
+    "SalesCost/index.html": {
+      "min_bytes": 20000,
+      "must_contain": [
+        "回主頁"
+      ]
+    },
+    "TAIS/index.html": {
+      "min_bytes": 500000,
+      "must_contain": [
+        "回主頁"
+      ]
+    }
+  },
+  "kpi": {
+    "KPI/index.html": {
+      "const": "DATA",
+      "top_keys": [
+        "kpi",
+        "groups",
+        "history",
+        "actual"
+      ],
+      "kpi_ids": [
+        "O1",
+        "O2",
+        "L1",
+        "L2",
+        "L3",
+        "L4",
+        "M1",
+        "M2",
+        "M3",
+        "M4",
+        "M5",
+        "M6",
+        "M7",
+        "E"
+      ],
+      "records_min": 17,
+      "records_max": 17,
+      "record_keys": [
+        "office",
+        "annual",
+        "rank",
+        "group_rank",
+        "scores"
+      ],
+      "forbidden_keys": [
+        "kpis",
+        "groupRank"
+      ]
+    }
+  },
+  "csv": {}
+}
